@@ -5,8 +5,7 @@
     "scripts": {
         "start": "nx serve",
         "build": "nx build",
-        "test": "nx test",
-        "build:remote"
+        "test": "nx test"
     },
     "private": true,
     "dependencies": {
