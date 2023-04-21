@@ -1,7 +1,7 @@
 import * as React from "react";
 import { useScroll, animated, useSpring } from "@react-spring/web";
 import styles from "./scroll-wave.module.scss";
-import gif from "../../public/61092-YzljOWQ3ZWQ2YQ.gif";
+import gif from "../assets/61092-YzljOWQ3ZWQ2YQ.gif";
 
 const X_LINES = 0;
 
