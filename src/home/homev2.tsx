@@ -1,14 +1,15 @@
-import { Canvas } from "@react-three/fiber";
+import { Canvas, useFrame } from "@react-three/fiber";
 import style from "./home.module.scss";
 import * as React from "react";
 import Grid from "@mui/material/Grid";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import Link from "@mui/material/Link";
+import Box from "@mui/material/Box";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
-import ScrollToTopButton from "./scroll-to-top";
+import ScrollToTopButton from "../scroll-to-buttons/scroll-to-top";
 import ImgMediaCard from "./card";
-import ScrollToBottomButton from "./scroll-to-bottom";
+import ScrollToBottomButton from "../scroll-to-buttons/scroll-to-bottom";
 import { useState } from "react";
 import {
     OrbitControls,
@@ -17,8 +18,6 @@ import {
     Stars,
 } from "@react-three/drei";
 import { useControls } from "leva";
-import { createStore } from "zustand";
-
 import { create } from "zustand";
 import { Object3D } from "three";
 
@@ -31,8 +30,6 @@ const useTargetState = create<TargetState>()((set) => ({
     target: null,
     setTarget: (target) => set({ target }),
 }));
-
-const useStore = createStore((set) => ({}));
 
 export interface JobExperience {
     name: string;
@@ -106,9 +103,10 @@ export default function HomeV2() {
                         camera={{ position: [1.0, 1.0, 1.0] }}
                     >
                         <color attach="background" args={["black"]} />
-                        <Stars saturation={0} count={300} speed={2} />
-                        <Box position={[2, 2, 0]} />
-                        <Box />
+                        <Stars saturation={0} count={300} speed={1} />
+                        <Box3D position={[2, 2, 0]} direction />
+                        <Box3D />
+
                         {target && (
                             <TransformControls object={target} mode={mode} />
                         )}
@@ -141,38 +139,65 @@ export default function HomeV2() {
                     </Container>
                 </main>
 
-                <footer>
-                    <Box
-                        sx={{ bgcolor: "background.paper", p: 6 }}
-                        component="footer"
-                    >
-                        <Typography
-                            variant="subtitle1"
-                            align="center"
-                            color="text.secondary"
-                            component="p"
-                        ></Typography>
-                        <Copyright />
-                    </Box>
-                </footer>
+                <Box
+                    style={{
+                        width: "100%",
+                        height: "auto",
+                        backgroundColor: "white",
+                        paddingTop: "1rem",
+                        paddingBottom: "1rem",
+                    }}
+                >
+                    <Container maxWidth="lg" fixed>
+                        <Grid container direction="column" alignItems="center">
+                            <Copyright />
+                            <Grid item xs={12}>
+                                <Typography
+                                    textAlign="center"
+                                    color="textSecondary"
+                                    variant="subtitle1"
+                                >
+                                    React | Material UI
+                                    <br />
+                                    TypeScript | React Three Fiber | React
+                                    Spring
+                                </Typography>
+                            </Grid>
+                        </Grid>
+                    </Container>
+                </Box>
             </ThemeProvider>
         </div>
     );
 }
 
-function Box(props: Record<string, unknown>) {
+function Box3D(props: Record<string, unknown>) {
+    const myMesh = React.useRef<any>();
     const setTarget = useTargetState((state) => state.setTarget);
     const [hovered, setHovered] = useState(false);
+
     useCursor(hovered);
+
+    useFrame(({ clock }) => {
+        if (myMesh.current) {
+            if (props?.direction) {
+                Math.round(
+                    (myMesh.current.rotation.x = clock.getElapsedTime() / 4)
+                );
+            }
+        }
+    });
     return (
         <mesh
             {...props}
+            ref={myMesh}
             onClick={(e) => setTarget(e.object)}
             onPointerOver={() => setHovered(true)}
             onPointerOut={() => setHovered(false)}
         >
             <boxGeometry />
-            <meshNormalMaterial />
+            {/* <meshNormalMaterial /> */}
+            <meshBasicMaterial color={0xfff1ef} attach="material" clipShadows  />
         </mesh>
     );
 }

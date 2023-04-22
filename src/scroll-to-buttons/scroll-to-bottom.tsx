@@ -19,7 +19,10 @@ export default function ScrollToBottomButton() {
 
     // Scroll the page to the top when the button is clicked
     const handleClick = () => {
-        window.scrollTo(0, document.body.scrollHeight - vhToPixels(100) - 30);
+        window.scrollBy({
+            behavior: "smooth",
+            top: document.body.scrollHeight - vhToPixels(100) - 30,
+        });
     };
 
     // Attach the scroll event listener to the window

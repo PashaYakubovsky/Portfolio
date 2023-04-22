@@ -6,8 +6,8 @@ import { ThemeContext, whiteThemeColors } from "src/сontext/theme-context";
 
 import { NoMatch } from "src/no-match/no-match";
 import { useState } from "react";
-import StickyHeader from "src/home/sticky-header";
-import ScrollWave from "src/home/scroll-wave";
+import StickyHeader from "src/sticky-header/sticky-header";
+import ScrollWave from "src/scroll-wave/scroll-wave";
 
 export const App = () => {
     const [theme, changeTheme] = useState("white");
