@@ -3,7 +3,7 @@
     "npmScope": "/",
     "tasksRunnerOptions": {
         "default": {
-            "runner": "@vercel/remote-nx",
+            "runner": "nx-cloud",
             "options": {
                 "cacheableOperations": ["build", "test", "lint", "e2e"],
                 "token": "<token>",

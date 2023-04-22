@@ -1,0 +1,41 @@
+.cForm {
+    padding: 1rem;
+    max-width: 20.5rem;
+    margin-top: 280px;
+    margin-bottom: 200px;
+}
+
+@media screen and (min-width: 425px) {
+    .cForm {
+        margin-left: auto;
+        margin-right: auto;
+    }
+}
+
+.cFormRememberMeCheckbox {
+    margin: 0 0.5rem 0 0;
+}
+
+.cErrorMessage {
+    color: tomato;
+}
+
+.cFormRegisterButton {
+    width: 100%;
+    padding: 0.8rem 1.6rem;
+    margin-top: 1rem;
+
+    font-size: 1.25rem;
+
+    color: var(--light-color);
+    background-color: #0d6efd;
+    cursor: pointer;
+    border: none;
+    border-radius: 0.3em;
+
+    transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out;
+}
+
+.cFormRegisterButton:hover {
+    background-color: #0b5ed7;
+}

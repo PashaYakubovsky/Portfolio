@@ -4,20 +4,7 @@ import CardActions from "@mui/material/CardActions";
 import CardContent from "@mui/material/CardContent";
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
-import { JobExperience } from "./homev2";
 import { Tooltip, TooltipProps, styled, tooltipClasses } from "@mui/material";
-
-// import { useNavigate } from "react-router-dom";
-
-export interface ILinkData {
-    url: string;
-    mediaType: string;
-    contentType: string;
-    favicons: string[];
-    description: string;
-    images: string[];
-    siteName: string;
-}
 
 export default function ImgMediaCard({
     description,

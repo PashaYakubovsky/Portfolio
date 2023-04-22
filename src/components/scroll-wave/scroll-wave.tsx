@@ -1,7 +1,8 @@
+/* eslint-disable @typescript-eslint/no-non-null-assertion */
 import * as React from "react";
 import { useScroll, animated, useSpring } from "@react-spring/web";
 import styles from "./scroll-wave.module.scss";
-import gif from "../assets/61092-YzljOWQ3ZWQ2YQ.gif";
+import gif from "../../assets/61092-YzljOWQ3ZWQ2YQ.gif";
 
 const X_LINES = 0;
 
@@ -15,7 +16,7 @@ export default function ScrollWave({ children }: { children: JSX.Element }) {
     const observerRef = React.useRef<IntersectionObserver | null>(null);
     const [show, changeShow] = React.useState(true);
 
-    const [textStyles, textApi] = useSpring(() => ({
+    const [, textApi] = useSpring(() => ({
         y: "100%",
     }));
 
