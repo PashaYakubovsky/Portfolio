@@ -1,7 +1,7 @@
 import { useCursor } from "@react-three/drei";
 import { useFrame } from "@react-three/fiber";
 import React, { useMemo, useState } from "react";
-import { useTargetState } from "./home-v2";
+import { useTargetState } from "../../pages/home/home-v2";
 import { BufferGeometry, Material, Mesh } from "three";
 
 function* toggleColorAnimation() {

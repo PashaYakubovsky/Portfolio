@@ -1,6 +1,6 @@
 import { Grid, Typography } from "@mui/material";
-import Copyright from "./copyright";
-import style from "./home.module.scss";
+import Copyright from "../copyright/copyright";
+import style from "./footer.module.scss";
 
 const Footer = () => {
     return (

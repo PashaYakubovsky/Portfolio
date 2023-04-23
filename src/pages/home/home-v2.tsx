@@ -4,17 +4,16 @@ import * as React from "react";
 import ScrollToTopButton from "../../components/scroll-to-buttons/scroll-to-top";
 import ScrollToBottomButton from "../../components/scroll-to-buttons/scroll-to-bottom";
 import { useState } from "react";
-import { OrbitControls, TransformControls, Stars } from "@react-three/drei";
-import { useControls } from "leva";
+import { OrbitControls } from "@react-three/drei";
 import { create } from "zustand";
 import { Object3D } from "three";
 import { CasesContext } from "src/contexts/cases-context";
 import db from "../../../netlify/db.json";
-import JobsCases from "./jobs-cases";
-import Footer from "./footer";
-import Box3D from "./box-3d";
-import Letters3D from "./letters-3d";
-import ScrollButton3d from "./scroll-button";
+import JobsCases from "../../components/job-cases/jobs-cases";
+import Footer from "../../components/footer/footer";
+import Letters3D from "../../components/3d/letters-3d";
+import ScrollButton3d from "../../components/3d/scroll-button";
+import Stars3D from "../../components/3d/strars-3d";
 
 export const useTargetState = create<TargetState>()((set) => ({
     target: null,
@@ -22,10 +21,10 @@ export const useTargetState = create<TargetState>()((set) => ({
 }));
 
 export default function HomeV2() {
-    const { target, setTarget } = useTargetState();
-    const { mode } = useControls({
-        mode: { value: "translate", options: ["translate", "rotate", "scale"] },
-    });
+    const { setTarget } = useTargetState();
+    // const { mode } = useControls({
+    //     mode: { value: "translate", options: ["translate", "rotate", "scale"] },
+    // });
     const [data, changeData] = useState<JobExperience[]>([]);
     const [showCanvas, changeShowCanvas] = React.useState(true);
     const observer = React.useRef<IntersectionObserver | null>(null);
@@ -47,31 +46,8 @@ export default function HomeV2() {
     }, []);
 
     React.useEffect(() => {
-        // fetch(`${config.apiDomain}/cases`)
-        //     .then((response) => {
-        //         console.log(response);
-        //         return response.json();
-        //     })
-        //     .then((payload) => {
-        //         console.log(payload);
-        //         changeData(payload?.cases ?? []);
-        //     })
-        //     .catch((err) => {
-        //         console.log(err);
-        //     });
-
         changeData(db?.cases ?? []);
     }, []);
-
-    const createArray = (length: number) => {
-        const newArr = [];
-
-        for (let i = 0; i < length; i++) {
-            newArr.push(i + 1);
-        }
-
-        return newArr;
-    };
 
     return (
         <CasesContext.Provider
@@ -79,46 +55,7 @@ export default function HomeV2() {
         >
             <div>
                 <div className={style.home}>
-                    {showCanvas ? (
-                        <Canvas
-                            dpr={[1, 2]}
-                            onPointerMissed={() => setTarget(null)}
-                            frameloop="demand"
-                            camera={{ position: [0, 0, 20] }}
-                        >
-                            <color attach="background" args={["black"]} />
-                            <Stars
-                                radius={0.0001}
-                                count={1000}
-                                factor={1}
-                                saturation={0}
-                                fade
-                                speed={2}
-                            />
-                            {/* Letter П */}
-                            {/* {createArray(17).map((position) => (
-                                <Box3D position={[10, position, 0]} />
-                            ))}
-                            {createArray(17).map((position) => (
-                                <Box3D position={[10, position, 10]} />
-                            ))}
-                            {createArray(10).map((position) => (
-                                <Box3D position={[10, 17, position]} />
-                            ))} */}
-
-                            <Letters3D text={`Hi my name is Pasha`} />
-
-                            <ScrollButton3d position={[0, -15, 0]} />
-
-                            {target ? (
-                                <TransformControls
-                                    object={target}
-                                    mode={mode}
-                                />
-                            ) : null}
-                            <OrbitControls makeDefault />
-                        </Canvas>
-                    ) : null}
+                    {showCanvas ? <Scene setTarget={setTarget} /> : null}
                 </div>
 
                 <ScrollToBottomButton />
@@ -130,6 +67,45 @@ export default function HomeV2() {
                 <Footer />
             </div>
         </CasesContext.Provider>
+    );
+}
+
+function Scene({
+    setTarget,
+}: {
+    setTarget: (arg: Object3D<Event> | null) => void;
+}) {
+    return (
+        <Canvas
+            dpr={[1, 2]}
+            onPointerMissed={() => setTarget(null)}
+            // frameloop="demand"
+            camera={{ position: [0, 0, -20], fov: 90 }}
+            // shadows={{ type: THREE.VSMShadowMap }}
+        >
+            <directionalLight
+                position={[0, 5, 5]}
+                castShadow
+                shadow-mapSize-height={1024}
+                shadow-mapSize-width={1024}
+                shadow-radius={10}
+                shadow-bias={-0.0001}
+            />
+
+            <Stars3D />
+
+            <Letters3D text="Hi my name is Pasha" />
+
+            <ScrollButton3d position={[0, -15, 0]} />
+
+            {/* {target ? (
+                                <TransformControls
+                                    object={target}
+                                    mode={mode}
+                                />
+                            ) : null} */}
+            <OrbitControls makeDefault />
+        </Canvas>
     );
 }
 
@@ -312,3 +288,26 @@ export default function HomeV2() {
 //         ]}
 //     />
 // ))}
+
+// const createArray = (length: number) => {
+//     const newArr = [];
+
+//     for (let i = 0; i < length; i++) {
+//         newArr.push(i + 1);
+//     }
+
+//     return newArr;
+// };
+
+// fetch(`${config.apiDomain}/cases`)
+//     .then((response) => {
+//         console.log(response);
+//         return response.json();
+//     })
+//     .then((payload) => {
+//         console.log(payload);
+//         changeData(payload?.cases ?? []);
+//     })
+//     .catch((err) => {
+//         console.log(err);
+//     });
