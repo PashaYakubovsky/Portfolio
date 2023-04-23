@@ -1,37 +1,4 @@
-[dev]
-  command = "npm run start"
-  publish = "dist"
-  port = 4200 
-
-[build]
-  command = "npm run build"
-  publish = "dist"
-
-[functions]
-  node_bundler = "esbuild"
-  included_files = ["netlify/db.json"]
-
 [[redirects]]
-  from = "#"
+  from = "/*"
   to = "/index.html
-  status = 200
-  
-[[redirects]]
-  from = "/api/cases"
-  to = "/.netlify/functions/cases"
-  status = 200
-
-[[redirects]]
-  from = "/api/login"
-  to = "/.netlify/functions/login"
-  status = 200
-
-[[redirects]]
-  from = "/api/register"
-  to = "/.netlify/functions/register"
-  status = 200
-
-[[redirects]]
-  from = "/api/check-user"
-  to = "/.netlify/functions/check-user"
   status = 200
