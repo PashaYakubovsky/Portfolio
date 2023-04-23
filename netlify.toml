@@ -12,7 +12,7 @@
   included_files = ["netlify/data/*.json"]
 
 [[redirects]]
-  from = "/"
+  from = "#"
   to = "/index.html
   status = 200
   
