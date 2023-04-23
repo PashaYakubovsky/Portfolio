@@ -13,6 +13,8 @@ const Letters3D = ({ text = "test", ...args }: { text: string }) => {
     return (
         <Text
             {...args}
+            receiveShadow
+            castShadow
             ref={mesh}
             color="#fff"
             fontSize={5}

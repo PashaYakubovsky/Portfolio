@@ -22,6 +22,7 @@ const ScrollButton3d = (props: any) => {
         <mesh
             ref={mesh}
             receiveShadow
+            castShadow
             {...props}
             onClick={() => {
                 window.scrollBy({
@@ -31,7 +32,12 @@ const ScrollButton3d = (props: any) => {
             }}
         >
             <sphereGeometry args={[5, 30, 30]} attach="geometry" />
-            <meshBasicMaterial color={0xfff1ef} attach="material" clipShadows />
+            <meshBasicMaterial
+                color={0xfff1ef}
+                attach="material"
+                clipShadows
+                shadowSide={2}
+            />
         </mesh>
     );
 };

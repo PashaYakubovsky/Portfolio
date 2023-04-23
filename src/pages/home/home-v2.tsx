@@ -80,11 +80,9 @@ function Scene({
             dpr={[1, 2]}
             onPointerMissed={() => setTarget(null)}
             // frameloop="demand"
-            camera={{ position: [0, 0, -20], fov: 90 }}
-            // shadows={{ type: THREE.VSMShadowMap }}
         >
             <directionalLight
-                position={[0, 5, 5]}
+                position={[0, 15, 30]}
                 castShadow
                 shadow-mapSize-height={1024}
                 shadow-mapSize-width={1024}
