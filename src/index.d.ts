@@ -3,6 +3,7 @@ interface JobExperience {
     screenshots: string[];
     description: string;
     link?: string;
+    index?: number;
 }
 
 interface ILinkData {
