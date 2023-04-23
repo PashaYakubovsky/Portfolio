@@ -23,15 +23,19 @@ const ImgMediaCard = React.forwardRef(
                             x = e.clientX - rect.left,
                             y = e.clientY - rect.top;
 
-                        console.log(x, y);
-
                         card.style.setProperty("--mouse-x", `${x}px`);
                         card.style.setProperty("--mouse-y", `${y}px`);
                     }
                 }}
                 className={style["job-case"]}
             >
-                <CardContent sx={{ height: "60%" }}>
+                <CardContent
+                    sx={{
+                        height: "60%",
+                        overflow: "scroll",
+                        scrollbarColor: "transparent",
+                    }}
+                >
                     <Typography gutterBottom variant="h5" component="div">
                         {name}
                     </Typography>

@@ -13,6 +13,8 @@ import db from "../../../netlify/db.json";
 import JobsCases from "./jobs-cases";
 import Footer from "./footer";
 import Box3D from "./box-3d";
+import Letters3D from "./letters-3d";
+import ScrollButton3d from "./scroll-button";
 
 export const useTargetState = create<TargetState>()((set) => ({
     target: null,
@@ -94,7 +96,7 @@ export default function HomeV2() {
                                 speed={2}
                             />
                             {/* Letter П */}
-                            {createArray(17).map((position) => (
+                            {/* {createArray(17).map((position) => (
                                 <Box3D position={[10, position, 0]} />
                             ))}
                             {createArray(17).map((position) => (
@@ -102,7 +104,13 @@ export default function HomeV2() {
                             ))}
                             {createArray(10).map((position) => (
                                 <Box3D position={[10, 17, position]} />
-                            ))}
+                            ))} */}
+
+                            <Letters3D
+                                text={`Hi my name is Pasha\ncheck the projects`}
+                            />
+
+                            <ScrollButton3d position={[0, -15, 0]} />
 
                             {target ? (
                                 <TransformControls

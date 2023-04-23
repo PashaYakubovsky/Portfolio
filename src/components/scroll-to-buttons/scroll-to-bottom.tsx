@@ -1,6 +1,10 @@
 import { Zoom, Button } from "@mui/material";
 import React, { useState } from "react";
 
+export function vhToPixels(vh: number): number {
+    return Math.round(window.innerHeight / (100 / vh));
+}
+
 export default function ScrollToBottomButton() {
     const [showButton, setShowButton] = useState(true);
 
@@ -12,10 +16,6 @@ export default function ScrollToBottomButton() {
             setShowButton(false);
         }
     };
-
-    function vhToPixels(vh: number): number {
-        return Math.round(window.innerHeight / (100 / vh));
-    }
 
     // Scroll the page to the top when the button is clicked
     const handleClick = () => {
