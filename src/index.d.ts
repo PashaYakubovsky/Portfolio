@@ -4,6 +4,7 @@ interface JobExperience {
     description: string;
     link?: string;
     index?: number;
+    tooltipsText?: string;
 }
 
 interface ILinkData {
@@ -20,5 +21,3 @@ interface TargetState {
     target: null | Object3D<Event>;
     setTarget: (by: null | Object3D) => void;
 }
-
-type User = any;

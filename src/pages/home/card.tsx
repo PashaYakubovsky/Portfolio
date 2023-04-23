@@ -8,17 +8,26 @@ import { Tooltip, TooltipProps, styled, tooltipClasses } from "@mui/material";
 import style from "./home.module.scss";
 
 const ImgMediaCard = React.forwardRef(
-    ({ description, name, link, index = 0 }: JobExperience, refs: any) => {
+    (
+        {
+            description,
+            name,
+            link,
+            index = 0,
+            tooltipsText = "link",
+        }: JobExperience,
+        ref: any
+    ) => {
         return (
             <Card
                 ref={(node) => {
-                    if (Array.isArray(refs.current)) {
-                        refs.current[index] = node;
+                    if (Array.isArray(ref?.current)) {
+                        ref.current[index] = node;
                     }
                 }}
                 onMouseMove={(e) => {
-                    if (Array.isArray(refs.current)) {
-                        const card = refs.current[index];
+                    if (Array.isArray(ref?.current)) {
+                        const card = ref?.current[index];
                         const rect = card.getBoundingClientRect(),
                             x = e.clientX - rect.left,
                             y = e.clientY - rect.top;
@@ -45,7 +54,7 @@ const ImgMediaCard = React.forwardRef(
                 </CardContent>
 
                 <CardActions>
-                    <LightTooltip title="link">
+                    <LightTooltip title={tooltipsText}>
                         <Button
                             sx={{ zIndex: 5 }}
                             onClick={() => link && window.open(link)}

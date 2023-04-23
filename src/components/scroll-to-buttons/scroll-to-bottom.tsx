@@ -37,7 +37,7 @@ export default function ScrollToBottomButton() {
         <Zoom
             style={{
                 position: "fixed",
-                bottom: "3vh",
+                bottom: "9vh",
                 right: "5vh",
                 zIndex: 1000,
             }}

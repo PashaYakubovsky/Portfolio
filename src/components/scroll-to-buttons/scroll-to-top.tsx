@@ -30,9 +30,9 @@ export default function ScrollToTopButton() {
         <Zoom
             style={{
                 position: "fixed",
-                bottom: "3vh",
+                bottom: "9vh",
                 right: "5vh",
-                zIndex: 1,
+                zIndex: 11,
             }}
             in={showButton}
         >

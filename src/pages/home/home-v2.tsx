@@ -106,9 +106,7 @@ export default function HomeV2() {
                                 <Box3D position={[10, 17, position]} />
                             ))} */}
 
-                            <Letters3D
-                                text={`Hi my name is Pasha\ncheck the projects`}
-                            />
+                            <Letters3D text={`Hi my name is Pasha`} />
 
                             <ScrollButton3d position={[0, -15, 0]} />
 

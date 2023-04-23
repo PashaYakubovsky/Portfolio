@@ -22,7 +22,7 @@ const ScrollButton3d = (props: any) => {
                 });
             }}
         >
-            <sphereBufferGeometry args={[5, 30, 30]} attach="geometry" />
+            <sphereGeometry args={[5, 30, 30]} attach="geometry" />
             <meshBasicMaterial color={0xfff1ef} attach="material" clipShadows />
         </mesh>
     );

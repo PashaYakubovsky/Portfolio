@@ -2,6 +2,7 @@ import { useCursor } from "@react-three/drei";
 import { useFrame } from "@react-three/fiber";
 import React, { useMemo, useState } from "react";
 import { useTargetState } from "./home-v2";
+import { BufferGeometry, Material, Mesh } from "three";
 
 function* toggleColorAnimation() {
     let toggle = true;
@@ -14,7 +15,7 @@ function* toggleColorAnimation() {
 }
 
 const Box3D = (props: Record<string, unknown>) => {
-    const myMesh = React.useRef<any>();
+    const myMesh = React.useRef<Mesh<BufferGeometry, Material>>(null!);
     const setTarget = useTargetState((state) => state.setTarget);
     const [hovered, setHovered] = useState(false);
 
@@ -30,7 +31,11 @@ const Box3D = (props: Record<string, unknown>) => {
 
         // Update the material's color property
         const material = myMesh.current.material;
-        material.color.setRGB(r, g, b);
+        (
+            material as unknown as {
+                color: { setRGB: (r: number, g: number, b: number) => void };
+            }
+        ).color.setRGB(r, g, b);
         // }
     });
     return (

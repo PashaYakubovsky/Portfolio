@@ -1,10 +1,10 @@
-import { Container, Grid, Typography } from "@mui/material";
+import { Grid, Typography } from "@mui/material";
 import Copyright from "./copyright";
 import style from "./home.module.scss";
 
 const Footer = () => {
     return (
-        <Container className={style.footerBox} maxWidth="lg" fixed>
+        <div className={style["footer-box"]}>
             <Grid container direction="column" alignItems="center">
                 <Copyright />
 
@@ -13,14 +13,10 @@ const Footer = () => {
                         textAlign="center"
                         color="textSecondary"
                         variant="subtitle1"
-                    >
-                        React | Material UI
-                        <br />
-                        TypeScript | React Three Fiber | React Spring
-                    </Typography>
+                    ></Typography>
                 </Grid>
             </Grid>
-        </Container>
+        </div>
     );
 };
 export default Footer;
