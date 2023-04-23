@@ -9,7 +9,7 @@
 
 [functions]
   node_bundler = "esbuild"
-  included_files = ["netlify/data/*.json"]
+  included_files = ["netlify/db.json"]
 
 [[redirects]]
   from = "#"
