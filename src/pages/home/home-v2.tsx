@@ -92,7 +92,7 @@ function Scene({
 
             <Stars3D />
 
-            <Letters3D text="Hi my name is Pasha" />
+            <Letters3D text="Happy to see you :)" />
 
             <ScrollButton3d position={[0, -15, 0]} />
 
