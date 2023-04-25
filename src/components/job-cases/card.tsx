@@ -21,7 +21,7 @@ const ImgMediaCard = React.forwardRef(
         return (
             <Card
                 ref={(node) => {
-                    if (Array.isArray(ref?.current)) {
+                    if (ref?.current) {
                         ref.current[index] = node;
                     }
                 }}

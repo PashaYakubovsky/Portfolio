@@ -14,9 +14,11 @@ import SignUp from "src/pages/sign-in/sign-up";
 import { Socket, io } from "socket.io-client";
 import { DefaultEventsMap } from "socket.io/dist/typed-events";
 import { WsContext } from "src/contexts/ws-context";
+import { ConfigContext } from "src/contexts/config-context";
 
 export const App = () => {
     const [theme, changeTheme] = useState("white");
+    const [config, changeConfig] = useState({ supportWebGl: false });
     const [socket, changeSocket] = useState<Socket<
         DefaultEventsMap,
         DefaultEventsMap
@@ -32,6 +34,23 @@ export const App = () => {
         socket.on("3d-text", (msg) => {
             console.log("message: " + msg);
         });
+
+        try {
+            const canvas = document.createElement("canvas");
+            const gl = canvas.getContext("webgl");
+            if (!gl) {
+                const message = document.createElement("div");
+                message.innerText =
+                    "Lockdown mode is enabled in your browser. This may affect the functionality of certain features on this site.";
+                document.body.appendChild(message);
+            } else {
+                changeConfig((state) => ({ ...state, supportWebGl: true }));
+            }
+            // Use WebGL context here
+        } catch (e) {
+            console.error(e);
+            // Hide canvas elements or display alternative content
+        }
     }, []);
 
     return (
@@ -39,19 +58,21 @@ export const App = () => {
             value={{ theme, changeTheme, ...whiteThemeColors }}
         >
             <WsContext.Provider value={{ socket }}>
-                <StickyHeader />
-                <Routes>
-                    <Route
-                        path="/"
-                        element={
-                            <ScrollWave>
-                                <HomeV2 />
-                            </ScrollWave>
-                        }
-                    />
-                    <Route path="/sign-up" element={<SignUp />} />
-                    <Route path="*" element={<NoMatch />} />
-                </Routes>
+                <ConfigContext.Provider value={config}>
+                    <StickyHeader />
+                    <Routes>
+                        <Route
+                            path="/"
+                            element={
+                                <ScrollWave>
+                                    <HomeV2 />
+                                </ScrollWave>
+                            }
+                        />
+                        <Route path="/sign-up" element={<SignUp />} />
+                        <Route path="*" element={<NoMatch />} />
+                    </Routes>
+                </ConfigContext.Provider>
             </WsContext.Provider>
         </ThemeContext.Provider>
     );

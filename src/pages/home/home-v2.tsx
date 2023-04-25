@@ -14,6 +14,7 @@ import Footer from "../../components/footer/footer";
 import Letters3D from "../../components/3d/letters-3d";
 import ScrollButton3d from "../../components/3d/scroll-button";
 import Stars3D from "../../components/3d/strars-3d";
+import { ConfigContext } from "src/contexts/config-context";
 
 export const useTargetState = create<TargetState>()((set) => ({
     target: null,
@@ -22,6 +23,7 @@ export const useTargetState = create<TargetState>()((set) => ({
 
 export default function HomeV2() {
     const { setTarget } = useTargetState();
+    const { supportWebGl } = React.useContext(ConfigContext);
     // const { mode } = useControls({
     //     mode: { value: "translate", options: ["translate", "rotate", "scale"] },
     // });
@@ -55,7 +57,9 @@ export default function HomeV2() {
         >
             <div>
                 <div className={style.home}>
-                    {showCanvas ? <Scene setTarget={setTarget} /> : null}
+                    {showCanvas && supportWebGl ? (
+                        <Scene setTarget={setTarget} />
+                    ) : null}
                 </div>
 
                 <ScrollToBottomButton />
@@ -97,11 +101,11 @@ function Scene({
             <ScrollButton3d position={[0, -15, 0]} />
 
             {/* {target ? (
-                                <TransformControls
-                                    object={target}
-                                    mode={mode}
-                                />
-                            ) : null} */}
+                    <TransformControls
+                        object={target}
+                        mode={mode}
+                    />
+                ) : null} */}
             <OrbitControls makeDefault />
         </Canvas>
     );
