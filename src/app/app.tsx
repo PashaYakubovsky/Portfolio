@@ -15,6 +15,7 @@ import { Socket, io } from "socket.io-client";
 import { DefaultEventsMap } from "socket.io/dist/typed-events";
 import { WsContext } from "src/contexts/ws-context";
 import { ConfigContext } from "src/contexts/config-context";
+import NotSupportModal from "src/components/modals/not-support-modal";
 
 export const App = () => {
     const [theme, changeTheme] = useState("white");
@@ -46,10 +47,8 @@ export const App = () => {
             } else {
                 changeConfig((state) => ({ ...state, supportWebGl: true }));
             }
-            // Use WebGL context here
         } catch (e) {
             console.error(e);
-            // Hide canvas elements or display alternative content
         }
     }, []);
 
@@ -60,6 +59,7 @@ export const App = () => {
             <WsContext.Provider value={{ socket }}>
                 <ConfigContext.Provider value={config}>
                     <StickyHeader />
+                    <NotSupportModal />
                     <Routes>
                         <Route
                             path="/"

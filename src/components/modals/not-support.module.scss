@@ -1,0 +1,26 @@
+.supportContainer {
+    height: 300;
+    flex-grow: 1;
+    min-width: 300;
+    transform: translateZ(1);
+    // The position fixed scoping doesn't work in IE11.
+    // Disable this demo to preserve the others.
+    @media all and (-ms-high-contrast: none) {
+        display: none;
+    }
+}
+.supportInnerContainer {
+    position: relative;
+    width: 400;
+    border: 2px solid #000;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+.supportModal {
+    margin: 5vw;
+    display: flex;
+    padding: 5px;
+    align-items: center;
+    justify-content: center;
+}

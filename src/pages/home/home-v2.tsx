@@ -56,11 +56,11 @@ export default function HomeV2() {
             value={{ jobCases: data, changeJobsCases: changeData }}
         >
             <div>
-                <div className={style.home}>
-                    {showCanvas && supportWebGl ? (
-                        <Scene setTarget={setTarget} />
-                    ) : null}
-                </div>
+                {supportWebGl ? (
+                    <div className={style.home}>
+                        {showCanvas ? <Scene setTarget={setTarget} /> : null}
+                    </div>
+                ) : null}
 
                 <ScrollToBottomButton />
 
