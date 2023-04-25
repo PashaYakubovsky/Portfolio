@@ -41,8 +41,7 @@ const ImgMediaCard = React.forwardRef(
                 <CardContent
                     sx={{
                         height: "60%",
-                        overflow: "scroll",
-                        scrollbarColor: "transparent",
+                        overflow: "hidden",
                     }}
                 >
                     <Typography gutterBottom variant="h5" component="div">
