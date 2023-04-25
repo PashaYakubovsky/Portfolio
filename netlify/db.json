@@ -1,7 +1,7 @@
 {
     "cases": [
         {
-            "description": "ASP.NET 7 додаток який робить запит на OpenAI API \nРеалізована авторизація та реєстрація черз Jwt токен, створення видалення юзерів, також існують ролі Admin та User \nПри створені юзера він привязується до порталу з яким цей сервіс буде працювати \nРобота с chat-gpt, DALL-E \nЛогування в текстовий файл через NLog \nЛогування всіх запитів в табличку sql \nРобота з сутностями через code first EntityFramework",
+            "description": "ASP.NET сервер для роботи з OpenAI API \nРеалізована авторизація та реєстрація черз Jwt токен, створення видалення юзерів, також існують ролі Admin та User \nПри створені юзера він привязується до порталу з яким цей сервіс буде працювати \nРобота с chat-gpt, DALL-E \nNLog \nSqlServer \ncode first EntityFramework",
             "name": "Gpt Service",
             "screenshots": [],
             "link": "https://mhp.inboost.ai:25056/swagger/index.html",
@@ -9,17 +9,24 @@
         },
         {
             "name": "Dev Helper Assistance",
-            "description": "Express.js сервер який хостить діскорд бота, проект написаний на TypeScript та піднімається за допомоги nodemon\nТакож в середині реалізована система Молодший брат, це просто роут який формує карточку для діскорда та відправляє на визначиний сервер на вебхук помилки, написаний для контролю помилок для всіх порталів фронт-енд додатків",
+            "description": "express.js сервер який хостить діскорд бота, проект написаний на TypeScript та піднімається за допомоги nodemon\nТакож в середині реалізована система Молодший брат, це просто роут який формує карточку для діскорда та відправляє на визначиний сервер на вебхук помилки, написаний для контролю помилок для всіх порталів фронт-енд додатків",
             "screenshots": [],
             "link": "https://discord.gg/8WCEeGEb",
-            "tooltipsText": "Go to discord server and try Dev Helper bot"
+            "tooltipsText": "Go to Discord server and try Dev Helper bot"
         },
         {
             "name": "Datepicker",
-            "description": "React, Redux, TypeScript біблеотека для дейтпікера існють такі фічі (3dMode для ефектного відображення, автовизначення к-сть інстансів в залежності від ширини контейнера, кожен інстанс працює зі своїм стейтом типу визначення неділі, місяця, сінгл дейт або ренж)",
+            "description": "React, Redux, TypeScript дейтпікер, single date або range (3dMode для ефектного відображення, автовизначення к-сть інстансів в залежності від ширини контейнера, кожен інстанс працює зі своїм стейтом типу визначення неділі, місяця)",
             "screenshots": [],
             "link": "https://640d185181f1e1bf735745d6-vinqyxblem.chromatic.com/?path=/story/datepicker--primary",
-            "tooltipsText": "Go to storybook"
+            "tooltipsText": "Go to Storybook"
+        },
+        {
+            "name": "Inboost Landing site",
+            "description": "React, Redux, TypeScript, Next.js, GSAP, Mongo.db. Сайт візітка для бізнеса, реалізовані динамічні переклади якщо адмін авторизований може на проді змінити будь який текст на будь якій мові",
+            "screenshots": [],
+            "link": "https://inboost.ai",
+            "tooltipsText": "Go to Site"
         }
     ]
 }
