@@ -2,14 +2,14 @@ import * as React from "react";
 import Modal from "@mui/material/Modal";
 import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
-import { ConfigContext } from "src/contexts/config-context";
 import style from "./not-support.module.scss";
 import { Button } from "@mui/material";
+import { useConfigStore } from "src/store/store";
 
 const NotSupportModal = () => {
     const rootRef = React.useRef<HTMLDivElement>(null);
     const [show, changeShow] = React.useState(true);
-    const { supportWebGl } = React.useContext(ConfigContext);
+    const { supportWebGl } = useConfigStore();
 
     return !supportWebGl && show ? (
         <Box className={style.supportContainer} ref={rootRef}>

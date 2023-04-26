@@ -1,4 +1,74 @@
+$spacing: 20px;
+$primary-color: #1976d2;
+
 .container {
     background-color: #000;
     height: 100vh;
+}
+
+.root {
+    & > .MuiAvatar-root {
+        margin-top: $spacing;
+        margin-right: $spacing;
+    }
+}
+
+.bubbleContainer {
+    flex-direction: column;
+    align-items: flex-start;
+    max-width: 50%;
+    padding: $spacing;
+    box-shadow: none;
+}
+
+.bubble {
+    background-color: grey;
+    padding: $spacing;
+    border-radius: 15px 15px 0 15px;
+
+    & > .MuiTypography-body1 {
+        color: #fff;
+    }
+
+    & + .MuiTypography-caption {
+        margin-top: $spacing;
+    }
+}
+
+.bubbleActive {
+    background-color: "#1976d2";
+    padding: $spacing;
+    border-radius: 15px 15px 0 15px;
+
+    & > .MuiTypography-body1 {
+        color: #fff;
+    }
+
+    & + .MuiTypography-caption {
+        margin-top: $spacing;
+    }
+}
+
+// Define styles for the TextareaAutosize component
+.textareaWrap {
+    width: 100%;
+    border: 1px solid $primary-color;
+    padding: 8px;
+    color: white;
+    background-color: black;
+
+    &:focus {
+        border-color: $primary-color;
+    }
+}
+
+// Override the styles for the InputBase component within TextareaAutosize
+.textarea {
+    color: white;
+    margin: 0;
+    padding: 0;
+    font-size: inherit;
+    font-family: inherit;
+    line-height: inherit;
+    background-color: transparent;
 }

@@ -1,24 +1,47 @@
-import { Grid, Typography, Paper, TextField, Button } from "@mui/material";
-import { useState } from "react";
+import {
+    Grid,
+    Typography,
+    Paper,
+    Button,
+    TextareaAutosize,
+} from "@mui/material";
+import { useContext, useEffect, useRef, useState } from "react";
 import style from "./chat.module.scss";
-
-interface IMessage {
-    id: number;
-    message: string;
-}
+import { WsContext } from "src/contexts/ws-context";
+import ChatMessageBubble from "./chat-message";
+import { ChatContext } from "src/contexts/chat-context";
+import { useConfigStore } from "src/store/store";
+import { v4 as uuid } from "uuid";
 
 const ChatContainer = () => {
-    const [messages, setMessages] = useState<IMessage[]>([]);
+    const { messages, changeMessages } = useContext(ChatContext);
     const [messageInput, setMessageInput] = useState<string>("");
+    const { socket } = useContext(WsContext);
+    const { user } = useConfigStore();
+    const inputRef = useRef<HTMLTextAreaElement>(null);
 
     const handleSendMessage = () => {
-        const newMessage: IMessage = {
-            id: Math.floor(Math.random() * 100),
+        const newMessage: ChatMessage = {
+            messageId: uuid() || "error",
             message: messageInput,
+            dateCreate: new Date().toDateString(),
+            user,
         };
-        setMessages([...messages, newMessage]);
+        changeMessages?.([newMessage, ...messages]);
         setMessageInput("");
+
+        socket?.emit("message", { message: newMessage, user });
     };
+
+    useEffect(() => {
+        const handleClick = (e: MouseEvent) => {
+            inputRef.current?.focus();
+        };
+        document.addEventListener("click", handleClick);
+        return () => {
+            document.removeEventListener("click", handleClick);
+        };
+    }, []);
 
     return (
         <div className={style.container}>
@@ -27,22 +50,44 @@ const ChatContainer = () => {
                     <Typography variant="h4">Chat</Typography>
                 </Grid>
                 <Grid item xs={12} md={6}>
-                    <Paper style={{ height: 400, overflowY: "scroll" }}>
-                        {messages.map((msg) => (
-                            <div key={msg.id}>{msg.message}</div>
-                        ))}
+                    <Paper
+                        style={{ height: "70vh", overflowY: "scroll" }}
+                        sx={{
+                            p: 2,
+                            display: "flex",
+                            flexDirection: "column-reverse",
+                        }}
+                    >
+                        {messages?.map((msg) => {
+                            return (
+                                <div key={msg.messageId}>
+                                    <ChatMessageBubble
+                                        user={user}
+                                        message={msg}
+                                    />
+                                </div>
+                            );
+                        })}
                     </Paper>
                 </Grid>
                 <Grid item xs={12} md={6}>
-                    <TextField
+                    <TextareaAutosize
+                        ref={inputRef}
                         autoFocus
-                        label="Write something"
+                        onKeyDown={(e) => {
+                            if (e.shiftKey) {
+                                return;
+                            }
+                            if (
+                                e.code === "Enter" ||
+                                e.code === "NumpadEnter"
+                            ) {
+                                handleSendMessage();
+                            }
+                        }}
                         // variant="outlined"
                         color="primary"
-                        InputProps={{
-                            inputProps: { style: { color: "white" } },
-                        }}
-                        fullWidth
+                        className={style.textareaWrap}
                         value={messageInput}
                         onChange={(e) => setMessageInput(e.target.value)}
                     />

@@ -12,29 +12,39 @@ import StickyHeader from "src/components/sticky-header/sticky-header";
 // import SignIn from "src/pages/sign-in/sign-up";
 import SignUp from "src/pages/sign-in/sign-up";
 import { Socket, io } from "socket.io-client";
-import { DefaultEventsMap } from "socket.io/dist/typed-events";
 import { WsContext } from "src/contexts/ws-context";
-import { ConfigContext } from "src/contexts/config-context";
 import NotSupportModal from "src/components/modals/not-support-modal";
 import ChatPage from "src/pages/chat/chat-page";
+import { ChatContext } from "src/contexts/chat-context";
+import { DefaultEventsMap } from "socket.io/dist/typed-events";
+import { useConfigStore } from "src/store/store";
 
 export const App = () => {
     const [theme, changeTheme] = useState("white");
-    const [config, changeConfig] = useState({ supportWebGl: true });
+    const { changeSupportWebGl } = useConfigStore((state) => state);
+
     const socketRef = useRef<Socket<DefaultEventsMap, DefaultEventsMap> | null>(
         null
     );
+    const { user, change3dText } = useConfigStore();
+    const [messages, changeMessages] = useState<ChatMessage[]>([]);
+    const socket = io("http://localhost:3000");
 
-    // useEffect(() => {
-    //     if (socketRef.current) {
-    //         socketRef.current.disconnect();
-    //     }
-    //     socketRef.current = io("https://localhost:3000");
-
-    //     socketRef.current.on("changeText", (msg: string) => {
-    //         console.log("message: " + msg);
-    //     });
-    // }, []);
+    useEffect(() => {
+        if (socketRef.current) {
+            socketRef.current.close();
+        }
+        socketRef.current = socket;
+        socketRef.current.on("changeText", (msg: string) => {
+            change3dText(msg);
+        });
+        socketRef.current.on("message", (message: ChatMessage) => {
+            console.log(message);
+            if (message.user?.userId !== user?.userId) {
+                changeMessages((state) => [message, ...state]);
+            }
+        });
+    }, [change3dText, messages, socket, user?.userId]);
 
     useEffect(() => {
         try {
@@ -46,18 +56,23 @@ export const App = () => {
                     "Lockdown mode is enabled in your browser. This may affect the functionality of certain features on this site."
                 );
             }
-            changeConfig((state) => ({ ...state, supportWebGl: Boolean(gl) }));
+            changeSupportWebGl(Boolean(gl));
         } catch (e) {
             console.error(e);
         }
-    }, []);
+    }, [changeSupportWebGl]);
 
     return (
         <ThemeContext.Provider
             value={{ theme, changeTheme, ...whiteThemeColors }}
         >
-            <WsContext.Provider value={{ socket: socketRef.current }}>
-                <ConfigContext.Provider value={config}>
+            <WsContext.Provider value={{ socket }}>
+                <ChatContext.Provider
+                    value={{
+                        messages,
+                        changeMessages,
+                    }}
+                >
                     <StickyHeader />
                     <NotSupportModal />
                     <Routes>
@@ -69,11 +84,13 @@ export const App = () => {
                                 // </ScrollWave>
                             }
                         />
+
                         <Route path="/chat" element={<ChatPage />} />
+
                         <Route path="/sign-up" element={<SignUp />} />
                         <Route path="*" element={<NoMatch />} />
                     </Routes>
-                </ConfigContext.Provider>
+                </ChatContext.Provider>
             </WsContext.Provider>
         </ThemeContext.Provider>
     );

@@ -1,12 +1,13 @@
 import { useThree } from "@react-three/fiber";
-import React from "react";
+import React, { useEffect } from "react";
 
 const Camera = () => {
     const { camera } = useThree();
 
-    React.useEffect(() => {
+    useEffect(() => {
         camera.position.set(0, 5, -30);
-    }, [camera.position]);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
 
     // eslint-disable-next-line react/jsx-no-useless-fragment
     return <></>;

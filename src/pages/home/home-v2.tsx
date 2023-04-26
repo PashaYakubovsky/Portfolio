@@ -1,12 +1,10 @@
-import { Canvas } from "@react-three/fiber";
+import { Canvas, useFrame } from "@react-three/fiber";
 import style from "./home.module.scss";
 import * as React from "react";
 import ScrollToTopButton from "../../components/scroll-to-buttons/scroll-to-top";
 import ScrollToBottomButton from "../../components/scroll-to-buttons/scroll-to-bottom";
 import { useState } from "react";
 import { OrbitControls } from "@react-three/drei";
-import { create } from "zustand";
-import { Object3D } from "three";
 import * as THREE from "three";
 import { CasesContext } from "src/contexts/cases-context";
 import db from "../../../netlify/db.json";
@@ -15,20 +13,20 @@ import Footer from "../../components/footer/footer";
 import Letters3D from "../../components/3d/letters-3d";
 import ScrollButton3d from "../../components/3d/scroll-button";
 import Stars3D from "../../components/3d/strars-3d";
-import { ConfigContext } from "src/contexts/config-context";
 import Camera from "src/components/3d/camera";
-
-export const useTargetState = create<TargetState>()((set) => ({
-    target: null,
-    setTarget: (target) => set({ target: target as Object3D<Event> }),
-}));
+import { BlendFunction, GlitchMode } from "postprocessing";
+import {
+    EffectComposer,
+    Scanline,
+    Vignette,
+    Bloom,
+    Glitch,
+    Noise,
+} from "@react-three/postprocessing";
+import { useConfigStore } from "src/store/store";
 
 export default function HomeV2() {
-    const { setTarget } = useTargetState();
-    const { supportWebGl } = React.useContext(ConfigContext);
-    // const { mode } = useControls({
-    //     mode: { value: "translate", options: ["translate", "rotate", "scale"] },
-    // });
+    const { changeLoader, supportWebGl } = useConfigStore();
     const [data, changeData] = useState<JobExperience[]>([]);
     const [showCanvas, changeShowCanvas] = React.useState(true);
     const observer = React.useRef<IntersectionObserver | null>(null);
@@ -51,7 +49,11 @@ export default function HomeV2() {
 
     React.useEffect(() => {
         changeData(db?.cases ?? []);
-    }, []);
+
+        setTimeout(() => {
+            changeLoader?.(false);
+        }, 3000);
+    }, [changeLoader]);
 
     return (
         <CasesContext.Provider
@@ -60,7 +62,7 @@ export default function HomeV2() {
             <div>
                 {supportWebGl ? (
                     <div ref={interceptor} className={style.home}>
-                        {showCanvas ? <Scene setTarget={setTarget} /> : null}
+                        {showCanvas ? <Scene /> : null}
                     </div>
                 ) : null}
 
@@ -76,44 +78,101 @@ export default function HomeV2() {
     );
 }
 
-function Scene({
-    setTarget,
-}: {
-    setTarget: (arg: Object3D<Event> | null) => void;
-}) {
+function Scene() {
+    const { glitch } = useConfigStore((state) => state);
+    const text = useConfigStore((state) => state["3dText"]);
+
+    console.log(text);
+
     return (
         <Canvas
-            dpr={[1, 2]}
-            onPointerMissed={() => setTarget(null)}
-            // frameloop="demand"
+
+        // dpr={[1, 2]}
+        // onPointerMissed={() => setTarget(null)}
+        // frameloop="demand"
         >
-            <Camera />
+            {glitch ? <GlitchEffects /> : null}
 
-            <Stars3D />
+            <React.Suspense fallback={<GlitchEffects />}>
+                <directionalLight />
 
-            <Letters3D text="Happy to see you :)" />
+                <Camera />
 
-            <rectAreaLight
-                width={3}
-                height={3}
-                color={"red"}
-                intensity={1}
-                position={[-2, 0, 5]}
-                lookAt={() => new THREE.Vector3(...[0, 0, 0])}
-                castShadow
-            />
+                <Stars3D />
 
-            <ScrollButton3d position={[0, 0, 0]} />
-            {/* {target ? (
-                    <TransformControls
-                        object={target}
-                        mode={mode}
-                    />
-                ) : null} */}
-            <OrbitControls makeDefault />
+                <Letters3D text={text} />
+
+                <rectAreaLight
+                    width={3}
+                    height={3}
+                    color={"red"}
+                    intensity={1}
+                    position={[-2, 0, 5]}
+                    lookAt={() => new THREE.Vector3(...[0, 0, 0])}
+                    castShadow
+                />
+
+                <pointLight
+                    position={[0, 0, 0]}
+                    intensity={1}
+                    color={"#ffffff"}
+                />
+
+                <ScrollButton3d position={[0, 0, 0]} />
+
+                <OrbitControls
+                    enableZoom={true}
+                    maxDistance={100}
+                    makeDefault
+                />
+            </React.Suspense>
         </Canvas>
     );
 }
+
+const GlitchEffects = () => {
+    const scene = React.useRef<THREE.Group | null>(null);
+
+    useFrame(() => {
+        if (scene.current) {
+            scene.current.rotation.y += 0.04;
+            scene.current.rotation.x += 0.04;
+            scene.current.rotation.z += 0.04;
+        }
+    });
+
+    return (
+        <group ref={scene}>
+            <EffectComposer>
+                <Glitch
+                    // strength={[0.01, 0.02]} // min and max glitch strength
+                    mode={GlitchMode.CONSTANT_MILD} // glitch mode
+                    active // turn on/off the effect (switches between "mode" prop and GlitchMode.DISABLED)
+                    ratio={0.6} // Threshold for strong glitches, 0 - no weak glitches, 1 - no strong glitches.
+                />
+                <Noise opacity={0.1} />
+                <Scanline
+                    blendFunction={BlendFunction.ALPHA} // blend mode
+                    density={0.8} // scanline density
+                    opacity={0.1}
+                />
+                <Bloom
+                    luminanceThreshold={0}
+                    luminanceSmoothing={0.9}
+                    height={400}
+                    intensity={2}
+                    radius={2}
+                />
+                <Vignette
+                    offset={0.2} // vignette offset
+                    darkness={0.9} // vignette darkness
+                    eskil={false} // Eskil's vignette technique
+                    blendFunction={BlendFunction.NORMAL} // blend mode
+                />
+            </EffectComposer>
+        </group>
+    );
+};
 
 // function buildLetters({
 //     str,

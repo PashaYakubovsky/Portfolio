@@ -1,6 +1,6 @@
-import { createContext } from "react";
+import React from "react";
 
-export const CasesContext = createContext<{
+export const CasesContext = React.createContext<{
     changeJobsCases: React.Dispatch<
         React.SetStateAction<JobExperience[]>
     > | null;

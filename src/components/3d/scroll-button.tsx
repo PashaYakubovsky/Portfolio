@@ -1,10 +1,10 @@
 import { Sphere } from "@react-three/drei";
 import { MeshProps, useFrame, useThree } from "@react-three/fiber";
-import { useControls } from "leva";
 import { useRef } from "react";
+import { isMobile } from "react-device-detect";
 import { vhToPixels } from "src/components/scroll-to-buttons/scroll-to-bottom";
-import { BufferGeometry, Material, Mesh, PointLight } from "three";
-import * as THREE from "three";
+import { useConfigStore } from "src/store/store";
+import { BufferGeometry, Material, Mesh } from "three";
 
 // import * as THREE from "three";
 // import { PerspectiveCamera, Vector3 } from "three";
@@ -13,7 +13,7 @@ const ScrollButton3d = (props: MeshProps) => {
     const mesh = useRef<Mesh<BufferGeometry, Material | Material[]> | null>(
         null
     );
-
+    const { changeShowGlitch } = useConfigStore();
     // Use useThree hook to get camera raycaster
     const { camera } = useThree();
     // const raycaster = new THREE.Raycaster();
@@ -122,9 +122,11 @@ const ScrollButton3d = (props: MeshProps) => {
                 castShadow
                 {...props}
                 onPointerOver={() => {
+                    if (!isMobile) changeShowGlitch?.(true);
                     document.body.style.cursor = "pointer";
                 }}
                 onPointerOut={() => {
+                    if (!isMobile) changeShowGlitch?.(false);
                     document.body.style.cursor = "default";
                 }}
                 onClick={() => {
