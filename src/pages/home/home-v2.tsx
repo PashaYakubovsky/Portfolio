@@ -7,6 +7,7 @@ import { useState } from "react";
 import { OrbitControls } from "@react-three/drei";
 import { create } from "zustand";
 import { Object3D } from "three";
+import * as THREE from "three";
 import { CasesContext } from "src/contexts/cases-context";
 import db from "../../../netlify/db.json";
 import JobsCases from "../../components/job-cases/jobs-cases";
@@ -15,6 +16,7 @@ import Letters3D from "../../components/3d/letters-3d";
 import ScrollButton3d from "../../components/3d/scroll-button";
 import Stars3D from "../../components/3d/strars-3d";
 import { ConfigContext } from "src/contexts/config-context";
+import Camera from "src/components/3d/camera";
 
 export const useTargetState = create<TargetState>()((set) => ({
     target: null,
@@ -85,21 +87,23 @@ function Scene({
             onPointerMissed={() => setTarget(null)}
             // frameloop="demand"
         >
-            <directionalLight
-                position={[0, 15, 30]}
-                castShadow
-                shadow-mapSize-height={1024}
-                shadow-mapSize-width={1024}
-                shadow-radius={10}
-                shadow-bias={-0.0001}
-            />
+            <Camera />
 
             <Stars3D />
 
             <Letters3D text="Happy to see you :)" />
 
-            <ScrollButton3d position={[0, -15, 0]} />
+            <rectAreaLight
+                width={3}
+                height={3}
+                color={"red"}
+                intensity={1}
+                position={[-2, 0, 5]}
+                lookAt={() => new THREE.Vector3(...[0, 0, 0])}
+                castShadow
+            />
 
+            <ScrollButton3d position={[0, 0, 0]} />
             {/* {target ? (
                     <TransformControls
                         object={target}

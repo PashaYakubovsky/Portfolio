@@ -25,16 +25,16 @@ export const App = () => {
         null
     );
 
-    useEffect(() => {
-        if (socketRef.current) {
-            socketRef.current.disconnect();
-        }
-        socketRef.current = io("https://localhost:3000");
+    // useEffect(() => {
+    //     if (socketRef.current) {
+    //         socketRef.current.disconnect();
+    //     }
+    //     socketRef.current = io("https://localhost:3000");
 
-        socketRef.current.on("changeText", (msg: string) => {
-            console.log("message: " + msg);
-        });
-    }, []);
+    //     socketRef.current.on("changeText", (msg: string) => {
+    //         console.log("message: " + msg);
+    //     });
+    // }, []);
 
     useEffect(() => {
         try {

@@ -12,6 +12,7 @@ const Letters3D = ({ text = "test", ...args }: { text: string }) => {
     const mesh = useRef();
     return (
         <Text
+            position={[0, 10, 29]}
             {...args}
             receiveShadow
             castShadow
@@ -19,7 +20,6 @@ const Letters3D = ({ text = "test", ...args }: { text: string }) => {
             color="#fff"
             fontSize={5}
             font={amatic}
-            position={[0, 0, 29]}
             rotation={[0, Math.PI, 0]}
             onClick={() => setTarget(mesh)}
             textAlign="center"

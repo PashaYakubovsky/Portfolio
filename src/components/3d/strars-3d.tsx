@@ -1,39 +1,33 @@
 import { Stars } from "@react-three/drei";
-import { useFrame, useThree } from "@react-three/fiber";
-import React, { useEffect } from "react";
+import { useFrame } from "@react-three/fiber";
+import React from "react";
+import { Mesh, BufferGeometry, Material } from "three";
 
 const Stars3D = () => {
-    const starsRef = React.useRef<any>(null!);
-    const { camera } = useThree();
+    const starsRef = React.useRef<Mesh<
+        BufferGeometry,
+        Material | Material[]
+    > | null>(null);
 
     useFrame(() => {
         if (starsRef.current) starsRef.current.rotation.y += 0.002;
     });
 
-    // Use the useFrame hook to update the camera position on every frame of the render loop
-    useFrame(() => {
-        if (starsRef.current) {
-            const { y } = starsRef.current.position;
-            // Increase camera altitude as stairs are climbed
-            camera.position.setY(y + 5);
-            camera.lookAt(0, y, 0); // Look at the next step in front of the camera
-        }
-    });
-
-    useEffect(() => {
-        camera.position.set(0, 5, -200);
-    }, [camera.position]);
-
-    camera.lookAt(0, 0, 0);
+    // camera.lookAt(220, 22220, 2);
 
     // const deg2rad = (degrees: number) => degrees * (Math.PI / 180);
 
     return (
         <Stars
-            ref={starsRef}
+            ref={(node) => {
+                starsRef.current = node as Mesh<
+                    BufferGeometry,
+                    Material | Material[]
+                > | null;
+            }}
             radius={0.0001}
-            count={1000}
-            factor={1}
+            count={500}
+            factor={4}
             saturation={0}
             fade
             speed={2}

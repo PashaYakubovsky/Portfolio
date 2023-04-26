@@ -23,7 +23,12 @@ const JobsCases = forwardRef(({}: {}, ref: LegacyRef<HTMLElement>) => {
                     spacing={2}
                 >
                     {jobCases?.map((jobCase, index) => (
-                        <ImgMediaCard ref={refs} index={index} {...jobCase} />
+                        <ImgMediaCard
+                            key={jobCase.name}
+                            ref={refs}
+                            index={index}
+                            {...jobCase}
+                        />
                     ))}
                 </Grid>
             </Container>

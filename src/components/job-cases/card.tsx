@@ -26,6 +26,7 @@ const ImgMediaCard = React.forwardRef(
                     }
                 }}
                 onMouseMove={(e) => {
+                    e.preventDefault();
                     if (Array.isArray(ref?.current)) {
                         const card = ref?.current[index];
                         const rect = card.getBoundingClientRect(),
