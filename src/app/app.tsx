@@ -28,7 +28,8 @@ export const App = () => {
     );
     const { user, change3dText } = useConfigStore();
     const [messages, changeMessages] = useState<ChatMessage[]>([]);
-    const socket = io("http://localhost:3000");
+    // const socket = io("http://localhost:3000");
+    const socket = io("https://mhp.inboost.ai:25055");
 
     useEffect(() => {
         if (socketRef.current) {
