@@ -20,7 +20,7 @@ import ChatPage from "src/pages/chat/chat-page";
 
 export const App = () => {
     const [theme, changeTheme] = useState("white");
-    const [config, changeConfig] = useState({ supportWebGl: false });
+    const [config, changeConfig] = useState({ supportWebGl: true });
     const socketRef = useRef<Socket<DefaultEventsMap, DefaultEventsMap> | null>(
         null
     );
@@ -40,14 +40,13 @@ export const App = () => {
         try {
             const canvas = document.createElement("canvas");
             const gl = canvas.getContext("webgl");
+
             if (!gl) {
-                const message = document.createElement("div");
-                message.innerText =
-                    "Lockdown mode is enabled in your browser. This may affect the functionality of certain features on this site.";
-                document.body.appendChild(message);
-            } else {
-                changeConfig((state) => ({ ...state, supportWebGl: true }));
+                console.warn(
+                    "Lockdown mode is enabled in your browser. This may affect the functionality of certain features on this site."
+                );
             }
+            changeConfig((state) => ({ ...state, supportWebGl: Boolean(gl) }));
         } catch (e) {
             console.error(e);
         }

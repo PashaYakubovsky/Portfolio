@@ -57,7 +57,7 @@ export default function HomeV2() {
         >
             <div>
                 {supportWebGl ? (
-                    <div className={style.home}>
+                    <div ref={interceptor} className={style.home}>
                         {showCanvas ? <Scene setTarget={setTarget} /> : null}
                     </div>
                 ) : null}
@@ -66,7 +66,7 @@ export default function HomeV2() {
 
                 <ScrollToTopButton />
 
-                <JobsCases ref={interceptor} />
+                <JobsCases />
 
                 <Footer />
             </div>
