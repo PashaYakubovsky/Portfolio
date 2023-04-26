@@ -1,6 +1,36 @@
 {
     "cases": [
         {
+            "description": "ASP.NET server for working with OpenAI API \nImplemented authentication and registration with Jwt token, user creation and deletion, also with Admin and User roles \nWhen creating a user, it is linked to the portal with which this service will work \nWorking with chat-gpt, DALL-E \nNLog \nSqlServer \ncode first EntityFramework",
+            "name": "Gpt Service",
+            "screenshots": [],
+            "link": "https://mhp.inboost.ai:25056/swagger/index.html",
+            "tooltipsText": "Go to Swagger"
+        },
+        {
+            "name": "Dev Helper Assistance",
+            "description": "express.js server hosting a Discord bot, project written in TypeScript and run with nodemon\nAlso implemented the Junior Brother system, which is just a route that creates a card for Discord and sends error notifications to a designated webhook server, designed for error monitoring for all front-end application portals",
+            "screenshots": [],
+            "link": "https://discord.gg/8WCEeGEb",
+            "tooltipsText": "Go to Discord server and try Dev Helper bot"
+        },
+        {
+            "name": "Datepicker",
+            "description": "React, Redux, TypeScript datepicker, single date or range (3dMode for a cool display, automatic determination of the number of instances depending on the container width, each instance works with its own state for determining the day of the week and month)",
+            "screenshots": [],
+            "link": "https://640d185181f1e1bf735745d6-vinqyxblem.chromatic.com/?path=/story/datepicker--primary",
+            "tooltipsText": "Go to Storybook"
+        },
+        {
+            "name": "Inboost Landing site",
+            "description": "React, Redux, TypeScript, Next.js, GSAP, Mongo.db. Business showcase website, implemented dynamic translations where, if an admin is authorized, they can change any text to any language on the fly",
+            "screenshots": [],
+            "link": "https://inboost.ai",
+            "tooltipsText": "Go to Site"
+        }
+    ],
+    "_cases": [
+        {
             "description": "ASP.NET сервер для роботи з OpenAI API \nРеалізована авторизація та реєстрація черз Jwt токен, створення видалення юзерів, також існують ролі Admin та User \nПри створені юзера він привязується до порталу з яким цей сервіс буде працювати \nРобота с chat-gpt, DALL-E \nNLog \nSqlServer \ncode first EntityFramework",
             "name": "Gpt Service",
             "screenshots": [],
