@@ -13,7 +13,7 @@ const ScrollButton3d = (props: MeshProps) => {
     const mesh = useRef<Mesh<BufferGeometry, Material | Material[]> | null>(
         null
     );
-    const { changeShowGlitch } = useConfigStore();
+    const { changeShowBloom } = useConfigStore();
     // Use useThree hook to get camera raycaster
     const { camera } = useThree();
     // const raycaster = new THREE.Raycaster();
@@ -122,11 +122,11 @@ const ScrollButton3d = (props: MeshProps) => {
                 castShadow
                 {...props}
                 onPointerOver={() => {
-                    if (!isMobile) changeShowGlitch?.(true);
+                    if (!isMobile) changeShowBloom?.(true);
                     document.body.style.cursor = "pointer";
                 }}
                 onPointerOut={() => {
-                    if (!isMobile) changeShowGlitch?.(false);
+                    if (!isMobile) changeShowBloom?.(false);
                     document.body.style.cursor = "default";
                 }}
                 onClick={() => {

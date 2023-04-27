@@ -79,10 +79,8 @@ export default function HomeV2() {
 }
 
 function Scene() {
-    const { glitch } = useConfigStore((state) => state);
+    const { glitch, bloom } = useConfigStore((state) => state);
     const text = useConfigStore((state) => state["3dText"]);
-
-    console.log(text);
 
     return (
         <Canvas
@@ -93,39 +91,41 @@ function Scene() {
         >
             {glitch ? <GlitchEffects /> : null}
 
-            <React.Suspense fallback={<GlitchEffects />}>
-                <directionalLight />
+            {bloom || glitch ? (
+                <>
+                    <directionalLight />
 
-                <Camera />
+                    <Camera />
 
-                <Stars3D />
+                    <Stars3D />
 
-                <Letters3D text={text} />
+                    <Letters3D text={text} />
 
-                <rectAreaLight
-                    width={3}
-                    height={3}
-                    color={"red"}
-                    intensity={1}
-                    position={[-2, 0, 5]}
-                    lookAt={() => new THREE.Vector3(...[0, 0, 0])}
-                    castShadow
-                />
+                    <rectAreaLight
+                        width={3}
+                        height={3}
+                        color={"red"}
+                        intensity={1}
+                        position={[-2, 0, 5]}
+                        lookAt={() => new THREE.Vector3(...[0, 0, 0])}
+                        castShadow
+                    />
 
-                <pointLight
-                    position={[0, 0, 0]}
-                    intensity={1}
-                    color={"#ffffff"}
-                />
+                    <pointLight
+                        position={[0, 0, 0]}
+                        intensity={1}
+                        color={"#ffffff"}
+                    />
 
-                <ScrollButton3d position={[0, 0, 0]} />
+                    <ScrollButton3d position={[0, 0, 0]} />
 
-                <OrbitControls
-                    enableZoom={true}
-                    maxDistance={100}
-                    makeDefault
-                />
-            </React.Suspense>
+                    <OrbitControls
+                        enableZoom={true}
+                        maxDistance={100}
+                        makeDefault
+                    />
+                </>
+            ) : null}
         </Canvas>
     );
 }

@@ -10,9 +10,11 @@ interface IConfigStore {
     loader: boolean;
     changeLoader?: (arg: boolean) => void;
     glitch: boolean;
+    bloom: boolean;
     changeShowGlitch?: (arg: boolean) => void;
     "3dText": string;
     change3dText: (arg: string) => void;
+    changeShowBloom?: (arg: boolean) => void;
 }
 
 export const useConfigStore = create<IConfigStore>((set) => ({
@@ -21,9 +23,13 @@ export const useConfigStore = create<IConfigStore>((set) => ({
         set((state) => ({ ...state, supportWebGl: arg })),
     glitch: false,
     loader: false,
+    bloom: false,
     user: {
         userId: uuidv4(),
+        name: "",
     },
+    changeShowBloom: (arg: boolean) =>
+        set((state) => ({ ...state, bloom: arg })),
     changeLoader: (arg: boolean) => set((state) => ({ ...state, loader: arg })),
     changeShowGlitch: (arg: boolean) =>
         set((state) => ({ ...state, glitch: arg })),
