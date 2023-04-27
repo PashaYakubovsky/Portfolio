@@ -24,6 +24,7 @@ interface TargetState {
 
 interface User {
     userId: string | undefined;
+    name: string;
 }
 
 interface ChatMessage {
@@ -31,4 +32,5 @@ interface ChatMessage {
     message: string;
     user: User | null;
     messageId: string;
+    status: 1 | 2 | 3;
 }

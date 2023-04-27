@@ -2,7 +2,9 @@ import { AppBar, Toolbar, Typography } from "@mui/material";
 import React, { useState } from "react";
 
 export default function StickyHeader() {
-    const [showHeader, setShowHeader] = useState(false);
+    const [showHeader, setShowHeader] = useState(
+        window.location.pathname === "/chat"
+    );
 
     // Show the header when the user has scrolled down 100px
     const handleScroll = () => {
@@ -15,7 +17,9 @@ export default function StickyHeader() {
 
     // Attach the scroll event listener to the window
     React.useEffect(() => {
-        window.addEventListener("scroll", handleScroll);
+        if (window.location.pathname === "/chat") {
+            window.addEventListener("scroll", handleScroll);
+        }
         return () => {
             window.removeEventListener("scroll", handleScroll);
         };

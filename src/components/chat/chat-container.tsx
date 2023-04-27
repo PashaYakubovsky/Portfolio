@@ -12,6 +12,7 @@ import ChatMessageBubble from "./chat-message";
 import { ChatContext } from "src/contexts/chat-context";
 import { useConfigStore } from "src/store/store";
 import { v4 as uuid } from "uuid";
+import Input from "./chat-input";
 
 const ChatContainer = () => {
     const { messages, changeMessages } = useContext(ChatContext);
@@ -26,6 +27,7 @@ const ChatContainer = () => {
             message: messageInput,
             dateCreate: new Date().toDateString(),
             user,
+            status: 1,
         };
         changeMessages?.([newMessage, ...messages]);
         setMessageInput("");
@@ -45,7 +47,11 @@ const ChatContainer = () => {
 
     return (
         <div className={style.container}>
-            <Grid container spacing={2} sx={{ width: "90vw", m: "auto" }}>
+            <Grid
+                container
+                spacing={2}
+                sx={{ width: "90vw", m: "auto", height: "100%" }}
+            >
                 <Grid item xs={12}>
                     <Typography variant="h4">Chat</Typography>
                 </Grid>
@@ -60,18 +66,26 @@ const ChatContainer = () => {
                     >
                         {messages?.map((msg) => {
                             return (
-                                <div key={msg.messageId}>
-                                    <ChatMessageBubble
-                                        user={user}
-                                        message={msg}
-                                    />
-                                </div>
+                                <ChatMessageBubble
+                                    key={msg.messageId}
+                                    position={
+                                        user?.userId === msg.user?.userId
+                                            ? "left"
+                                            : "right"
+                                    }
+                                    message={msg}
+                                />
                             );
                         })}
                     </Paper>
                 </Grid>
                 <Grid item xs={12} md={6}>
-                    <TextareaAutosize
+                    <Input
+                        changeValue={(v) => setMessageInput(v)}
+                        value={messageInput}
+                        onSend={handleSendMessage}
+                    />
+                    {/* <TextareaAutosize
                         ref={inputRef}
                         autoFocus
                         onKeyDown={(e) => {
@@ -90,15 +104,15 @@ const ChatContainer = () => {
                         className={style.textareaWrap}
                         value={messageInput}
                         onChange={(e) => setMessageInput(e.target.value)}
-                    />
-                    <Button
+                    /> */}
+                    {/* <Button
                         sx={{ mt: 2 }}
                         color="primary"
                         variant="outlined"
                         onClick={handleSendMessage}
                     >
                         Send
-                    </Button>
+                    </Button> */}
                 </Grid>
             </Grid>
         </div>
