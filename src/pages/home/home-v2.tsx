@@ -79,8 +79,10 @@ export default function HomeV2() {
 }
 
 function Scene() {
-    const { glitch, bloom } = useConfigStore((state) => state);
+    const { bloom } = useConfigStore((state) => state);
     const text = useConfigStore((state) => state["3dText"]);
+
+    console.log(text);
 
     return (
         <Canvas
@@ -89,50 +91,48 @@ function Scene() {
         // onPointerMissed={() => setTarget(null)}
         // frameloop="demand"
         >
-            {glitch ? <GlitchEffects /> : null}
+            {bloom ? <GlitchEffects /> : null}
 
-            {bloom || glitch ? (
-                <>
-                    <directionalLight />
+            <>
+                <directionalLight />
 
-                    <Camera />
+                <Camera />
 
-                    <Stars3D />
+                <Stars3D />
 
-                    <Letters3D text={text} />
+                <Letters3D text={text} />
 
-                    <rectAreaLight
-                        width={3}
-                        height={3}
-                        color={"red"}
-                        intensity={1}
-                        position={[-2, 0, 5]}
-                        lookAt={() => new THREE.Vector3(...[0, 0, 0])}
-                        castShadow
-                    />
+                <rectAreaLight
+                    width={3}
+                    height={3}
+                    color={"red"}
+                    intensity={1}
+                    position={[-2, 0, 5]}
+                    lookAt={() => new THREE.Vector3(...[0, 0, 0])}
+                    castShadow
+                />
 
-                    <pointLight
-                        position={[0, 0, 0]}
-                        intensity={1}
-                        color={"#ffffff"}
-                    />
+                <pointLight
+                    position={[0, 0, 0]}
+                    intensity={1}
+                    color={"#ffffff"}
+                />
 
-                    <ScrollButton3d position={[0, 0, 0]} />
+                <ScrollButton3d position={[0, 0, 0]} />
 
-                    <OrbitControls
-                        enableZoom={true}
-                        maxDistance={100}
-                        makeDefault
-                    />
-                </>
-            ) : null}
+                <OrbitControls
+                    enableZoom={true}
+                    maxDistance={100}
+                    makeDefault
+                />
+            </>
         </Canvas>
     );
 }
 
 const GlitchEffects = () => {
     const scene = React.useRef<THREE.Group | null>(null);
-
+    // const { bloom, glitch } = useConfigStore();
     useFrame(() => {
         if (scene.current) {
             scene.current.rotation.y += 0.04;
@@ -144,12 +144,15 @@ const GlitchEffects = () => {
     return (
         <group ref={scene}>
             <EffectComposer>
-                <Glitch
-                    // strength={[0.01, 0.02]} // min and max glitch strength
-                    mode={GlitchMode.CONSTANT_MILD} // glitch mode
-                    active // turn on/off the effect (switches between "mode" prop and GlitchMode.DISABLED)
-                    ratio={0.6} // Threshold for strong glitches, 0 - no weak glitches, 1 - no strong glitches.
-                />
+                {/* {bloom || glitch ? (
+                    <Glitch
+                        // strength={[0.01, 0.02]} // min and max glitch strength
+                        mode={GlitchMode.CONSTANT_MILD} // glitch mode
+                        active // turn on/off the effect (switches between "mode" prop and GlitchMode.DISABLED)
+                        ratio={0.6} // Threshold for strong glitches, 0 - no weak glitches, 1 - no strong glitches.
+                    />
+                ) : null} */}
+
                 <Noise opacity={0.1} />
                 <Scanline
                     blendFunction={BlendFunction.ALPHA} // blend mode
