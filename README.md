@@ -4,6 +4,7 @@ animation concept
 ![IMAGE 2023-04-25 20:43:45](https://user-images.githubusercontent.com/74597949/234358954-0b5ae9e0-4e8e-438d-9775-7a339810c6e7.jpg)
 
 ## Pages
+
 -   [/] home page
 -   [/chat] chat based on socket.io
 
@@ -19,6 +20,16 @@ animation concept
 ## About
 
 This is an awesome project built with React, Three.js, React-Three-Fiber, React-Spring, and TypeScript. It showcases the power of these libraries and provides a stunning user experience.
+
+if you want to change dynamic 3d text on main page, make request to this API :) its make request into node.js express.js server and take u message and pass into websocket connection to client
+
+```shell
+    curl --location 'https://mhp.inboost.ai:25055/change-3d-text' \
+    --header 'Content-Type: application/json' \
+    --data '{
+        "message": "Never gonna give you up, never gonna let you down\nNever gonna run around and desert you\nNever gonna make you cry, never gonna say goodbye\nNever gonna tell a lie and hurt yo"
+    }'
+```
 
 ## Technologies Used
 
