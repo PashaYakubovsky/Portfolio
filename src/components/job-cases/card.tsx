@@ -4,8 +4,8 @@ import CardActions from "@mui/material/CardActions";
 import CardContent from "@mui/material/CardContent";
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
-import { Tooltip, TooltipProps, styled, tooltipClasses } from "@mui/material";
 import style from "./job-cases.module.scss";
+import LightTooltip from "../tooltip/light-tooltip";
 
 const ImgMediaCard = React.forwardRef(
     (
@@ -68,16 +68,5 @@ const ImgMediaCard = React.forwardRef(
         );
     }
 );
-
-const LightTooltip = styled(({ className, ...props }: TooltipProps) => (
-    <Tooltip {...props} classes={{ popper: className }} />
-))(({ theme }) => ({
-    [`& .${tooltipClasses.tooltip}`]: {
-        backgroundColor: theme.palette.common.white,
-        color: "rgba(0, 0, 0, 0.87)",
-        boxShadow: theme.shadows[1],
-        fontSize: 11,
-    },
-}));
 
 export default ImgMediaCard;

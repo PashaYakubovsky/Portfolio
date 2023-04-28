@@ -15,6 +15,8 @@ interface IConfigStore {
     "3dText": string;
     change3dText: (arg: string) => void;
     changeShowBloom?: (arg: boolean) => void;
+    headerLabel: string;
+    changeHeaderLabel?: (arg: string) => void;
 }
 
 export const useConfigStore = create<IConfigStore>((set) => ({
@@ -24,6 +26,8 @@ export const useConfigStore = create<IConfigStore>((set) => ({
     glitch: false,
     loader: false,
     bloom: false,
+    headerLabel: "Projects",
+    "3dText": "Happy to see yoy :)",
     user: {
         userId: uuidv4(),
         name: "",
@@ -34,7 +38,8 @@ export const useConfigStore = create<IConfigStore>((set) => ({
     changeShowGlitch: (arg: boolean) =>
         set((state) => ({ ...state, glitch: arg })),
     uniqueId: uniqueId,
-    "3dText": "Happy to see yoy :)",
     change3dText: (arg: string) =>
         set((state) => ({ ...state, "3dText": arg })),
+    changeHeaderLabel: (arg: string) =>
+        set((state) => ({ ...state, headerLabel: arg })),
 }));

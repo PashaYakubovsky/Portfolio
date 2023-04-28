@@ -25,7 +25,7 @@ import {
 } from "@react-three/postprocessing";
 import { useConfigStore } from "src/store/store";
 
-export default function HomeV2() {
+const HomeV2 = () => {
     const { changeLoader, supportWebGl } = useConfigStore();
     const [data, changeData] = useState<JobExperience[]>([]);
     const [showCanvas, changeShowCanvas] = React.useState(true);
@@ -76,13 +76,11 @@ export default function HomeV2() {
             </div>
         </CasesContext.Provider>
     );
-}
+};
 
 function Scene() {
-    const { bloom } = useConfigStore((state) => state);
+    const { bloom, glitch } = useConfigStore((state) => state);
     const text = useConfigStore((state) => state["3dText"]);
-
-    console.log(text);
 
     return (
         <Canvas
@@ -91,7 +89,8 @@ function Scene() {
         // onPointerMissed={() => setTarget(null)}
         // frameloop="demand"
         >
-            {bloom ? <GlitchEffects /> : null}
+            {bloom ? <BloomEffects /> : null}
+            {glitch ? <GlitchEffects /> : null}
 
             <>
                 <directionalLight />
@@ -105,7 +104,6 @@ function Scene() {
                 <rectAreaLight
                     width={3}
                     height={3}
-                    color={"red"}
                     intensity={1}
                     position={[-2, 0, 5]}
                     lookAt={() => new THREE.Vector3(...[0, 0, 0])}
@@ -130,16 +128,16 @@ function Scene() {
     );
 }
 
-const GlitchEffects = () => {
+const BloomEffects = () => {
     const scene = React.useRef<THREE.Group | null>(null);
     // const { bloom, glitch } = useConfigStore();
-    useFrame(() => {
-        if (scene.current) {
-            scene.current.rotation.y += 0.04;
-            scene.current.rotation.x += 0.04;
-            scene.current.rotation.z += 0.04;
-        }
-    });
+    // useFrame(() => {
+    //     if (scene.current) {
+    //         scene.current.rotation.y += 0.04;
+    //         scene.current.rotation.x += 0.04;
+    //         scene.current.rotation.z += 0.04;
+    //     }
+    // });
 
     return (
         <group ref={scene}>
@@ -162,9 +160,9 @@ const GlitchEffects = () => {
                 <Bloom
                     luminanceThreshold={0}
                     luminanceSmoothing={0.9}
-                    height={400}
-                    intensity={2}
-                    radius={2}
+                    height={200}
+                    intensity={1}
+                    radius={1}
                 />
                 <Vignette
                     offset={0.2} // vignette offset
@@ -176,6 +174,53 @@ const GlitchEffects = () => {
         </group>
     );
 };
+
+const GlitchEffects = () => {
+    const scene = React.useRef<THREE.Group | null>(null);
+    // const { bloom, glitch } = useConfigStore();
+    useFrame(() => {
+        if (scene.current) {
+            scene.current.rotation.y += 0.04;
+            scene.current.rotation.x += 0.04;
+            scene.current.rotation.z += 0.04;
+        }
+    });
+
+    return (
+        <group ref={scene}>
+            <EffectComposer>
+                <Glitch
+                    // strength={[0.01, 0.02]} // min and max glitch strength
+                    mode={GlitchMode.CONSTANT_MILD} // glitch mode
+                    active // turn on/off the effect (switches between "mode" prop and GlitchMode.DISABLED)
+                    ratio={0.6} // Threshold for strong glitches, 0 - no weak glitches, 1 - no strong glitches.
+                />
+
+                <Noise opacity={0.1} />
+                <Scanline
+                    blendFunction={BlendFunction.ALPHA} // blend mode
+                    density={0.8} // scanline density
+                    opacity={0.1}
+                />
+                {/* <Bloom
+                    luminanceThreshold={0}
+                    luminanceSmoothing={0.9}
+                    height={200}
+                    intensity={1}
+                    radius={1}
+                /> */}
+                <Vignette
+                    offset={0.2} // vignette offset
+                    darkness={0.9} // vignette darkness
+                    eskil={false} // Eskil's vignette technique
+                    blendFunction={BlendFunction.NORMAL} // blend mode
+                />
+            </EffectComposer>
+        </group>
+    );
+};
+
+export default HomeV2;
 
 // function buildLetters({
 //     str,

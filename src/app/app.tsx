@@ -26,7 +26,7 @@ export const App = () => {
     const socketRef = useRef<Socket<DefaultEventsMap, DefaultEventsMap> | null>(
         null
     );
-    const { user, change3dText } = useConfigStore();
+    const { user, change3dText, changeShowGlitch } = useConfigStore();
     const [messages, changeMessages] = useState<ChatMessage[]>([]);
     // const socket = io("http://localhost:3000");
     const socket = io("https://mhp.inboost.ai:25055");
@@ -38,6 +38,10 @@ export const App = () => {
         socketRef.current = socket;
         socketRef.current.on("changeText", (msg: string) => {
             change3dText(msg);
+            changeShowGlitch?.(true);
+            setTimeout(() => {
+                changeShowGlitch?.(false);
+            }, 1000);
         });
         socketRef.current.on("message", (message: ChatMessage) => {
             console.log(message);
@@ -45,7 +49,7 @@ export const App = () => {
                 changeMessages((state) => [message, ...state]);
             }
         });
-    }, [change3dText, messages, socket, user?.userId]);
+    }, [change3dText, changeShowGlitch, messages, socket, user?.userId]);
 
     useEffect(() => {
         try {

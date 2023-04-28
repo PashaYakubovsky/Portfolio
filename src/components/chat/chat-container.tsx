@@ -1,12 +1,6 @@
-import {
-    Grid,
-    Typography,
-    Paper,
-    Button,
-    TextareaAutosize,
-} from "@mui/material";
+import { Grid, Paper } from "@mui/material";
 import { useContext, useEffect, useRef, useState } from "react";
-import style from "./chat.module.scss";
+// import style from "./chat.module.scss";
 import { WsContext } from "src/contexts/ws-context";
 import ChatMessageBubble from "./chat-message";
 import { ChatContext } from "src/contexts/chat-context";
@@ -46,76 +40,41 @@ const ChatContainer = () => {
     }, []);
 
     return (
-        <div className={style.container}>
-            <Grid
-                container
-                spacing={2}
-                sx={{ width: "90vw", m: "auto", height: "100%" }}
-            >
-                <Grid item xs={12}>
-                    <Typography variant="h4">Chat</Typography>
-                </Grid>
-                <Grid item xs={12} md={6}>
-                    <Paper
-                        style={{ height: "70vh", overflowY: "scroll" }}
-                        sx={{
-                            p: 2,
-                            display: "flex",
-                            flexDirection: "column-reverse",
-                        }}
-                    >
-                        {messages?.map((msg) => {
-                            return (
-                                <ChatMessageBubble
-                                    key={msg.messageId}
-                                    position={
-                                        user?.userId === msg.user?.userId
-                                            ? "left"
-                                            : "right"
-                                    }
-                                    message={msg}
-                                />
-                            );
-                        })}
-                    </Paper>
-                </Grid>
-                <Grid item xs={12} md={6}>
-                    <Input
-                        changeValue={(v) => setMessageInput(v)}
-                        value={messageInput}
-                        onSend={handleSendMessage}
-                    />
-                    {/* <TextareaAutosize
-                        ref={inputRef}
-                        autoFocus
-                        onKeyDown={(e) => {
-                            if (e.shiftKey) {
-                                return;
-                            }
-                            if (
-                                e.code === "Enter" ||
-                                e.code === "NumpadEnter"
-                            ) {
-                                handleSendMessage();
-                            }
-                        }}
-                        // variant="outlined"
-                        color="primary"
-                        className={style.textareaWrap}
-                        value={messageInput}
-                        onChange={(e) => setMessageInput(e.target.value)}
-                    /> */}
-                    {/* <Button
-                        sx={{ mt: 2 }}
-                        color="primary"
-                        variant="outlined"
-                        onClick={handleSendMessage}
-                    >
-                        Send
-                    </Button> */}
-                </Grid>
+        <>
+            <Grid flexGrow={1} height="calc(100% - 105px)" item xs={12} md={6}>
+                <Paper
+                    sx={{
+                        p: 2,
+                        display: "flex",
+                        flexDirection: "column-reverse",
+                        height: "100%",
+                        overflowY: "scroll",
+                    }}
+                >
+                    {messages?.map((msg) => {
+                        return (
+                            <ChatMessageBubble
+                                key={msg.messageId}
+                                position={
+                                    user?.userId === msg.user?.userId
+                                        ? "left"
+                                        : "right"
+                                }
+                                message={msg}
+                            />
+                        );
+                    })}
+                </Paper>
             </Grid>
-        </div>
+
+            <Grid item xs={12} md={6}>
+                <Input
+                    changeValue={(v) => setMessageInput(v)}
+                    value={messageInput}
+                    onSend={handleSendMessage}
+                />
+            </Grid>
+        </>
     );
 };
 
