@@ -33,4 +33,14 @@ interface ChatMessage {
     user: User | null;
     messageId: string;
     status: 1 | 2 | 3;
+    isFromBlob?: boolean;
+}
+
+interface MessageTyping {
+    typing: boolean;
+    user: User;
+}
+
+interface Window {
+    MSStream?: any;
 }

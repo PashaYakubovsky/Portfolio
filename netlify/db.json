@@ -11,7 +11,7 @@
             "name": "Dev Helper Assistance",
             "description": "express.js server hosting a Discord bot, project written in TypeScript and run with nodemon\nAlso implemented the Junior Brother system, which is just a route that creates a card for Discord and sends error notifications to a designated webhook server, designed for error monitoring for all front-end application portals",
             "screenshots": [],
-            "link": "https://discord.gg/8WCEeGEb",
+            "link": "https://discord.gg/2Q4ZgpVhzD",
             "tooltipsText": "Go to Discord server and try Dev Helper bot"
         },
         {

@@ -1,13 +1,24 @@
 .container {
     display: flex;
     align-items: center;
+    flex-direction: column;
     justify-content: space-between;
     background-color: #fff;
     border-radius: 4px;
     box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.25);
     padding: 8px 16px;
-    height: 65px;
+    // min-height: 65px;
+    height: fit-content;
+    margin-top: 20px;
     // margin-bottom: 24px;
+}
+
+.containerForm {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    height: 100%;
 }
 
 .input {
@@ -56,4 +67,36 @@
     width: 24px;
     height: 24px;
     fill: #2196f3;
+}
+
+.previewContainer {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 20px;
+}
+
+.previewImage {
+    height: 150px;
+    width: 150%;
+    object-fit: cover;
+}
+
+.emojiWrap {
+    position: relative;
+    & {
+        position: absolute;
+        right: -40px;
+        bottom: calc(100% + 20px);
+        max-height: 60vh;
+        overflow-y: scroll;
+    }
+}
+
+.emojiButton {
+    position: relative;
+    background-color: transparent;
+    outline: none;
+    cursor: pointer;
+    width: 25px;
 }

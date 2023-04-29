@@ -3,6 +3,7 @@ import style from "./chat-page.module.scss";
 import { useEffect } from "react";
 import { useConfigStore } from "src/store/store";
 import { Container } from "@mui/material";
+import ChatBackground from "src/components/3d/chat-background";
 
 const ChatPage = () => {
     const { changeHeaderLabel } = useConfigStore();
@@ -22,6 +23,7 @@ const ChatPage = () => {
                 maxWidth="sm"
             >
                 <ChatContainer />
+                <ChatBackground />
             </Container>
         </div>
     );

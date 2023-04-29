@@ -1,6 +1,7 @@
-import { AppBar, Toolbar, Typography } from "@mui/material";
+import { AppBar, Link, Toolbar, Typography } from "@mui/material";
 import React, { useRef, useState } from "react";
 import { useConfigStore } from "src/store/store";
+import styles from "./sticky-header.module.scss";
 
 export default function StickyHeader() {
     const [showHeader, setShowHeader] = useState(
@@ -48,6 +49,11 @@ export default function StickyHeader() {
                 <Typography sx={{ color: "#000" }} variant="h6">
                     {headerLabel}
                 </Typography>
+
+                <div className={styles.headerLinks}>
+                    <Link href="/">Main</Link>
+                    <Link href="/chat">Chat</Link>
+                </div>
             </Toolbar>
         </AppBar>
     );

@@ -3,7 +3,6 @@ import styles from "./app.module.scss";
 import { Routes, Route } from "react-router-dom";
 import HomeV2 from "src/pages/home/home-v2";
 import { ThemeContext, whiteThemeColors } from "src/contexts/theme-context";
-
 import { NoMatch } from "src/pages/no-match/no-match";
 import { useEffect, useRef, useState } from "react";
 import StickyHeader from "src/components/sticky-header/sticky-header";
@@ -18,38 +17,136 @@ import ChatPage from "src/pages/chat/chat-page";
 import { ChatContext } from "src/contexts/chat-context";
 import { DefaultEventsMap } from "socket.io/dist/typed-events";
 import { useConfigStore } from "src/store/store";
+import { v4 as uuid } from "uuid";
+import configMain from "../../config.json";
 
 export const App = () => {
     const [theme, changeTheme] = useState("white");
-    const { changeSupportWebGl } = useConfigStore((state) => state);
-
     const socketRef = useRef<Socket<DefaultEventsMap, DefaultEventsMap> | null>(
         null
     );
-    const { user, change3dText, changeShowGlitch } = useConfigStore();
+    const timeoutRef = useRef<number | null>(null);
+
     const [messages, changeMessages] = useState<ChatMessage[]>([]);
-    // const socket = io("http://localhost:3000");
-    const socket = io("https://mhp.inboost.ai:25055");
+    const socket = io(configMain?.devHelperApi);
+
+    const config = useConfigStore();
+    const {
+        user,
+        change3dText,
+        changeShowGlitch,
+        changeIsSomeTypingInChat,
+        isSomeTypingInChat,
+        changeSupportWebGl,
+    } = config;
+    // const socket = io("https://mhp.inboost.ai:25055");
+
+    // useEffect(() => {
+    //     // Make a POST request to the Spotify Accounts Service to retrieve an access token
+    //     fetch("https://accounts.spotify.com/api/token", {
+    //         method: "POST",
+    //         headers: {
+    //             "Content-Type": "application/x-www-form-urlencoded",
+    //             Authorization:
+    //                 "Basic " +
+    //                 btoa(spotifyClientId + ":" + spotifyClientSecret),
+    //         },
+    //         body: "grant_type=client_credentials",
+    //     })
+    //         .then((response) => response.json())
+    //         .then((data) => {
+    //             const accessToken = data.access_token;
+    //             changeSpotifyToken?.(accessToken);
+    //         })
+    //         .catch((error) => {
+    //             console.error(error);
+    //         });
+    // }, []);
 
     useEffect(() => {
         if (socketRef.current) {
             socketRef.current.close();
         }
+
         socketRef.current = socket;
-        socketRef.current.on("changeText", (msg: string) => {
-            change3dText(msg);
+
+        socketRef.current.on("changeText", (message: string) => {
+            if (message !== config["3dText"]) change3dText(message);
+
             changeShowGlitch?.(true);
+
             setTimeout(() => {
                 changeShowGlitch?.(false);
             }, 1000);
         });
+
+        socketRef.current.on(
+            "image",
+            (message: {
+                name?: string;
+                type: string;
+                data?: string | ArrayBuffer | null;
+                userId: string;
+            }) => {
+                const buffer = message?.data ?? "";
+                const blob = new Blob([buffer], { type: message.type });
+                const url = URL.createObjectURL(blob);
+
+                const newMessage: ChatMessage = {
+                    dateCreate: new Date().toISOString(),
+                    messageId: uuid(),
+                    message: url,
+                    status: 2,
+                    user: { name: "", userId: message?.userId },
+                    isFromBlob: true,
+                };
+
+                changeMessages((state) => [newMessage, ...state]);
+            }
+        );
+
         socketRef.current.on("message", (message: ChatMessage) => {
-            console.log(message);
             if (message.user?.userId !== user?.userId) {
-                changeMessages((state) => [message, ...state]);
+                changeMessages((state) => [
+                    { ...message, status: 2 },
+                    ...state,
+                ]);
             }
         });
-    }, [change3dText, changeShowGlitch, messages, socket, user?.userId]);
+
+        socketRef.current.on("typing", (message: MessageTyping) => {
+            if (message.user?.userId !== user?.userId) {
+                if (timeoutRef.current) {
+                    clearTimeout(
+                        timeoutRef.current as unknown as number | undefined
+                    );
+                }
+
+                if (
+                    isSomeTypingInChat.every(
+                        (_user) => _user?.userId !== user?.userId
+                    ) &&
+                    user
+                ) {
+                    changeIsSomeTypingInChat?.(isSomeTypingInChat.concat(user));
+                }
+
+                timeoutRef.current = setTimeout(() => {
+                    changeIsSomeTypingInChat?.([]);
+                }, 300) as unknown as number;
+            }
+        });
+    }, [
+        change3dText,
+        changeIsSomeTypingInChat,
+        changeShowGlitch,
+        config,
+        isSomeTypingInChat,
+        messages,
+        socket,
+        user,
+        user?.userId,
+    ]);
 
     useEffect(() => {
         try {

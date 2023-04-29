@@ -5,7 +5,11 @@ export function vhToPixels(vh: number): number {
     return Math.round(window.innerHeight / (100 / vh));
 }
 
-export default function ScrollToBottomButton() {
+export default function ScrollToBottomButton({
+    elem,
+}: {
+    elem?: HTMLElement | null;
+}) {
     const [showButton, setShowButton] = useState(true);
 
     // Show the "scroll to top" button when the user has scrolled down 300px
@@ -19,9 +23,11 @@ export default function ScrollToBottomButton() {
 
     // Scroll the page to the top when the button is clicked
     const handleClick = () => {
-        window.scrollBy({
+        (elem ?? window).scrollBy({
             behavior: "smooth",
-            top: document.body.scrollHeight - vhToPixels(100) - 30,
+            top: elem
+                ? elem.scrollHeight
+                : document.body.scrollHeight - vhToPixels(100) - 30,
         });
     };
 

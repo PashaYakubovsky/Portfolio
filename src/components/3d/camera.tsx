@@ -5,7 +5,7 @@ const Camera = () => {
     const { camera } = useThree();
 
     useEffect(() => {
-        camera.position.set(0, 5, -30);
+        camera.position.set(0, 5, -5);
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 

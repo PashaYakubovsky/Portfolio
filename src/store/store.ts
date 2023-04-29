@@ -17,9 +17,43 @@ interface IConfigStore {
     changeShowBloom?: (arg: boolean) => void;
     headerLabel: string;
     changeHeaderLabel?: (arg: string) => void;
+    spotifyToken: string;
+    changeSpotifyToken?: (arg: string) => void;
+    isSomeTypingInChat: User[];
+    changeIsSomeTypingInChat?: (arg: User[]) => void;
+    objects3d: _Object3d[];
+    changeObjects3d: (arg: _Object3d[]) => void;
+    objects3dRanges: number;
 }
 
+type _Object3d = {
+    random: number;
+    position: number[];
+    rotation: number[];
+};
+
+const randomVector = (r: number) => [
+    r / 2 - Math.random() * r,
+    r / 2 - Math.random() * r,
+    r / 2 - Math.random() * r,
+];
+const randomEuler = () => [
+    Math.random() * Math.PI,
+    Math.random() * Math.PI,
+    Math.random() * Math.PI,
+];
+
+export const generate3dObjs = ({ length, r }: { length: number; r?: number }) =>
+    Array.from({ length }, () => ({
+        random: Math.random(),
+        position: randomVector(r as number),
+        rotation: randomEuler(),
+    }));
+
+const objects3dRanges = 500;
+
 export const useConfigStore = create<IConfigStore>((set) => ({
+    objects3dRanges,
     supportWebGl: false,
     changeSupportWebGl: (arg: boolean) =>
         set((state) => ({ ...state, supportWebGl: arg })),
@@ -32,6 +66,9 @@ export const useConfigStore = create<IConfigStore>((set) => ({
         userId: uuidv4(),
         name: "",
     },
+    spotifyToken: "",
+    isSomeTypingInChat: [],
+    objects3d: generate3dObjs({ length: objects3dRanges, r: 10 }),
     changeShowBloom: (arg: boolean) =>
         set((state) => ({ ...state, bloom: arg })),
     changeLoader: (arg: boolean) => set((state) => ({ ...state, loader: arg })),
@@ -42,4 +79,10 @@ export const useConfigStore = create<IConfigStore>((set) => ({
         set((state) => ({ ...state, "3dText": arg })),
     changeHeaderLabel: (arg: string) =>
         set((state) => ({ ...state, headerLabel: arg })),
+    changeSpotifyToken: (arg: string) =>
+        set((state) => ({ ...state, spotifyToken: arg })),
+    changeIsSomeTypingInChat: (arg: User[]) =>
+        set((state) => ({ ...state, isSomeTypingInChat: arg })),
+    changeObjects3d: (arg: _Object3d[]) =>
+        set((state) => ({ ...state, objects3d: arg })),
 }));
