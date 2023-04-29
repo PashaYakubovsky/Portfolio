@@ -28,7 +28,7 @@ export const App = () => {
     const timeoutRef = useRef<number | null>(null);
 
     const [messages, changeMessages] = useState<ChatMessage[]>([]);
-    const socket = io(configMain?.devHelperApi);
+    const socket = io("https://mhp.inboost.ai:25055");
 
     const config = useConfigStore();
     const {

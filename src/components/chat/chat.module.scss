@@ -5,6 +5,8 @@ $primary-color: #1976d2;
     background-color: #000;
     height: 100vh;
     margin-top: var(--header);
+    z-index: 0;
+    position: relative;
 }
 
 .root {
