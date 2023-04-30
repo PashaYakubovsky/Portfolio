@@ -1,5 +1,6 @@
 import { Zoom, Button } from "@mui/material";
 import React, { useState } from "react";
+import style from "./scroll-to.module.scss";
 
 export function vhToPixels(vh: number): number {
     return Math.round(window.innerHeight / (100 / vh));
@@ -7,8 +8,10 @@ export function vhToPixels(vh: number): number {
 
 export default function ScrollToBottomButton({
     elem,
+    show = true,
 }: {
     elem?: HTMLElement | null;
+    show?: boolean;
 }) {
     const [showButton, setShowButton] = useState(true);
 
@@ -40,19 +43,17 @@ export default function ScrollToBottomButton({
     }, []);
 
     return (
-        <Zoom
-            style={{
-                position: "fixed",
-                bottom: "9vh",
-                right: "5vh",
-                zIndex: 1000,
-            }}
-            in={showButton}
-        >
+        <Zoom in={showButton} className={style.botButtonContainer}>
             <div>
-                <Button variant="outlined" color="info" onClick={handleClick}>
-                    Bottom
-                </Button>
+                {show ? (
+                    <Button
+                        variant="outlined"
+                        color="info"
+                        onClick={handleClick}
+                    >
+                        Bottom
+                    </Button>
+                ) : null}
             </div>
         </Zoom>
     );

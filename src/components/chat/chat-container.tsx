@@ -51,7 +51,6 @@ const ChatContainer = () => {
         };
         changeMessages?.([newMessage, ...messages]);
         setMessageInput("");
-
         socket?.emit("message", { message: newMessage, user });
     };
     const handleFileChange = async (file: File) => {
@@ -78,6 +77,23 @@ const ChatContainer = () => {
         };
     }, []);
 
+    const [scrollDirection, setScrollDirection] = useState<"up" | "down">(
+        "down"
+    );
+    const [prevScrollPosition, setPrevScrollPosition] = useState(0);
+
+    const handleScroll = (e: React.UIEvent<HTMLDivElement>) => {
+        const currentPosition = e.currentTarget.scrollTop;
+
+        if (currentPosition > prevScrollPosition) {
+            setScrollDirection("down");
+        } else if (currentPosition < prevScrollPosition) {
+            setScrollDirection("up");
+        }
+
+        setPrevScrollPosition(currentPosition);
+    };
+
     return (
         <>
             <Grid flexGrow={1} height="calc(100% - 105px)" item xs={12} md={6}>
@@ -89,9 +105,15 @@ const ChatContainer = () => {
                         flexDirection: "column-reverse",
                         height: "100%",
                         overflowY: "scroll",
+                        position: "relative",
                     }}
+                    onScroll={handleScroll}
                 >
                     <div ref={messagesEndRef} />
+                    <ScrollToBottomButton
+                        elem={paperRef.current}
+                        show={scrollDirection === "up"}
+                    />
 
                     {messages?.map((msg, idx, arr) => {
                         return (
@@ -113,8 +135,6 @@ const ChatContainer = () => {
                             username={typing.map((user) => user.userId ?? "")}
                         />
                     ) : null}
-
-                    <ScrollToBottomButton elem={paperRef.current} />
                 </Paper>
             </Grid>
 
