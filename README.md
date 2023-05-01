@@ -23,7 +23,7 @@ This is an awesome project built with React, Three.js, React-Three-Fiber, React-
 
 if you want to change dynamic 3d text on main page, make request to this API :) its make request into node.js express.js server and take u message and pass into websocket connection to client
 
-const endpoint = 'https://5e66-157-90-210-118.ngrok-free.app/change-3d-tex';
+const endpoint = 'https://62b6-157-90-210-118.ngrok-free.app/change-3d-tex';
 
 ```shell
     curl --location endpoint \
