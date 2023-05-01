@@ -72,3 +72,11 @@
     );
     z-index: 1;
 }
+
+.techStack {
+    margin-top: 10px;
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 10px;
+}

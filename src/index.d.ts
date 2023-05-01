@@ -5,6 +5,7 @@ interface JobExperience {
     link?: string;
     index?: number;
     tooltipsText?: string;
+    techStack: string[];
 }
 
 interface ILinkData {

@@ -6,6 +6,7 @@ import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import style from "./job-cases.module.scss";
 import LightTooltip from "../tooltip/light-tooltip";
+import JobExperienceTag from "../tags/job-expirience-tag";
 
 const ImgMediaCard = React.forwardRef(
     (
@@ -15,6 +16,7 @@ const ImgMediaCard = React.forwardRef(
             link,
             index = 0,
             tooltipsText = "link",
+            techStack,
         }: JobExperience,
         ref: any
     ) => {
@@ -51,6 +53,12 @@ const ImgMediaCard = React.forwardRef(
                     <Typography variant="body2" color="text.secondary">
                         {description}
                     </Typography>
+
+                    <div className={style.techStack}>
+                        {techStack?.map((tech) => (
+                            <JobExperienceTag label={tech} />
+                        ))}
+                    </div>
                 </CardContent>
 
                 <CardActions>

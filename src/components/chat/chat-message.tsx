@@ -3,8 +3,8 @@ import styles from "./chat.module.scss";
 import ReactPlayer from "react-player";
 import { validateYouTubeUrl, validateFacebookVideoUrl } from "../utils/valid";
 import { Spotify } from "react-spotify-embed";
-import { useCallback, useContext, useRef } from "react";
-import { ChatContext } from "src/contexts/chat-context";
+import { useRef } from "react";
+// import { ChatContext } from "src/contexts/chat-context";
 import config from "../../../config.json";
 
 const createLinkPreview = async (url: string) => {
@@ -85,11 +85,11 @@ interface ChatMessageProps {
 const ChatMessageComponent: React.FC<ChatMessageProps> = ({
     message,
     position,
-    user,
-    isLastElem,
+    // user,
+    // isLastElem,
 }) => {
-    const changeMessages = useContext(ChatContext)?.changeMessages;
-    const observer = useRef<IntersectionObserver | null>(null);
+    // const changeMessages = useContext(ChatContext)?.changeMessages;
+    // const observer = useRef<IntersectionObserver | null>(null);
     const getStatusIcon = (status: 1 | 2 | 3) => {
         return {
             1: <span>&#10003;</span>,

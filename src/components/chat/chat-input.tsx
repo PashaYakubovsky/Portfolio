@@ -85,7 +85,7 @@ const Input: React.FC<Props> = ({ onSend, changeValue, handleFileChange }) => {
             changeValue?.(newValue);
             inputElement.setSelectionRange(start + 2, start + 2);
         },
-        []
+        [changeValue]
     );
     const handleClick = useCallback(
         (e: MouseEvent) => {
