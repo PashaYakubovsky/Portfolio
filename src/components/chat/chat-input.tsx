@@ -1,4 +1,4 @@
-import React, { useCallback, useRef, useState } from "react";
+import React, { useCallback, useContext, useRef, useState } from "react";
 import styles from "./input.module.scss";
 import clipSvg from "./clip.svg";
 import LightTooltip from "../tooltip/light-tooltip";
@@ -9,6 +9,8 @@ import EmojiPicker, {
     Theme,
 } from "emoji-picker-react";
 import { useEffect } from "react";
+import { WsContext } from "src/contexts/ws-context";
+import { useConfigStore } from "src/store/store";
 
 interface Props {
     onSend: (text: string, file?: File | null) => void;
@@ -23,6 +25,8 @@ const Input: React.FC<Props> = ({ onSend, changeValue, handleFileChange }) => {
     const inputRef = useRef<HTMLInputElement | null>(null);
     const emojiWrapRef = useRef<HTMLDivElement | null>(null);
     const [showEmoji, changeShowEmoji] = useState(false);
+    const { socket } = useContext(WsContext);
+    const user = useConfigStore((state) => state.user);
 
     const handleTextChange = useCallback(
         (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -30,8 +34,13 @@ const Input: React.FC<Props> = ({ onSend, changeValue, handleFileChange }) => {
                 setText(e.target.value);
                 changeValue?.(e.target.value);
             });
+
+            socket?.emit("typing", {
+                typing: true,
+                user,
+            } as MessageTyping);
         },
-        []
+        [changeValue, socket, user]
     );
 
     const onFileChange = useCallback(

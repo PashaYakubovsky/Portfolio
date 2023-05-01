@@ -149,10 +149,6 @@ const ChatContainer = () => {
             <Input
                 changeValue={(v) => {
                     setMessageInput(v);
-                    socket?.emit("typing", {
-                        typing: true,
-                        user,
-                    } as MessageTyping);
                 }}
                 value={messageInput}
                 onSend={handleSendMessage}
