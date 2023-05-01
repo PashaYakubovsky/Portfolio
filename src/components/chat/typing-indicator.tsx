@@ -1,12 +1,10 @@
 import React, { useState, useEffect } from "react";
 
 interface UserTypingIndicatorProps {
-    username: string[];
+    users: User[];
 }
 
-const UserTypingIndicator: React.FC<UserTypingIndicatorProps> = ({
-    username,
-}) => {
+const UserTypingIndicator: React.FC<UserTypingIndicatorProps> = ({ users }) => {
     const [dots, setDots] = useState("");
 
     useEffect(() => {
@@ -21,11 +19,18 @@ const UserTypingIndicator: React.FC<UserTypingIndicatorProps> = ({
         return () => clearInterval(timerId);
     }, [dots]);
 
+    console.log(users);
+
     return (
         <div>
             <p>
-                {username.map((_userName) => _userName.slice(0, 10)).join(", ")}{" "}
-                is typing{dots}
+                {users
+                    .map((user) =>
+                        (user?.name ?? user?.userId ?? "").slice(0, 10)
+                    )
+                    .join(", ")}{" "}
+                is typing
+                {dots}
             </p>
         </div>
     );

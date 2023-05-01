@@ -139,9 +139,7 @@ const ChatContainer = () => {
                         );
                     })}
                     {typing.length > 0 ? (
-                        <UserTypingIndicator
-                            username={typing.map((user) => user.userId ?? "")}
-                        />
+                        <UserTypingIndicator users={typing} />
                     ) : null}
                 </Paper>
             </Grid>
