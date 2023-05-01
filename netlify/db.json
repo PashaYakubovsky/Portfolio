@@ -47,7 +47,8 @@
                 "Storybook",
                 "ReduxToolkit",
                 "TypeScript",
-                "scss-in-js"
+                "scss-in-js",
+                "rollup"
             ]
         },
         {
@@ -64,7 +65,9 @@
                 "GSAP",
                 "Mongo.db",
                 "Tailwind",
-                "scss-in-js"
+                "scss-in-js",
+                "ReduxToolkit",
+                "webpack"
             ]
         }
     ],
