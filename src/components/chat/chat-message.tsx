@@ -99,42 +99,42 @@ const ChatMessageComponent: React.FC<ChatMessageProps> = ({
     };
     const messageRef = useRef<HTMLDivElement | null>(null);
 
-    const observerCallback = useCallback(
-        (node: HTMLDivElement) => {
-            if (observer.current) {
-                observer.current.disconnect();
-            }
-            observer.current = new IntersectionObserver((entries) => {
-                if (
-                    entries[0].isIntersecting &&
-                    message.status < 2 &&
-                    message.user?.userId !== user?.userId
-                ) {
-                    changeMessages?.((state) =>
-                        state.map((msg) =>
-                            msg.messageId === message.messageId
-                                ? { ...msg, status: 2 }
-                                : msg
-                        )
-                    );
-                }
-            });
-            observer.current.observe(node);
-        },
-        [
-            changeMessages,
-            message.messageId,
-            message.status,
-            message.user?.userId,
-            user?.userId,
-        ]
-    );
+    // const observerCallback = useCallback(
+    //     (node: HTMLDivElement) => {
+    //         if (observer.current) {
+    //             observer.current.disconnect();
+    //         }
+    //         observer.current = new IntersectionObserver((entries) => {
+    //             if (
+    //                 entries[0].isIntersecting &&
+    //                 message.status < 2 &&
+    //                 message.user?.userId !== user?.userId
+    //             ) {
+    //                 changeMessages?.((state) =>
+    //                     state.map((msg) =>
+    //                         msg.messageId === message.messageId
+    //                             ? { ...msg, status: 2 }
+    //                             : msg
+    //                     )
+    //                 );
+    //             }
+    //         });
+    //         observer.current.observe(node);
+    //     },
+    //     [
+    //         changeMessages,
+    //         message.messageId,
+    //         message.status,
+    //         message.user?.userId,
+    //         user?.userId,
+    //     ]
+    // );
 
     return (
         <div
             ref={(node) => {
                 if (node) {
-                    observerCallback(node);
+                    // observerCallback(node);
                     messageRef.current = node;
                 }
             }}

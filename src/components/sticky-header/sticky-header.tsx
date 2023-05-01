@@ -51,8 +51,12 @@ export default function StickyHeader() {
                 </Typography>
 
                 <div className={styles.headerLinks}>
-                    <Link href="/">Main</Link>
-                    <Link href="/chat">Chat</Link>
+                    {window.location.pathname !== "/" ? (
+                        <Link href="/">Main</Link>
+                    ) : null}
+                    {window.location.pathname !== "/chat" ? (
+                        <Link href="/chat">Chat</Link>
+                    ) : null}
                 </div>
             </Toolbar>
         </AppBar>
