@@ -23,12 +23,35 @@ This is an awesome project built with React, Three.js, React-Three-Fiber, React-
 
 if you want to change dynamic 3d text on main page, make request to this API :) its make request into node.js express.js server and take u message and pass into websocket connection to client
 
+const endpoint = 'https://5e66-157-90-210-118.ngrok-free.app/change-3d-tex';
+
 ```shell
-    curl --location 'https://5e66-157-90-210-118.ngrok-free.app/change-3d-text' \
+    curl --location endpoint \
     --header 'Content-Type: application/json' \
     --data '{
-        "message": "Never gonna give you up, never gonna let you down\nNever gonna run around and desert you\nNever gonna make you cry, never gonna say goodbye\nNever gonna tell a lie and hurt yo"
+        "message": "try with yours text"
     }'
+```
+Or in browser console
+```js
+var myHeaders = new Headers();
+myHeaders.append("Content-Type", "application/json");
+
+var raw = JSON.stringify({
+  "message": "try with yours text"
+});
+
+var requestOptions = {
+  method: 'POST',
+  headers: myHeaders,
+  body: raw,
+  redirect: 'follow'
+};
+
+fetch(endpoint, requestOptions)
+  .then(response => response.text())
+  .then(result => console.log(result))
+  .catch(error => console.log('error', error));
 ```
 
 ## Technologies Used
