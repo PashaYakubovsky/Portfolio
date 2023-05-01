@@ -152,3 +152,7 @@ $primary-color: #1976d2;
     width: fit-content;
     object-fit: contain;
 }
+.scrollToBottom {
+    position: absolute;
+    bottom: -20px;
+}

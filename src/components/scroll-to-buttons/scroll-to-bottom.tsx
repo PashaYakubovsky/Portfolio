@@ -9,9 +9,11 @@ export function vhToPixels(vh: number): number {
 export default function ScrollToBottomButton({
     elem,
     show = true,
+    className,
 }: {
     elem?: HTMLElement | null;
     show?: boolean;
+    className?: string;
 }) {
     const [showButton, setShowButton] = useState(true);
 
@@ -43,7 +45,10 @@ export default function ScrollToBottomButton({
     }, []);
 
     return (
-        <Zoom in={showButton} className={style.botButtonContainer}>
+        <Zoom
+            in={showButton}
+            className={[style.botButtonContainer, className].join(" ")}
+        >
             <div>
                 {show ? (
                     <Button

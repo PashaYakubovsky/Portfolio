@@ -1,6 +1,6 @@
 import { Grid, Paper } from "@mui/material";
 import { useContext, useEffect, useRef, useState } from "react";
-// import style from "./chat.module.scss";
+import style from "./chat.module.scss";
 import { WsContext } from "src/contexts/ws-context";
 import ChatMessageBubble from "./chat-message";
 import { ChatContext } from "src/contexts/chat-context";
@@ -96,7 +96,19 @@ const ChatContainer = () => {
 
     return (
         <>
-            <Grid flexGrow={1} height="calc(100% - 105px)" item xs={12} md={6}>
+            <Grid
+                flexGrow={1}
+                height="calc(100% - 105px)"
+                position="relative"
+                item
+                xs={12}
+                md={6}
+            >
+                <ScrollToBottomButton
+                    elem={paperRef.current}
+                    show={scrollDirection === "up"}
+                    className={style.scrollToBottom}
+                />
                 <Paper
                     ref={paperRef}
                     sx={{
@@ -110,10 +122,6 @@ const ChatContainer = () => {
                     onScroll={handleScroll}
                 >
                     <div ref={messagesEndRef} />
-                    <ScrollToBottomButton
-                        elem={paperRef.current}
-                        show={scrollDirection === "up"}
-                    />
 
                     {messages?.map((msg, idx, arr) => {
                         return (
