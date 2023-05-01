@@ -32,7 +32,9 @@ const endpoint = 'https://5e66-157-90-210-118.ngrok-free.app/change-3d-tex';
         "message": "try with yours text"
     }'
 ```
+
 Or in browser console
+
 ```js
 var myHeaders = new Headers();
 myHeaders.append("Content-Type", "application/json");
@@ -52,6 +54,7 @@ fetch(endpoint, requestOptions)
   .then(response => response.text())
   .then(result => console.log(result))
   .catch(error => console.log('error', error));
+
 ```
 
 ## Technologies Used
