@@ -13,46 +13,182 @@ import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { useState } from "react";
-import { useUser } from "../../cache/user.js";
-// import style from "./sign-in.module.scss";
+import AuthModal from "src/components/modals/auth-modal.js";
+import config from "../../../config.json";
+import { useConfigStore } from "src/store/store";
+import { useCookies } from "react-cookie";
+import FormHelperText from "@mui/material/FormHelperText";
+import { useLocation, useNavigate } from "react-router-dom";
+import { useMediaQuery } from "@mui/material";
 
-function Copyright(props: any) {
-    return (
-        <Typography
-            variant="body2"
-            color="text.secondary"
-            align="center"
-            {...props}
-        >
-            {"Copyright © "}
-            <Link color="inherit" href="https://mui.com/">
-                Your Website
-            </Link>{" "}
-            {new Date().getFullYear()}
-            {"."}
-        </Typography>
-    );
-}
+// import style from "./sign-in.module.scss";
 
 const theme = createTheme();
 
 export default function SignUp() {
-    const [, { login }] = useUser();
+    const navigate = useNavigate();
+    const location = useLocation();
+    const params = new URLSearchParams(location.search);
+    const queryObject = Object.fromEntries(params.entries());
+    const [cookie, changeCookie] = useCookies(["token_dev"]);
+    const user = useConfigStore((state) => state.user);
+    const [errors, changeErrors] = useState({
+        password: {
+            err: false,
+            subErr: false,
+            text: "",
+            subText: "",
+        },
+        email: {
+            err: false,
+            text: "",
+        },
+    });
+    const changeUser = useConfigStore((state) => state.changeUser);
 
-    const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
-        event.preventDefault();
-        const data = new FormData(event.currentTarget);
+    const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+        try {
+            event.preventDefault();
+            const data = new FormData(event.currentTarget);
+            const body = {
+                name: data.get("firstName")?.toString(),
+                email: data.get("email")?.toString(),
+                password: data.get("password"),
+                password1: data.get("password1"),
+                userId: user?.userId,
+            };
 
-        login(
-            data.get("email")?.toString() ?? "",
-            data.get("password")?.toString() ?? ""
-        );
+            if (body.password !== body.password1) {
+                changeErrors({
+                    ...errors,
+                    password: {
+                        ...errors.password,
+                        subErr: true,
+                        subText: "Passwords must be the same",
+                    },
+                });
+                return;
+            }
+
+            const response = await fetch(
+                config?.devHelperApi + "/api/v1/user/create",
+                {
+                    method: "POST",
+                    body: JSON.stringify(body),
+                    headers: {
+                        Authorization: `Bearer ${cookie?.token_dev}`,
+                        "Content-Type": "application/json",
+                    },
+                }
+            );
+
+            if (response.status === 200) {
+                try {
+                    changeUser({
+                        ...(user ?? {}),
+                        ...(body as User),
+                        password: null,
+                    });
+
+                    const responseToken = await fetch(
+                        config?.devHelperApi + "/api/v1/auth/login",
+                        {
+                            method: "POST",
+                            body: JSON.stringify({
+                                name: body.name,
+                                password: body.password,
+                                token: "SUPER_SECRET_220",
+                            }),
+                            headers: {
+                                Authorization: `Bearer ${cookie?.token_dev}`,
+                                "Content-Type": "application/json",
+                            },
+                        }
+                    );
+
+                    const token = await responseToken.text();
+
+                    changeCookie("token_dev", token);
+
+                    navigate(queryObject?.redirect_rout ?? "/");
+                } catch (error) {
+                    console.log(error);
+                }
+            }
+        } catch (error) {
+            console.log(error);
+        }
     };
+
+    const validatePassword = (value: string, isSub?: boolean) => {
+        if (value.length < 8) {
+            changeErrors((state) => {
+                if (!state.password[isSub ? "subErr" : "err"]) {
+                    return {
+                        ...state,
+                        password: {
+                            ...state.password,
+                            [isSub ? "subErr" : "err"]: true,
+                            [isSub ? "subText" : "text"]:
+                                "Password must be at least 8 characters",
+                        },
+                    };
+                }
+                return state;
+            });
+        } else {
+            changeErrors((state) =>
+                state.password[isSub ? "subErr" : "err"]
+                    ? {
+                          ...state,
+                          password: {
+                              ...state.password,
+                              [isSub ? "subErr" : "err"]: false,
+                              [isSub ? "subErr" : "err"]: "",
+                          },
+                      }
+                    : state
+            );
+        }
+        return true;
+    };
+
+    const changeErrorUniversal = (
+        key: keyof typeof errors,
+        err: { err: boolean; text: string }
+    ) => {
+        changeErrors((state) => ({
+            ...state,
+            [key]: err,
+        }));
+    };
+
+    function validateEmail(email: string) {
+        const re = /\S+@\S+\.\S+/;
+
+        if (!email) {
+            changeErrorUniversal("email", {
+                err: true,
+                text: "Please provide an email address",
+            });
+        } else if (!re.test(String(email).toLowerCase())) {
+            changeErrorUniversal("email", {
+                err: true,
+                text: "Please enter a valid email address",
+            });
+        } else {
+            changeErrorUniversal("email", {
+                err: false,
+                text: "",
+            });
+        }
+    }
 
     return (
         <ThemeProvider theme={theme}>
             <Container component="main" maxWidth="xs">
                 <CssBaseline />
+
                 <Box
                     sx={{
                         marginTop: 8,
@@ -79,7 +215,6 @@ export default function SignUp() {
                                 <TextField
                                     autoComplete="given-name"
                                     name="firstName"
-                                    required
                                     fullWidth
                                     id="firstName"
                                     label="First Name"
@@ -88,19 +223,45 @@ export default function SignUp() {
                             </Grid>
                             <Grid item xs={12}>
                                 <TextField
+                                    helperText={errors.email.text}
+                                    error={errors.email.err}
                                     required
                                     fullWidth
                                     id="email"
                                     label="Email Address"
                                     name="email"
                                     autoComplete="email"
+                                    onChange={(e) =>
+                                        validateEmail(e.target.value)
+                                    }
                                 />
                             </Grid>
                             <Grid item xs={12}>
                                 <TextField
                                     required
+                                    helperText={errors.password.text}
+                                    error={errors.password.err}
                                     fullWidth
+                                    onChange={(e) => {
+                                        validatePassword(e.target.value);
+                                    }}
                                     name="password"
+                                    label="Password"
+                                    type="password"
+                                    id="password"
+                                    autoComplete="new-password"
+                                />
+                            </Grid>
+                            <Grid item xs={12}>
+                                <TextField
+                                    required
+                                    helperText={errors.password.subText}
+                                    error={errors.password.subErr}
+                                    fullWidth
+                                    onChange={(e) => {
+                                        validatePassword(e.target.value, true);
+                                    }}
+                                    name="password1"
                                     label="Password"
                                     type="password"
                                     id="password"
@@ -115,8 +276,8 @@ export default function SignUp() {
                             sx={{
                                 mt: 3,
                                 mb: 2,
-                                pt: 2,
-                                pb: 2,
+                                pt: 1,
+                                pb: 1,
                                 color: "#fff",
                                 backgroundColor: "#000",
                                 ":hover": {
@@ -136,7 +297,7 @@ export default function SignUp() {
                         </Grid>
                     </Box>
                 </Box>
-                <Copyright sx={{ mt: 5 }} />
+                {/* <Copyright sx={{ mt: 5 }} /> */}
             </Container>
         </ThemeProvider>
     );

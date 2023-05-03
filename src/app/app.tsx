@@ -21,6 +21,8 @@ import { v4 as uuid } from "uuid";
 // import configMain from "../../config.json";
 import RequireAuth from "src/auth/requareAuth";
 import { socket } from "src/main";
+import AuthModal from "src/components/modals/auth-modal";
+import {CHAT_PAGE,LOGIN_PAGE,SIGN_UP_PAGE} from "./routes";
 
 export const App = () => {
     const [theme, changeTheme] = useState("white");
@@ -188,9 +190,8 @@ export const App = () => {
                                 // </ScrollWave>
                             }
                         />
-
                         <Route
-                            path="/chat"
+                            path={CHAT_PAGE}
                             element={
                                 <RequireAuth>
                                     <ChatPage />
@@ -198,7 +199,8 @@ export const App = () => {
                             }
                         />
 
-                        <Route path="/sign-up" element={<SignUp />} />
+                        <Route path={LOGIN_PAGE} element={<AuthModal open />} />
+                        <Route path={SIGN_UP_PAGE} element={<SignUp />} />
                         <Route path="*" element={<NoMatch />} />
                     </Routes>
                 </ChatContext.Provider>

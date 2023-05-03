@@ -24,6 +24,7 @@ interface IConfigStore {
     objects3d: _Object3d[];
     changeObjects3d: (arg: _Object3d[]) => void;
     objects3dRanges: number;
+    changeUser: (arg: User) => void;
 }
 
 type _Object3d = {
@@ -85,4 +86,5 @@ export const useConfigStore = create<IConfigStore>((set) => ({
         set((state) => ({ ...state, isSomeTypingInChat: arg })),
     changeObjects3d: (arg: _Object3d[]) =>
         set((state) => ({ ...state, objects3d: arg })),
+    changeUser: (arg: User) => set((state) => ({ ...state, user: arg })),
 }));

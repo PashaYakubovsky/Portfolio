@@ -26,6 +26,9 @@ interface TargetState {
 interface User {
     userId: string | undefined;
     name: string;
+    password?: string | null;
+    email?: string;
+    avatarUrl?: string;
 }
 
 interface ChatMessage {

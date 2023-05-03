@@ -11,7 +11,7 @@ import { useCookies } from "react-cookie";
 const ChatPage = () => {
     const { changeHeaderLabel } = useConfigStore();
     const { changeMessages } = useContext(ChatContext);
-    const [cookie] = useCookies(["token_dev"]);
+    const [cookie, _, deleteCookie] = useCookies(["token_dev"]);
     useEffect(() => {
         if (changeHeaderLabel) changeHeaderLabel("Chat");
     }, [changeHeaderLabel]);
@@ -26,6 +26,10 @@ const ChatPage = () => {
                     },
                 });
 
+                if (response.status === 401) {
+                    deleteCookie("token_dev");
+                }
+
                 const json: ChatMessage[] = await response.json();
 
                 if (json.length > 0) changeMessages?.(json);
@@ -35,7 +39,7 @@ const ChatPage = () => {
         };
 
         init();
-    }, [changeMessages, cookie?.token_dev]);
+    }, [changeMessages, cookie?.token_dev, deleteCookie]);
 
     return (
         <div className={style.containerWrapper}>

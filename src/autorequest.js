@@ -14,7 +14,7 @@ var requestOptions = {
 };
 
 function tick() {
-    fetch("https://mhp.inboost.ai:25055/change-3d-text", requestOptions)
+    fetch("http://localhost:25055/change-3d-text", requestOptions)
         .then((response) => {
             return response.json();
         })

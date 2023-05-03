@@ -8,17 +8,21 @@ import {
 import { useState } from "react";
 import config from "../../../config.json";
 import { useCookies } from "react-cookie";
+import { useLocation, useNavigate } from "react-router-dom";
+import { SIGN_UP_PAGE } from "src/app/routes";
 
 const AuthModal = ({
     open,
     handleClose,
 }: {
     open: boolean;
-    handleClose: (arg: boolean) => void;
+    handleClose?: (arg: boolean) => void;
 }) => {
+    const location = useLocation();
     const [name, setName] = useState("");
     const [password, setPassword] = useState("");
     const [, setCookie] = useCookies(["token_dev"]);
+    const navigate = useNavigate();
 
     const handleNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         setName(e.target.value);
@@ -53,7 +57,7 @@ const AuthModal = ({
             console.log(err);
         }
 
-        handleClose(false);
+        handleClose?.(false);
     };
 
     return (
@@ -61,10 +65,10 @@ const AuthModal = ({
             open={open}
             onKeyDown={(e) => e.code === "Enter" && handleSubmit()}
             onClose={() => {
-                handleClose(true);
+                handleClose?.(true);
             }}
         >
-            <DialogContent>
+            <DialogContent sx={{ width: "50vw" }}>
                 <DialogTitle>Sign In</DialogTitle>
 
                 <div
@@ -96,7 +100,7 @@ const AuthModal = ({
 
                 <div
                     style={{
-                        margin: "5px",
+                        margin: "25px 0 0 0",
                         display: "flex",
                         alignItems: "center",
                         gap: 10,
@@ -105,24 +109,57 @@ const AuthModal = ({
                     <Button
                         variant="contained"
                         color="primary"
+                        sx={{
+                            backgroundColor: "black",
+                            color: "whitesmoke",
+                            width: "100%",
+                            pt: 1,
+                            pb: 1,
+                            "&:hover": {
+                                backgroundColor: "whitesmoke",
+                                color: "black",
+                            },
+                        }}
                         onClick={handleSubmit}
                     >
                         Sign In
                     </Button>
-                    <Button
-                        variant="contained"
-                        color="warning"
-                        onClick={() => {
-                            handleClose(false);
-                        }}
-                    >
-                        Close
-                    </Button>
+                    {window.location.pathname !== "/login" ? (
+                        <Button
+                            variant="contained"
+                            color="error"
+                            sx={{
+                                width: "100%",
+                                pt: 1,
+                                pb: 1,
+                            }}
+                            onClick={() => {
+                                handleClose?.(false);
+                            }}
+                        >
+                            Close
+                        </Button>
+                    ) : null}
                 </div>
                 <Button
-                    sx={{ width: "100%", mt: 1 }}
+                    onClick={() => {
+                        navigate(
+                            SIGN_UP_PAGE + `?redirect_rout=${location.pathname}`
+                        );
+                    }}
+                    sx={{
+                        width: "100%",
+                        mt: 1,
+                        backgroundColor: "black",
+                        color: "whitesmoke",
+                        pt: 1,
+                        pb: 1,
+                        "&:hover": {
+                            backgroundColor: "whitesmoke",
+                            color: "black",
+                        },
+                    }}
                     variant="contained"
-                    color="primary"
                 >
                     Registration
                 </Button>
