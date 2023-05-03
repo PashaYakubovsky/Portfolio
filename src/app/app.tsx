@@ -10,35 +10,40 @@ import StickyHeader from "src/components/sticky-header/sticky-header";
 // import Register from "src/pages/register/register";
 // import SignIn from "src/pages/sign-in/sign-up";
 import SignUp from "src/pages/sign-in/sign-up";
-import { Socket, io } from "socket.io-client";
+// import { io } from "socket.io-client";
 import { WsContext } from "src/contexts/ws-context";
 import NotSupportModal from "src/components/modals/not-support-modal";
 import ChatPage from "src/pages/chat/chat-page";
 import { ChatContext } from "src/contexts/chat-context";
-import { DefaultEventsMap } from "socket.io/dist/typed-events";
+// import { DefaultEventsMap } from "socket.io/dist/typed-events";
 import { useConfigStore } from "src/store/store";
 import { v4 as uuid } from "uuid";
-import configMain from "../../config.json";
+// import configMain from "../../config.json";
+import RequireAuth from "src/auth/requareAuth";
+import { socket } from "src/main";
 
 export const App = () => {
     const [theme, changeTheme] = useState("white");
-    const socketRef = useRef<Socket<DefaultEventsMap, DefaultEventsMap> | null>(
-        null
-    );
+    // const socketRef = useRef<Socket<DefaultEventsMap, DefaultEventsMap> | null>(
+    //     null
+    // );
     const timeoutRef = useRef<number | null>(null);
 
     const [messages, changeMessages] = useState<ChatMessage[]>([]);
-    const socket = io("https://mhp.inboost.ai:25055");
 
-    const config = useConfigStore();
-    const {
-        user,
-        change3dText,
-        changeShowGlitch,
-        changeIsSomeTypingInChat,
-        isSomeTypingInChat,
-        changeSupportWebGl,
-    } = config;
+    const user = useConfigStore((state) => state.user);
+    const text3d = useConfigStore((state) => state["3dText"]);
+    const change3dText = useConfigStore((state) => state.change3dText);
+    const changeShowGlitch = useConfigStore((state) => state.changeShowGlitch);
+    const changeIsSomeTypingInChat = useConfigStore(
+        (state) => state.changeIsSomeTypingInChat
+    );
+    const isSomeTypingInChat = useConfigStore(
+        (state) => state.isSomeTypingInChat
+    );
+    const changeSupportWebGl = useConfigStore(
+        (state) => state.changeSupportWebGl
+    );
     // const socket = io("https://mhp.inboost.ai:25055");
 
     // useEffect(() => {
@@ -64,14 +69,8 @@ export const App = () => {
     // }, []);
 
     useEffect(() => {
-        if (socketRef.current) {
-            socketRef.current.close();
-        }
-
-        socketRef.current = socket;
-
-        socketRef.current.on("changeText", (message: string) => {
-            if (message !== config["3dText"]) change3dText(message);
+        socket.on("changeText", (message: string) => {
+            if (message !== text3d) change3dText(message);
 
             changeShowGlitch?.(true);
 
@@ -80,7 +79,7 @@ export const App = () => {
             }, 1000);
         });
 
-        socketRef.current.on(
+        socket.on(
             "image",
             (message: {
                 name?: string;
@@ -105,7 +104,7 @@ export const App = () => {
             }
         );
 
-        socketRef.current.on("message", (message: ChatMessage) => {
+        socket.on("message", (message: ChatMessage) => {
             if (message.user?.userId !== user?.userId) {
                 changeMessages((state) => [
                     { ...message, status: 2 },
@@ -114,7 +113,7 @@ export const App = () => {
             }
         });
 
-        socketRef.current.on("typing", (message: MessageTyping) => {
+        socket.on("typing", (message: MessageTyping) => {
             if (message.user?.userId !== user?.userId) {
                 if (timeoutRef.current) {
                     clearTimeout(
@@ -136,14 +135,17 @@ export const App = () => {
                 }, 300) as unknown as number;
             }
         });
+
+        return () => {
+            socket.close();
+        };
     }, [
         change3dText,
         changeIsSomeTypingInChat,
         changeShowGlitch,
-        config,
         isSomeTypingInChat,
         messages,
-        socket,
+        text3d,
         user,
         user?.userId,
     ]);
@@ -168,7 +170,7 @@ export const App = () => {
         <ThemeContext.Provider
             value={{ theme, changeTheme, ...whiteThemeColors }}
         >
-            <WsContext.Provider value={{ socket }}>
+            <WsContext.Provider value={{ socket: socket }}>
                 <ChatContext.Provider
                     value={{
                         messages,
@@ -187,7 +189,14 @@ export const App = () => {
                             }
                         />
 
-                        <Route path="/chat" element={<ChatPage />} />
+                        <Route
+                            path="/chat"
+                            element={
+                                <RequireAuth>
+                                    <ChatPage />
+                                </RequireAuth>
+                            }
+                        />
 
                         <Route path="/sign-up" element={<SignUp />} />
                         <Route path="*" element={<NoMatch />} />

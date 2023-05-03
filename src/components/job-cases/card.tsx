@@ -55,8 +55,8 @@ const ImgMediaCard = React.forwardRef(
                     </Typography>
 
                     <div className={style.techStack}>
-                        {techStack?.map((tech) => (
-                            <JobExperienceTag label={tech} />
+                        {techStack?.map((tech, index) => (
+                            <JobExperienceTag key={index} label={tech} />
                         ))}
                     </div>
                 </CardContent>

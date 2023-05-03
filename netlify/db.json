@@ -1,6 +1,25 @@
 {
     "cases": [
         {
+            "name": "Inboost Landing site",
+            "description": "Business showcase website, implemented dynamic translations where, if an admin is authorized, they can change any text to any language on the fly",
+            "screenshots": [],
+            "link": "https://inboost.ai",
+            "tooltipsText": "Go to Site",
+            "techStack": [
+                "React",
+                "Redux",
+                "TypeScript",
+                "Next.js",
+                "GSAP",
+                "Mongo.db",
+                "Tailwind",
+                "scss-in-js",
+                "ReduxToolkit",
+                "webpack"
+            ]
+        },
+        {
             "description": "Web-server for working with OpenAI API \nImplemented authentication and registration with Jwt token \nWhen creating a user, it is linked to the portal with which this service will work",
             "name": "Gpt Service",
             "screenshots": [],
@@ -10,7 +29,7 @@
                 "ASP.NET 7",
                 "Jwt",
                 "REST",
-                "nNLog",
+                "NLog",
                 "mssql",
                 "EntityFramework",
                 "LINQ",
@@ -46,28 +65,8 @@
                 "moment.js",
                 "Storybook",
                 "ReduxToolkit",
-                "TypeScript",
                 "scss-in-js",
                 "rollup"
-            ]
-        },
-        {
-            "name": "Inboost Landing site",
-            "description": "Business showcase website, implemented dynamic translations where, if an admin is authorized, they can change any text to any language on the fly",
-            "screenshots": [],
-            "link": "https://inboost.ai",
-            "tooltipsText": "Go to Site",
-            "techStack": [
-                "React",
-                "Redux",
-                "TypeScript",
-                "Next.js",
-                "GSAP",
-                "Mongo.db",
-                "Tailwind",
-                "scss-in-js",
-                "ReduxToolkit",
-                "webpack"
             ]
         }
     ],

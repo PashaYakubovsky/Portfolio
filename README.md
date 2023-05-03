@@ -21,20 +21,9 @@
 
 This is an awesome project built with React, Three.js, React-Three-Fiber, React-Spring, and TypeScript. It showcases the power of these libraries and provides a stunning user experience.
 
-if you want to change dynamic 3d text on main page, make request to this API :) its make request into node.js express.js server and take u message and pass into websocket connection to client
+if you want to change dynamic 3d text on main page, make request to this API. Its make request into node.js express.js server and take u message and pass into websocket connection to client
 
-const endpoint = 'https://5e66-157-90-210-118.ngrok-free.app/change-3d-tex';
-
-```shell
-    curl --location endpoint \
-    --header 'Content-Type: application/json' \
-    --data '{
-        "message": "try with yours text"
-    }'
-```
-
-Or in browser console
-
+With JavaScript
 ```js
 var myHeaders = new Headers();
 myHeaders.append("Content-Type", "application/json");
@@ -50,7 +39,7 @@ var requestOptions = {
   redirect: 'follow'
 };
 
-fetch(endpoint, requestOptions)
+fetch("http://pashaykubovsky.tech:25055/change-3d-tex", requestOptions)
   .then(response => response.text())
   .then(result => console.log(result))
   .catch(error => console.log('error', error));
