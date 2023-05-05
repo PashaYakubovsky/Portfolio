@@ -56,6 +56,7 @@ export default function SignUp() {
                 password: data.get("password"),
                 password1: data.get("password1"),
                 userId: user?.userId,
+                token: "SUPER_SECRET_220",
             };
 
             if (body.password !== body.password1) {
@@ -97,7 +98,6 @@ export default function SignUp() {
                             body: JSON.stringify({
                                 name: body.name,
                                 password: body.password,
-                                token: "SUPER_SECRET_220",
                             }),
                             headers: {
                                 Authorization: `Bearer ${cookie?.token_dev}`,

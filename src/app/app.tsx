@@ -22,7 +22,7 @@ import { v4 as uuid } from "uuid";
 import RequireAuth from "src/auth/requareAuth";
 import { socket } from "src/main";
 import AuthModal from "src/components/modals/auth-modal";
-import {CHAT_PAGE,LOGIN_PAGE,SIGN_UP_PAGE} from "./routes";
+import { CHAT_PAGE, LOGIN_PAGE, SIGN_UP_PAGE } from "./routes";
 
 export const App = () => {
     const [theme, changeTheme] = useState("white");
