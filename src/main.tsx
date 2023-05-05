@@ -17,7 +17,7 @@ if (isIos) {
     });
 }
 
-export const socket = io(configMain?.devHelperApi);
+export const socket = io(configMain?.wsServer);
 
 // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
 ReactDOM.createRoot(document.getElementById("root")!).render(
