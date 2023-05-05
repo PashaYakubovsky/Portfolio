@@ -39,7 +39,7 @@ var requestOptions = {
   redirect: 'follow'
 };
 
-fetch("http://pashaykubovsky.tech:25055/change-3d-tex", requestOptions)
+fetch("https://13.50.241.71:25055/change-3d-tex", requestOptions)
   .then(response => response.text())
   .then(result => console.log(result))
   .catch(error => console.log('error', error));
