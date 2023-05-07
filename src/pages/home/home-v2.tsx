@@ -24,7 +24,7 @@ import {
     Noise,
 } from "@react-three/postprocessing";
 import { useConfigStore } from "src/store/store";
-import { throttle } from "lodash";
+// import { throttle } from "lodash";
 
 const HomeV2 = () => {
     const { changeLoader, supportWebGl } = useConfigStore();
@@ -67,40 +67,40 @@ const HomeV2 = () => {
             }}
         >
             <div
-                onScroll={throttle((e: React.UIEvent<HTMLDivElement>) => {
-                    console.log(e);
-                    if (
-                        showJobs.length > 0 &&
-                        showJobs.every((job) => job === true)
-                    ) {
-                        return;
-                    }
-                    const containerHeight = e.currentTarget?.scrollHeight;
-                    const containerScrollTop = e.currentTarget?.scrollTop;
+                // onScroll={throttle((e: React.UIEvent<HTMLDivElement>) => {
+                //     console.log(e);
+                //     if (
+                //         showJobs.length > 0 &&
+                //         showJobs.every((job) => job === true)
+                //     ) {
+                //         return;
+                //     }
+                //     const containerHeight = e.currentTarget?.scrollHeight;
+                //     const containerScrollTop = e.currentTarget?.scrollTop;
 
-                    const _showJobs = data.map((job, idx) => {
-                        const jobElement = document.getElementById(
-                            `job-${idx}`
-                        ); // assuming there's an HTML element with id `job-${idx}` for each job
-                        if (jobElement) {
-                            const elementTop = jobElement.offsetTop;
-                            const elementHeight = jobElement.offsetHeight;
-                            const elementBottom = elementTop + elementHeight;
-                            const visibleTop = containerScrollTop;
-                            const visibleBottom =
-                                containerScrollTop + containerHeight;
-                            const isElementVisible =
-                                elementTop <= visibleBottom &&
-                                elementBottom >= visibleTop;
-                            return !showJobs[idx]
-                                ? isElementVisible
-                                : showJobs[idx];
-                        }
-                        return showJobs[idx];
-                    });
+                //     const _showJobs = data.map((job, idx) => {
+                //         const jobElement = document.getElementById(
+                //             `job-${idx}`
+                //         ); // assuming there's an HTML element with id `job-${idx}` for each job
+                //         if (jobElement) {
+                //             const elementTop = jobElement.offsetTop;
+                //             const elementHeight = jobElement.offsetHeight;
+                //             const elementBottom = elementTop + elementHeight;
+                //             const visibleTop = containerScrollTop;
+                //             const visibleBottom =
+                //                 containerScrollTop + containerHeight;
+                //             const isElementVisible =
+                //                 elementTop <= visibleBottom &&
+                //                 elementBottom >= visibleTop;
+                //             return !showJobs[idx]
+                //                 ? isElementVisible
+                //                 : showJobs[idx];
+                //         }
+                //         return showJobs[idx];
+                //     });
 
-                    changeShowJobs?.(_showJobs);
-                }, 400)}
+                //     changeShowJobs?.(_showJobs);
+                // }, 400)}
                 className={style.container}
             >
                 {supportWebGl ? (
