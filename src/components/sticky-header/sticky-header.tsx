@@ -35,6 +35,7 @@ export default function StickyHeader() {
             sx={{
                 backgroundColor: "#fff",
                 zIndex: 100,
+                boxShadow: "0 5px 20px #011",
             }}
             ref={(node) => {
                 if (node) {

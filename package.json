@@ -13,6 +13,7 @@
         "@emotion/styled": "^11.10.6",
         "@mui/icons-material": "^5.11.16",
         "@mui/material": "^5.12.1",
+        "@mui/styles": "^5.12.3",
         "@netlify/functions": "^1.4.0",
         "@react-spring/parallax": "^9.7.2",
         "@react-spring/web": "^9.7.2",

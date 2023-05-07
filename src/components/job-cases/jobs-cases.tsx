@@ -54,33 +54,32 @@ const JobsCases = forwardRef(({}, ref: LegacyRef<HTMLElement>) => {
                     style={{
                         backgroundImage: url("stars", true),
                         backgroundSize: "cover",
+                        zIndex: -1,
                     }}
                 />
 
                 <ParallaxLayer
                     offset={0.3}
                     speed={-0.1}
-                    style={{ opacity: 0.4 }}
+                    style={{ opacity: 1, zIndex: -1 }}
                 >
                     <RunAwayCloud
                         style={{
-                            display: "block",
-                            width: "15%",
-                            marginLeft: "0%",
+                            right: 0,
+                            width: 500,
                         }}
                     />
                     <RunAwayCloud
                         style={{
-                            display: "block",
-                            width: "10%",
-                            marginLeft: "80%",
+                            left: 50,
+                            width: 200,
                         }}
                     />
                     <RunAwayCloud
                         style={{
-                            display: "block",
-                            width: "30%",
-                            marginLeft: "90%",
+                            right: 0,
+                            top: -190,
+                            width: 300,
                         }}
                     />
                 </ParallaxLayer>
@@ -115,31 +114,23 @@ const JobsCases = forwardRef(({}, ref: LegacyRef<HTMLElement>) => {
                     </Grid>
                 </Container>
 
-                <ParallaxLayer offset={1} speed={0.4} style={{ opacity: 0.6 }}>
-                    {/* <img
-                        src={url("cloud")}
-                        
-                        alt="cloud"
-                    /> */}
+                <ParallaxLayer
+                    offset={1}
+                    speed={0.4}
+                    style={{ opacity: 1, zIndex: -1 }}
+                >
                     <RunAwayCloud
                         style={{
-                            display: "block",
-                            width: "20%",
-                            marginLeft: "5%",
+                            right: 0,
+                            width: 600,
                         }}
                     />
                     <RunAwayCloud
                         style={{
-                            display: "block",
-                            width: "15%",
-                            marginLeft: "75%",
+                            left: 50,
+                            width: 300,
                         }}
                     />
-                    {/* <img
-                        src={url("cloud")}
-                       
-                        alt="cloud"
-                    /> */}
                 </ParallaxLayer>
             </Parallax>
         </main>

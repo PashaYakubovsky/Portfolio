@@ -72,7 +72,7 @@ const AuthModal = ({
                 handleClose?.(true);
             }}
         >
-            <DialogContent sx={{ width: "50vw" }}>
+            <DialogContent sx={{ width: "60vw", maxWidth: "500px" }}>
                 <DialogTitle>Sign In</DialogTitle>
 
                 <div
@@ -80,6 +80,7 @@ const AuthModal = ({
                         display: "flex",
                         flexDirection: "column",
                         gap: 10,
+                        margin: 0,
                         marginBottom: 20,
                     }}
                 >

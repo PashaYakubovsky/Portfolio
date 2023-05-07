@@ -7,7 +7,10 @@ import Typography from "@mui/material/Typography";
 import style from "./job-cases.module.scss";
 import LightTooltip from "../tooltip/light-tooltip";
 import JobExperienceTag from "../tags/job-expirience-tag";
-import { useSpring, animated, config } from "react-spring";
+import { animated } from "react-spring";
+// import { ButtonProps } from "@mui/material";
+// import { ThreeDRotation } from "@mui/icons-material";
+// import { makeStyles, styled } from "@mui/styles";
 
 const ImgMediaCard = React.forwardRef(
     (
@@ -88,6 +91,7 @@ const ImgMediaCard = React.forwardRef(
                         <div className={style.techStack}>
                             {techStack?.map((tech, index) => (
                                 <JobExperienceTag key={index} label={tech} />
+                                // <ThreeDButton>{tech}</ThreeDButton>
                             ))}
                         </div>
                     </CardContent>
