@@ -6,6 +6,8 @@ interface JobExperience {
     index?: number;
     tooltipsText?: string;
     techStack: string[];
+    show?: boolean;
+    changeShow?: () => void;
 }
 
 interface ILinkData {

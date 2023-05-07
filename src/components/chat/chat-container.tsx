@@ -115,7 +115,7 @@ const ChatContainer = () => {
                         p: 2,
                         display: "flex",
                         flexDirection: "column-reverse",
-                        height: "100%",
+                        height: "75vh",
                         overflowY: "scroll",
                         position: "relative",
                     }}

@@ -24,12 +24,14 @@ import {
     Noise,
 } from "@react-three/postprocessing";
 import { useConfigStore } from "src/store/store";
+import { throttle } from "lodash";
 
 const HomeV2 = () => {
     const { changeLoader, supportWebGl } = useConfigStore();
     const [data, changeData] = useState<JobExperience[]>([]);
     const [showCanvas, changeShowCanvas] = React.useState(true);
     const observer = React.useRef<IntersectionObserver | null>(null);
+    const [showJobs, changeShowJobs] = useState(data.map(() => false));
 
     // This reference will give us direct access to the mesh
     const interceptor = React.useCallback((node: HTMLDivElement | null) => {
@@ -57,9 +59,50 @@ const HomeV2 = () => {
 
     return (
         <CasesContext.Provider
-            value={{ jobCases: data, changeJobsCases: changeData }}
+            value={{
+                jobCases: data,
+                changeJobsCases: changeData,
+                changeShowJobs,
+                showJobs,
+            }}
         >
-            <div>
+            <div
+                onScroll={throttle((e: React.UIEvent<HTMLDivElement>) => {
+                    console.log(e);
+                    if (
+                        showJobs.length > 0 &&
+                        showJobs.every((job) => job === true)
+                    ) {
+                        return;
+                    }
+                    const containerHeight = e.currentTarget?.scrollHeight;
+                    const containerScrollTop = e.currentTarget?.scrollTop;
+
+                    const _showJobs = data.map((job, idx) => {
+                        const jobElement = document.getElementById(
+                            `job-${idx}`
+                        ); // assuming there's an HTML element with id `job-${idx}` for each job
+                        if (jobElement) {
+                            const elementTop = jobElement.offsetTop;
+                            const elementHeight = jobElement.offsetHeight;
+                            const elementBottom = elementTop + elementHeight;
+                            const visibleTop = containerScrollTop;
+                            const visibleBottom =
+                                containerScrollTop + containerHeight;
+                            const isElementVisible =
+                                elementTop <= visibleBottom &&
+                                elementBottom >= visibleTop;
+                            return !showJobs[idx]
+                                ? isElementVisible
+                                : showJobs[idx];
+                        }
+                        return showJobs[idx];
+                    });
+
+                    changeShowJobs?.(_showJobs);
+                }, 400)}
+                className={style.container}
+            >
                 {supportWebGl ? (
                     <div ref={interceptor} className={style.home}>
                         {showCanvas ? <Scene /> : null}

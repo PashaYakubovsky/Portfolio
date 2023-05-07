@@ -8,8 +8,8 @@
         "experimentalDecorators": true,
         "importHelpers": true,
         "module": "esnext",
-        "target": "es2021",
-        "lib": ["dom", "es2021"],
+        "target": "ES2020",
+        "lib": ["dom", "es2021", "ES2016"],
         "skipLibCheck": true,
         "skipDefaultLibCheck": true,
         "baseUrl": ".",
@@ -17,7 +17,6 @@
         "allowJs": false,
         "esModuleInterop": false,
         "allowSyntheticDefaultImports": true,
-        "strict": true,
         "resolveJsonModule": true,
         "types": ["vite/client", "vitest"]
     },

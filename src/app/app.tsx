@@ -9,7 +9,7 @@ import StickyHeader from "src/components/sticky-header/sticky-header";
 // import ScrollWave from "src/components/scroll-wave/scroll-wave";
 // import Register from "src/pages/register/register";
 // import SignIn from "src/pages/sign-in/sign-up";
-import SignUp from "src/pages/sign-in/sign-up";
+import SignUp from "src/pages/sign-up/sign-up";
 // import { io } from "socket.io-client";
 import { WsContext } from "src/contexts/ws-context";
 import NotSupportModal from "src/components/modals/not-support-modal";
@@ -23,6 +23,7 @@ import RequireAuth from "src/auth/requareAuth";
 import { socket } from "src/main";
 import AuthModal from "src/components/modals/auth-modal";
 import { CHAT_PAGE, LOGIN_PAGE, SIGN_UP_PAGE } from "./routes";
+import SslAttentionModal from "src/components/modals/ssl-attention-modal";
 
 export const App = () => {
     const [theme, changeTheme] = useState("white");
@@ -181,15 +182,10 @@ export const App = () => {
                 >
                     <StickyHeader />
                     <NotSupportModal />
+                    <SslAttentionModal />
+
                     <Routes>
-                        <Route
-                            path="/"
-                            element={
-                                // <ScrollWave>
-                                <HomeV2 />
-                                // </ScrollWave>
-                            }
-                        />
+                        <Route path="/" element={<HomeV2 />} />
                         <Route
                             path={CHAT_PAGE}
                             element={

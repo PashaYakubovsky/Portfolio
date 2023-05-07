@@ -9,7 +9,7 @@ import { useState } from "react";
 import config from "../../../config.json";
 import { useCookies } from "react-cookie";
 import { useLocation, useNavigate } from "react-router-dom";
-import { SIGN_UP_PAGE } from "src/app/routes";
+import { LOGIN_PAGE, SIGN_UP_PAGE } from "src/app/routes";
 
 const AuthModal = ({
     open,
@@ -18,11 +18,13 @@ const AuthModal = ({
     open: boolean;
     handleClose?: (arg: boolean) => void;
 }) => {
-    const location = useLocation();
     const [name, setName] = useState("");
     const [password, setPassword] = useState("");
     const [, setCookie] = useCookies(["token_dev"]);
     const navigate = useNavigate();
+    const location = useLocation();
+    const params = new URLSearchParams(location.search);
+    const queryObject = Object.fromEntries(params.entries());
 
     const handleNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         setName(e.target.value);
@@ -53,6 +55,8 @@ const AuthModal = ({
             if (token) {
                 setCookie("token_dev", token);
             }
+            if (window.location.pathname === LOGIN_PAGE)
+                navigate(queryObject?.redirect_rout ?? "/");
         } catch (err) {
             console.log(err);
         }

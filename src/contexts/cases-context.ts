@@ -5,4 +5,11 @@ export const CasesContext = React.createContext<{
         React.SetStateAction<JobExperience[]>
     > | null;
     jobCases: JobExperience[] | null;
-}>({ changeJobsCases: null, jobCases: null });
+    showJobs: boolean[];
+    changeShowJobs: React.Dispatch<React.SetStateAction<boolean[]>>;
+}>({
+    changeJobsCases: null,
+    jobCases: [],
+    changeShowJobs: null,
+    showJobs: [],
+});
