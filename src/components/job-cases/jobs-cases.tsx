@@ -5,8 +5,9 @@ import { CasesContext } from "src/contexts/cases-context";
 // import { throttle } from "lodash";
 import style from "./job-cases.module.scss";
 import { Parallax, ParallaxLayer, IParallax } from "@react-spring/parallax";
+import RunAwayCloud from "./run-away-cloud";
 
-const url = (name: string, wrap = false) =>
+export const url = (name: string, wrap = false) =>
     `${
         wrap ? "url(" : ""
     }https://awv3node-homepage.surge.sh/build/assets/${name}.svg${
@@ -56,33 +57,31 @@ const JobsCases = forwardRef(({}, ref: LegacyRef<HTMLElement>) => {
                     }}
                 />
 
-                <ParallaxLayer offset={0} speed={-0.1} style={{ opacity: 0.4 }}>
-                    <img
-                        src={url("cloud")}
+                <ParallaxLayer
+                    offset={0.3}
+                    speed={-0.1}
+                    style={{ opacity: 0.4 }}
+                >
+                    <RunAwayCloud
                         style={{
                             display: "block",
-                            width: "20%",
-                            marginLeft: "60%",
+                            width: "15%",
+                            marginLeft: "0%",
                         }}
-                        alt="cloud"
                     />
-                    <img
-                        src={url("cloud")}
-                        style={{
-                            display: "block",
-                            width: "25%",
-                            marginLeft: "30%",
-                        }}
-                        alt="cloud"
-                    />
-                    <img
-                        src={url("cloud")}
+                    <RunAwayCloud
                         style={{
                             display: "block",
                             width: "10%",
                             marginLeft: "80%",
                         }}
-                        alt="cloud"
+                    />
+                    <RunAwayCloud
+                        style={{
+                            display: "block",
+                            width: "30%",
+                            marginLeft: "90%",
+                        }}
                     />
                 </ParallaxLayer>
 
@@ -117,24 +116,30 @@ const JobsCases = forwardRef(({}, ref: LegacyRef<HTMLElement>) => {
                 </Container>
 
                 <ParallaxLayer offset={1} speed={0.4} style={{ opacity: 0.6 }}>
-                    <img
+                    {/* <img
                         src={url("cloud")}
+                        
+                        alt="cloud"
+                    /> */}
+                    <RunAwayCloud
                         style={{
                             display: "block",
                             width: "20%",
                             marginLeft: "5%",
                         }}
-                        alt="cloud"
                     />
-                    <img
-                        src={url("cloud")}
+                    <RunAwayCloud
                         style={{
                             display: "block",
                             width: "15%",
                             marginLeft: "75%",
                         }}
-                        alt="cloud"
                     />
+                    {/* <img
+                        src={url("cloud")}
+                       
+                        alt="cloud"
+                    /> */}
                 </ParallaxLayer>
             </Parallax>
         </main>
