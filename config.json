@@ -3,5 +3,5 @@
     "spotifyClientId": "2b568f70d8d0470fa7d091b96f89e4e6",
     "spotifyClientSecret": "65a28d6c64c14127837181d55dd2f60b",
     "devHelperApi": "https://pashaykubovsky.tech:25055",
-    "wsServer": "https://pashaykubovsky.tech:25055"
+    "wsServer": "wss://pashaykubovsky.tech:25055"
 }
