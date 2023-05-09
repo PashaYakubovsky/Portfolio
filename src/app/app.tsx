@@ -23,7 +23,7 @@ import RequireAuth from "src/auth/requareAuth";
 import { socket } from "src/main";
 import AuthModal from "src/components/modals/auth-modal";
 import { CHAT_PAGE, LOGIN_PAGE, SIGN_UP_PAGE } from "./routes";
-import SslAttentionModal from "src/components/modals/ssl-attention-modal";
+// import SslAttentionModal from "src/components/modals/ssl-attention-modal";
 
 export const App = () => {
     const [theme, changeTheme] = useState("white");
@@ -182,7 +182,7 @@ export const App = () => {
                 >
                     <StickyHeader />
                     <NotSupportModal />
-                    <SslAttentionModal />
+                    {/* <SslAttentionModal /> */}
 
                     <Routes>
                         <Route path="/" element={<HomeV2 />} />
