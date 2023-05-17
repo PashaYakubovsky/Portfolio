@@ -11,6 +11,7 @@ import { useCookies } from "react-cookie";
 const ChatPage = () => {
     const { changeHeaderLabel } = useConfigStore();
     const { changeMessages } = useContext(ChatContext);
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const [cookie, _, deleteCookie] = useCookies(["token_dev"]);
     useEffect(() => {
         if (changeHeaderLabel) changeHeaderLabel("Chat");

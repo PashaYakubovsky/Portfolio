@@ -33,4 +33,19 @@ html {
 
 body {
     overflow: hidden;
+    width: 100%;
 }
+
+@media (max-width: 700px) {
+    .parallax-1,
+    .parallax-2 {
+        display: none;
+    }
+}
+// body {
+// position: fixed;
+// overscroll-behavior-y: none;
+// cursor: url("https://github.com/chenglou/react-motion/raw/master/demos/demo8-draggable-list/cursor.png")
+//         39 39,
+//     auto;
+// }

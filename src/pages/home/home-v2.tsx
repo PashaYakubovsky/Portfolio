@@ -24,6 +24,7 @@ import {
     Noise,
 } from "@react-three/postprocessing";
 import { useConfigStore } from "src/store/store";
+
 // import { throttle } from "lodash";
 
 const HomeV2 = () => {
@@ -127,7 +128,6 @@ function Scene() {
 
     return (
         <Canvas
-
         // dpr={[1, 2]}
         // onPointerMissed={() => setTarget(null)}
         // frameloop="demand"

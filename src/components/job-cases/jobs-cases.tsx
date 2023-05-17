@@ -61,6 +61,7 @@ const JobsCases = forwardRef(({}, ref: LegacyRef<HTMLElement>) => {
                 <ParallaxLayer
                     offset={0.3}
                     speed={-0.1}
+                    className="parallax-1"
                     style={{ opacity: 1, zIndex: -1 }}
                 >
                     <RunAwayCloud
@@ -117,6 +118,7 @@ const JobsCases = forwardRef(({}, ref: LegacyRef<HTMLElement>) => {
                 <ParallaxLayer
                     offset={1}
                     speed={0.4}
+                    className="parallax-2"
                     style={{ opacity: 1, zIndex: -1 }}
                 >
                     <RunAwayCloud

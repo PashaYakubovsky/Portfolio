@@ -22,7 +22,8 @@ import { v4 as uuid } from "uuid";
 import RequireAuth from "src/auth/requareAuth";
 import { socket } from "src/main";
 import AuthModal from "src/components/modals/auth-modal";
-import { CHAT_PAGE, LOGIN_PAGE, SIGN_UP_PAGE } from "./routes";
+import { ABOUT_PAGE, CHAT_PAGE, LOGIN_PAGE, SIGN_UP_PAGE } from "./routes";
+import About from "src/pages/about/about";
 // import SslAttentionModal from "src/components/modals/ssl-attention-modal";
 
 export const App = () => {
@@ -72,72 +73,83 @@ export const App = () => {
     // }, []);
 
     useEffect(() => {
-        socket.on("changeText", (message: string) => {
-            if (message !== text3d) change3dText(message);
-
-            changeShowGlitch?.(true);
-
-            setTimeout(() => {
-                changeShowGlitch?.(false);
-            }, 1000);
-        });
-
-        socket.on(
-            "image",
-            (message: {
-                name?: string;
-                type: string;
-                data?: string | ArrayBuffer | null;
-                userId: string;
-            }) => {
-                const buffer = message?.data ?? "";
-                const blob = new Blob([buffer], { type: message.type });
-                const url = URL.createObjectURL(blob);
-
-                const newMessage: ChatMessage = {
-                    dateCreate: new Date().toISOString(),
-                    messageId: uuid(),
-                    message: url,
-                    status: 2,
-                    user: { name: "", userId: message?.userId },
-                    isFromBlob: true,
-                };
-
-                changeMessages((state) => [newMessage, ...state]);
+        const init = async () => {
+            if (socket.disconnected) {
+                socket.open();
             }
-        );
 
-        socket.on("message", (message: ChatMessage) => {
-            if (message.user?.userId !== user?.userId) {
-                changeMessages((state) => [
-                    { ...message, status: 2 },
-                    ...state,
-                ]);
-            }
-        });
+            socket.on("changeText", (message: string) => {
+                if (message !== text3d) change3dText(message);
 
-        socket.on("typing", (message: MessageTyping) => {
-            if (message.user?.userId !== user?.userId) {
-                if (timeoutRef.current) {
-                    clearTimeout(
-                        timeoutRef.current as unknown as number | undefined
-                    );
+                changeShowGlitch?.(true);
+
+                setTimeout(() => {
+                    changeShowGlitch?.(false);
+                }, 1000);
+            });
+
+            socket.on(
+                "image",
+                (message: {
+                    name?: string;
+                    type: string;
+                    data?: string | ArrayBuffer | null;
+                    userId: string;
+                }) => {
+                    const buffer = message?.data ?? "";
+                    const blob = new Blob([buffer], { type: message.type });
+                    const url = URL.createObjectURL(blob);
+
+                    const newMessage: ChatMessage = {
+                        dateCreate: new Date().toISOString(),
+                        messageId: uuid(),
+                        message: url,
+                        status: 2,
+                        user: { name: "", userId: message?.userId },
+                        isFromBlob: true,
+                    };
+
+                    changeMessages((state) => [newMessage, ...state]);
                 }
+            );
 
-                if (
-                    isSomeTypingInChat.every(
-                        (_user) => _user?.userId !== user?.userId
-                    ) &&
-                    user
-                ) {
-                    changeIsSomeTypingInChat?.(isSomeTypingInChat.concat(user));
+            socket.on("message", (message: ChatMessage) => {
+                debugger;
+                if (message.user?.userId !== user?.userId) {
+                    changeMessages((state) => [
+                        { ...message, status: 2 },
+                        ...state,
+                    ]);
                 }
+            });
 
-                timeoutRef.current = setTimeout(() => {
-                    changeIsSomeTypingInChat?.([]);
-                }, 300) as unknown as number;
-            }
-        });
+            socket.on("typing", (message: MessageTyping) => {
+                if (message.user?.userId !== user?.userId) {
+                    if (timeoutRef.current) {
+                        clearTimeout(
+                            timeoutRef.current as unknown as number | undefined
+                        );
+                    }
+
+                    if (
+                        isSomeTypingInChat.every(
+                            (_user) => _user?.userId !== user?.userId
+                        ) &&
+                        user
+                    ) {
+                        changeIsSomeTypingInChat?.(
+                            isSomeTypingInChat.concat(user)
+                        );
+                    }
+
+                    timeoutRef.current = setTimeout(() => {
+                        changeIsSomeTypingInChat?.([]);
+                    }, 300) as unknown as number;
+                }
+            });
+        };
+
+        init();
 
         return () => {
             socket.close();
@@ -191,6 +203,14 @@ export const App = () => {
                             element={
                                 <RequireAuth>
                                     <ChatPage />
+                                </RequireAuth>
+                            }
+                        />
+                        <Route
+                            path={ABOUT_PAGE}
+                            element={
+                                <RequireAuth>
+                                    <About />
                                 </RequireAuth>
                             }
                         />
