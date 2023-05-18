@@ -10,6 +10,7 @@ import config from "../../../config.json";
 import { useCookies } from "react-cookie";
 import { useLocation, useNavigate } from "react-router-dom";
 import { LOGIN_PAGE, SIGN_UP_PAGE } from "src/app/routes";
+import { useConfigStore } from "src/store/store";
 
 const AuthModal = ({
     open,
@@ -21,6 +22,8 @@ const AuthModal = ({
     const [name, setName] = useState("");
     const [password, setPassword] = useState("");
     const [, setCookie] = useCookies(["token_dev"]);
+    const changeUser = useConfigStore((state) => state.changeUser);
+    const user = useConfigStore((state) => state.user);
     const navigate = useNavigate();
     const location = useLocation();
     const params = new URLSearchParams(location.search);
@@ -50,11 +53,14 @@ const AuthModal = ({
                 }
             );
 
-            const token = await response.text();
+            const { token, user: _user } = await response.json();
 
             if (token) {
                 setCookie("token_dev", token);
             }
+
+            changeUser({ ...user, ..._user, password: null });
+
             if (window.location.pathname === LOGIN_PAGE)
                 navigate(queryObject?.redirect_rout ?? "/");
         } catch (err) {

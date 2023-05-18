@@ -51,6 +51,7 @@ const ChatContainer = () => {
         };
         changeMessages?.([newMessage, ...messages]);
         setMessageInput("");
+        // debugger;
         socket?.emit("message", { message: newMessage, user });
     };
     const handleFileChange = async (file: File) => {
@@ -129,7 +130,7 @@ const ChatContainer = () => {
                                 user={user}
                                 key={msg.messageId}
                                 position={
-                                    user?.userId === msg.user?.userId
+                                    user?.name === msg.user?.name
                                         ? "left"
                                         : "right"
                                 }

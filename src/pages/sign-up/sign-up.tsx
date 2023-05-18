@@ -85,12 +85,6 @@ export default function SignUp() {
 
             if (response.status === 200) {
                 try {
-                    changeUser({
-                        ...(user ?? {}),
-                        ...(body as User),
-                        password: null,
-                    });
-
                     const responseToken = await fetch(
                         config?.devHelperApi + "/api/v1/auth/login",
                         {
@@ -106,7 +100,13 @@ export default function SignUp() {
                         }
                     );
 
-                    const token = await responseToken.text();
+                    const { token, user: _user } = await responseToken.json();
+
+                    changeUser({
+                        ...(user ?? {}),
+                        ...(_user as User),
+                        password: null,
+                    });
 
                     changeCookie("token_dev", token);
 

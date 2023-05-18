@@ -22,8 +22,15 @@ import { v4 as uuid } from "uuid";
 import RequireAuth from "src/auth/requareAuth";
 import { socket } from "src/main";
 import AuthModal from "src/components/modals/auth-modal";
-import { ABOUT_PAGE, CHAT_PAGE, LOGIN_PAGE, SIGN_UP_PAGE } from "./routes";
+import {
+    ABOUT_PAGE,
+    ANIMATIONS_PAGE,
+    CHAT_PAGE,
+    LOGIN_PAGE,
+    SIGN_UP_PAGE,
+} from "./routes";
 import About from "src/pages/about/about";
+import AnimationPlanes from "src/pages/animations-plane/animationsPlane";
 // import SslAttentionModal from "src/components/modals/ssl-attention-modal";
 
 export const App = () => {
@@ -114,7 +121,6 @@ export const App = () => {
             );
 
             socket.on("message", (message: ChatMessage) => {
-                debugger;
                 if (message.user?.userId !== user?.userId) {
                     changeMessages((state) => [
                         { ...message, status: 2 },
@@ -211,6 +217,14 @@ export const App = () => {
                             element={
                                 <RequireAuth>
                                     <About />
+                                </RequireAuth>
+                            }
+                        />
+                        <Route
+                            path={ANIMATIONS_PAGE}
+                            element={
+                                <RequireAuth>
+                                    <AnimationPlanes />
                                 </RequireAuth>
                             }
                         />

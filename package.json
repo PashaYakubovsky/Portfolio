@@ -60,6 +60,7 @@
         "@nrwl/workspace": "15.9.2",
         "@testing-library/react": "14.0.0",
         "@types/flickity": "^2.2.7",
+        "@types/jsonwebtoken": "^9.0.2",
         "@types/lodash": "^4.14.194",
         "@types/material-ui": "^0.21.12",
         "@types/node": "^14.18.43",
