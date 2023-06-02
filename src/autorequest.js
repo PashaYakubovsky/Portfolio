@@ -14,7 +14,7 @@ var requestOptions = {
 };
 
 function tick() {
-    fetch("http://localhost:25055/change-3d-text", requestOptions)
+    fetch("http://localhost:25055/api/v1/change-3d-text", requestOptions)
         .then((response) => {
             return response.json();
         })

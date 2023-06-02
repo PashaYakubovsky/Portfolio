@@ -24,26 +24,30 @@ This is an awesome project built with React, Three.js, React-Three-Fiber, React-
 if you want to change dynamic 3d text on main page, make request to this API. Its make request into node.js express.js server and take u message and pass into websocket connection to client
 
 With JavaScript
+
 ```js
 var myHeaders = new Headers();
 myHeaders.append("Content-Type", "application/json");
+myHeaders.append(
+    "Authorization",
+    "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJwYXNzd29yZCI6IjQ1NTU1NTUiLCJhdmF0YXJVcmwiOiIiLCJuYW1lIjoiWFhYWFgiLCJ1c2VySWQiOiJhc2RzYWRhc2Rhc2Rhc2RzYWRhc2Rhc2QiLCJjcmVhdGVEYXRlIjoiMjAyMy0wNC0zMFQxMzoxMToxMS4xMDlaIiwiaWF0IjoxNjg1NjY2OTMxLCJleHAiOjE2ODU3NTMzMzF9.03UGRTZANn_5z9MYTjfu5bP1a05OrbKZjz4_2z4j4vg"
+);
 
 var raw = JSON.stringify({
-  "message": "try with yours text"
+    message: "try with yours text",
 });
 
 var requestOptions = {
-  method: 'POST',
-  headers: myHeaders,
-  body: raw,
-  redirect: 'follow'
+    method: "POST",
+    headers: myHeaders,
+    body: raw,
+    redirect: "follow",
 };
 
-fetch("https://pashaykubovsky.tech:25055/change-3d-tex", requestOptions)
-  .then(response => response.text())
-  .then(result => console.log(result))
-  .catch(error => console.log('error', error));
-
+fetch("https://pashaykubovsky.tech:25055/api/v1/change-3d-text", requestOptions)
+    .then((response) => response.text())
+    .then((result) => console.log(result))
+    .catch((error) => console.log("error", error));
 ```
 
 ## Technologies Used

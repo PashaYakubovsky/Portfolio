@@ -18,7 +18,7 @@ import { ChatContext } from "src/contexts/chat-context";
 // import { DefaultEventsMap } from "socket.io/dist/typed-events";
 import { useConfigStore } from "src/store/store";
 import { v4 as uuid } from "uuid";
-// import configMain from "../../config.json";
+import configMain from "../../config.json";
 import RequireAuth from "src/auth/requareAuth";
 import { socket } from "src/main";
 import AuthModal from "src/components/modals/auth-modal";
@@ -31,7 +31,7 @@ import {
 } from "./routes";
 import About from "src/pages/about/about";
 import AnimationPlanes from "src/pages/animations-plane/animationsPlane";
-// import SslAttentionModal from "src/components/modals/ssl-attention-modal";
+// import { useVisitorStore } from "src/store/visitors";
 
 export const App = () => {
     const [theme, changeTheme] = useState("white");
@@ -55,29 +55,40 @@ export const App = () => {
     const changeSupportWebGl = useConfigStore(
         (state) => state.changeSupportWebGl
     );
-    // const socket = io("https://mhp.inboost.ai:25055");
+
+    // const { visitors, setVisitors } = useVisitorStore();
 
     // useEffect(() => {
-    //     // Make a POST request to the Spotify Accounts Service to retrieve an access token
-    //     fetch("https://accounts.spotify.com/api/token", {
-    //         method: "POST",
-    //         headers: {
-    //             "Content-Type": "application/x-www-form-urlencoded",
-    //             Authorization:
-    //                 "Basic " +
-    //                 btoa(spotifyClientId + ":" + spotifyClientSecret),
-    //         },
-    //         body: "grant_type=client_credentials",
-    //     })
-    //         .then((response) => response.json())
-    //         .then((data) => {
-    //             const accessToken = data.access_token;
-    //             changeSpotifyToken?.(accessToken);
-    //         })
-    //         .catch((error) => {
-    //             console.error(error);
-    //         });
-    // }, []);
+    //     const init = async () => {
+    //         try {
+    //             const response = await fetch(
+    //                 configMain.devHelperApi + "/api/v1/active-socket-count"
+    //             );
+    //             const { count } = await response.json();
+
+    //             setVisitors((count ?? 0) + 1);
+    //         } catch (err) {
+    //             console.log(err);
+    //         }
+    //     };
+    //     init();
+    // }, [change3dText, setVisitors]);
+
+    // useEffect(() => {
+    //     const init = async () => {
+    //         try {
+    //             const response = await fetch(
+    //                 configMain.devHelperApi + "/api/v1/get-3d-text"
+    //             );
+    //             const { message } = await response.json();
+
+    //             change3dText(message ?? "");
+    //         } catch (err) {
+    //             console.log(err);
+    //         }
+    //     };
+    //     init();
+    // }, [change3dText]);
 
     useEffect(() => {
         const init = async () => {

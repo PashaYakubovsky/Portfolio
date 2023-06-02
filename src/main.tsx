@@ -16,8 +16,8 @@ if (isIos) {
         window.scrollTo(0, activeElement?.offsetTop);
     });
 }
-// configMain?.wsServer
-export const socket = io("http://localhost:3000", {
+// "https://pashaykubovsky.tech:25055"
+export const socket = io(configMain?.wsServer, {
     transports: ["websocket"],
 });
 

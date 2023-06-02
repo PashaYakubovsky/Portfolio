@@ -55,3 +55,4 @@ yarn-error.log*
 # Local Netlify folder
 .netlify
 /config.json
+/src/config.ts
