@@ -1,11 +1,11 @@
 import style from "./about.module.scss";
 import * as THREE from "three";
-import { useEffect, useLayoutEffect, useMemo, useRef } from "react";
-import { Canvas, useFrame, useLoader, useThree } from "@react-three/fiber";
-import { animated, useSpring } from "react-spring";
-import { useBox, usePlane, useSphere } from "@react-three/cannon";
+import { useEffect, useLayoutEffect, useMemo } from "react";
+import { Canvas, useFrame, useThree } from "@react-three/fiber";
+// import { animated, useSpring } from "react-spring";
+import { usePlane, useSphere } from "@react-three/cannon";
 import { Physics } from "@react-three/cannon";
-import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader";
+// import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader";
 import niceColors from "nice-color-palettes";
 
 const tempColor = new THREE.Color();

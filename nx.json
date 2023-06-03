@@ -3,17 +3,12 @@
   "npmScope": "/",
   "tasksRunnerOptions": {
     "default": {
-      "runner": "@nrwl/nx-cloud",
+      "runner": "nx-cloud",
       "options": {
-        "cacheableOperations": [
-          "build",
-          "test",
-          "lint",
-          "e2e"
-        ],
+        "cacheableOperations": [],
         "token": "<token>",
         "teamId": "<teamId>",
-        "accessToken": "NTlmMmEzZjUtZmEyOC00ZWMyLWI1MzMtMzcwZWQ5YTg3MTg5fHJlYWQtd3JpdGU=",
+        "accessToken": "NzIzMmM5OWQtYmQyNC00NDBlLWIwMzMtNzAzMWE4YjA1Nzk0fHJlYWQtd3JpdGU=",
         "url": "http://staging.nx.app"
       }
     }
@@ -78,5 +73,8 @@
       }
     }
   },
-  "defaultProject": "/"
+  "defaultProject": "/",
+  "affected": {
+    "defaultBase": "main"
+  }
 }

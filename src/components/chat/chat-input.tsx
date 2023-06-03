@@ -9,8 +9,8 @@ import EmojiPicker, {
     Theme,
 } from "emoji-picker-react";
 import { useEffect } from "react";
-import { WsContext } from "src/contexts/ws-context";
-import { useConfigStore } from "src/store/store";
+import { WsContext } from "../../contexts/ws-context";
+import { useConfigStore } from "../../store/store";
 
 interface Props {
     onSend: (text: string, file?: File | null) => void;

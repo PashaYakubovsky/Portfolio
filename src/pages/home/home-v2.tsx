@@ -6,14 +6,14 @@ import ScrollToBottomButton from "../../components/scroll-to-buttons/scroll-to-b
 import { useState } from "react";
 import { OrbitControls } from "@react-three/drei";
 import * as THREE from "three";
-import { CasesContext } from "src/contexts/cases-context";
+import { CasesContext } from "../../contexts/cases-context";
 import db from "../../../netlify/db.json";
 import JobsCases from "../../components/job-cases/jobs-cases";
 import Footer from "../../components/footer/footer";
 import Letters3D from "../../components/3d/letters-3d";
 import ScrollButton3d from "../../components/3d/scroll-button";
 import Stars3D from "../../components/3d/strars-3d";
-import Camera from "src/components/3d/camera";
+import Camera from "../../components/3d/camera";
 import { BlendFunction, GlitchMode } from "postprocessing";
 import {
     EffectComposer,
@@ -23,7 +23,7 @@ import {
     Glitch,
     Noise,
 } from "@react-three/postprocessing";
-import { useConfigStore } from "src/store/store";
+import { useConfigStore } from "../../store/store";
 
 // import { throttle } from "lodash";
 

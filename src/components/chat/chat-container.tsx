@@ -1,10 +1,10 @@
 import { Grid, Paper } from "@mui/material";
 import { useContext, useEffect, useRef, useState } from "react";
 import style from "./chat.module.scss";
-import { WsContext } from "src/contexts/ws-context";
+import { WsContext } from "../../contexts/ws-context";
 import ChatMessageBubble from "./chat-message";
-import { ChatContext } from "src/contexts/chat-context";
-import { useConfigStore } from "src/store/store";
+import { ChatContext } from "../../contexts/chat-context";
+import { useConfigStore } from "../../store/store";
 import { v4 as uuid } from "uuid";
 import Input from "./chat-input";
 import UserTypingIndicator from "./typing-indicator";

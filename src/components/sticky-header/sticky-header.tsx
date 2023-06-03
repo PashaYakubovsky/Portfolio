@@ -1,6 +1,6 @@
 import { AppBar, Link, Toolbar, Typography } from "@mui/material";
 import React, { useRef, useState } from "react";
-import { useConfigStore } from "src/store/store";
+import { useConfigStore } from "../../store/store";
 import styles from "./sticky-header.module.scss";
 
 export default function StickyHeader() {
@@ -39,7 +39,7 @@ export default function StickyHeader() {
             }}
             ref={(node) => {
                 if (node) {
-                    ref.current = node;
+                    (ref.current as unknown) = node;
                 }
             }}
             elevation={0}

@@ -1,7 +1,6 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
-import { BrowserRouter } from "react-router-dom";
-import App from "./app/app";
+// import { BrowserRouter } from "react-router-dom";
 import { io } from "socket.io-client";
 import configMain from "../config.json";
 
@@ -16,16 +15,13 @@ if (isIos) {
         window.scrollTo(0, activeElement?.offsetTop);
     });
 }
+
+const App = React.lazy(() => import("./app/app"));
+
 // "https://pashaykubovsky.tech:25055"
 export const socket = io(configMain?.wsServer, {
     transports: ["websocket"],
 });
 
 // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-ReactDOM.createRoot(document.getElementById("root")!).render(
-    <React.StrictMode>
-        <BrowserRouter>
-            <App />
-        </BrowserRouter>
-    </React.StrictMode>
-);
+if (App) ReactDOM.createRoot(document.getElementById("root")!).render(<App />);
