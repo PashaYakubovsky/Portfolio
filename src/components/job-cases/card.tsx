@@ -24,7 +24,7 @@ const ImgMediaCard = React.forwardRef(
         ref: React.RefObject<HTMLDivElement[]>
     ) => {
         return (
-            <animated.div id={`job-${index}`}>
+            <animated.div className={style.jobContainer} id={`job-${index}`}>
                 <Card
                     ref={(node) => {
                         if (ref?.current) {
