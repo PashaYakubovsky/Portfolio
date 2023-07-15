@@ -1,11 +1,11 @@
-import ChatContainer from "src/components/chat/chat-container";
+import ChatContainer from "../../components/chat/chat-container";
 import style from "./chat-page.module.scss";
 import { useContext, useEffect } from "react";
-import { useConfigStore } from "src/store/store";
+import { useConfigStore } from "../../store/store";
 import { Container } from "@mui/material";
-import ChatBackground from "src/components/3d/chat-background";
+import ChatBackground from "../../components/3d/chat-background";
 import config from "../../../config.json";
-import { ChatContext } from "src/contexts/chat-context";
+import { ChatContext } from "../../contexts/chat-context";
 import { useCookies } from "react-cookie";
 
 const ChatPage = () => {

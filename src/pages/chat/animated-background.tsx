@@ -52,7 +52,7 @@ const Snowfall = () => {
     const materialParams = [
         {
             color: new THREE.Color(0xffffff),
-            texturePath: "/src/assets/snow.png",
+            texturePath: "../assets/snow.png",
             size: 500,
         },
     ];

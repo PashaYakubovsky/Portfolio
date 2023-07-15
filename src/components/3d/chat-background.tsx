@@ -1,89 +1,10 @@
-import {
-    Canvas,
-    GroupProps,
-    MeshProps,
-    Object3DNode,
-    extend,
-    useFrame,
-} from "@react-three/fiber";
-import React, { useEffect, useRef } from "react";
+import { Canvas, MeshProps, useFrame } from "@react-three/fiber";
+import { useEffect, useRef } from "react";
 import * as THREE from "three";
-import { GradientTexture } from "@react-three/drei";
-import { animated, useSpring } from "react-spring";
 import { useState } from "react";
-import {
-    Instances,
-    Instance,
-    OrbitControls,
-    Environment,
-    useGLTF,
-} from "@react-three/drei";
+import { OrbitControls } from "@react-three/drei";
 import { useControls } from "leva";
-import { generate3dObjs, useConfigStore } from "src/store/store";
-
-// function Airplanes({
-//     data,
-//     range,
-// }: {
-//     data: typeof data3dObjs;
-//     range: number;
-// }) {
-//     const { nodes, materials } = useGLTF("/paper_airplane.glb");
-//     debugger;
-//     return (
-//         <Instances range={range} geometry={nodes.Airplane.geometry}>
-//             <group position={[0, 0, 0]}>
-//                 {data.map((props, i) => (
-//                     <Airplane key={i} {...props} />
-//                 ))}
-//             </group>
-//         </Instances>
-//     );
-// }
-
-// function Airplane({
-//     random,
-//     color = new THREE.Color(),
-//     ...props
-// }: {
-//     random: number;
-//     color?: THREE.Color;
-// }): JSX.Element {
-// const ref = useRef();
-// const [hovered, setHover] = useState(false);
-// useFrame((state) => {
-//     if (ref.current) {
-//         const t = state.clock.getElapsedTime() + random * 10000;
-//         ref.current.rotation.set(
-//             Math.cos(t / 4) / 2,
-//             Math.sin(t / 4) / 2,
-//             Math.cos(t / 1.5) / 2
-//         );
-//         ref.current.position.y = Math.sin(t / 1.5) / 2;
-//         ref.current.scale.x =
-//             ref.current.scale.y =
-//             ref.current.scale.z =
-//                 THREE.MathUtils.lerp(
-//                     ref.current.scale.z,
-//                     hovered ? 1.4 : 1,
-//                     0.1
-//                 );
-//         ref.current.color.lerp(
-//             color.set(hovered ? "red" : "white"),
-//             hovered ? 1 : 0.1
-//         );
-//     }
-// });
-//     return (
-//         <group {...props}>
-//             <Instance
-// ref={ref}
-// onPointerOver={(e) => (e.stopPropagation(), setHover(true))}
-// onPointerOut={(e) => setHover(false)}
-//             />
-//         </group>
-//     );
-// }
+import { generate3dObjs, useConfigStore } from "../../store/store";
 
 const ChatBackground = () => {
     const { range } = useControls({
@@ -123,7 +44,6 @@ const ChatBackground = () => {
 
 const ChatBackgroundInner = ({
     target,
-    range,
 }: {
     target: THREE.Vector3;
     range: number;
@@ -144,7 +64,7 @@ const ChatBackgroundInner = ({
                         {
                             position: model.position,
                             rotation: model.rotation,
-                        } as any
+                        } as unknown
                     }
                     target={target}
                 />
@@ -159,28 +79,6 @@ const ChatBackgroundInner = ({
         </>
     );
 };
-// function Model({ url }: { url: string }) {
-//     const { scene } = useGLTF(url);
-//     return <primitive object={scene} />;
-// }
-
-// const ModelAnimations = () => {
-//     return (
-//         <>
-//             {data3dObjs.map((model) => {
-//                 console.log(model);
-//                 return (
-//                     <Model
-//                         key={model.random}
-//                         random={model.random}
-//                         position={model.position}
-//                         rotation={model.rotation}
-//                     />
-//                 );
-//             })}
-//         </>
-//     );
-// };
 
 const PaperAirplane = ({
     target,

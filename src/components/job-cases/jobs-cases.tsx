@@ -1,7 +1,7 @@
 import { Container, Grid } from "@mui/material";
 import ImgMediaCard from "./card";
 import { LegacyRef, forwardRef, useContext, useRef } from "react";
-import { CasesContext } from "src/contexts/cases-context";
+import { CasesContext } from "../../contexts/cases-context";
 import style from "./job-cases.module.scss";
 import { Parallax, ParallaxLayer, IParallax } from "@react-spring/parallax";
 import RunAwayCloud from "./run-away-cloud";

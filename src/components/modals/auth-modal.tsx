@@ -9,8 +9,8 @@ import { useState } from "react";
 import config from "../../../config.json";
 import { useCookies } from "react-cookie";
 import { useLocation, useNavigate } from "react-router-dom";
-import { LOGIN_PAGE, SIGN_UP_PAGE } from "src/app/routes";
-import { useConfigStore } from "src/store/store";
+import { LOGIN_PAGE, SIGN_UP_PAGE } from "../../app/routes";
+import { useConfigStore } from "../../store/store";
 
 const AuthModal = ({
     open,

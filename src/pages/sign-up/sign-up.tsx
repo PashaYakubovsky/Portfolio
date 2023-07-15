@@ -15,7 +15,7 @@ import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { useState } from "react";
 // import AuthModal from "src/components/modals/auth-modal.js";
 import config from "../../../config.json";
-import { useConfigStore } from "src/store/store";
+import { useConfigStore } from "../../store/store";
 import { useCookies } from "react-cookie";
 // import FormHelperText from "@mui/material/FormHelperText";
 import { useLocation, useNavigate } from "react-router-dom";

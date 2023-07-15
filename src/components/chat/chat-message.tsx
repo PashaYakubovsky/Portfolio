@@ -4,7 +4,6 @@ import ReactPlayer from "react-player";
 import { validateYouTubeUrl, validateFacebookVideoUrl } from "../utils/valid";
 import { Spotify } from "react-spotify-embed";
 import { useRef } from "react";
-// import { ChatContext } from "src/contexts/chat-context";
 import config from "../../../config.json";
 
 const createLinkPreview = async (url: string) => {

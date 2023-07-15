@@ -2,8 +2,8 @@ import { Sphere } from "@react-three/drei";
 import { MeshProps, useFrame, useThree } from "@react-three/fiber";
 import { useRef } from "react";
 import { isMobile } from "react-device-detect";
-import { vhToPixels } from "src/components/scroll-to-buttons/scroll-to-bottom";
-import { useConfigStore } from "src/store/store";
+import { vhToPixels } from "../../components/scroll-to-buttons/scroll-to-bottom";
+import { useConfigStore } from "../../store/store";
 import { BufferGeometry, Material, Mesh } from "three";
 
 // import * as THREE from "three";

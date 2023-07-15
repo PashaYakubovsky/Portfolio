@@ -1,8 +1,8 @@
 import { ReactElement, useEffect, useState } from "react";
 import { useCookies } from "react-cookie";
 import { useNavigate } from "react-router";
-import AuthModal from "src/components/modals/auth-modal";
-import { useConfigStore } from "src/store/store";
+import AuthModal from "../components/modals/auth-modal";
+import { useConfigStore } from "../store/store";
 import { devHelperApi } from "../../config.json";
 
 const RequireAuth = ({

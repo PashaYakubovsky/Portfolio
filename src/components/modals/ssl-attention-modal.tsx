@@ -5,7 +5,7 @@ import Box from "@mui/material/Box";
 import style from "./not-support.module.scss";
 import { Button } from "@mui/material";
 import { useCookies } from "react-cookie";
-import { useConfigStore } from "src/store/store";
+import { useConfigStore } from "../../store/store";
 
 const SslAttentionModal = () => {
     const rootRef = React.useRef<HTMLDivElement>(null);
