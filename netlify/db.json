@@ -68,6 +68,47 @@
                 "scss-in-js",
                 "rollup"
             ]
+        },
+        {
+            "name": "ThreeFlow",
+            "description": "R3f example with gltf models",
+            "screenshots": [],
+            "link": "https://three-flow.vercel.app",
+            "tooltipsText": "Go to app",
+            "techStack": [
+                "React",
+                "@react-three",
+                "TypeScript",
+                "gltfjsx",
+                "Zustand",
+                "leva",
+                "css modules",
+                "Vite"
+            ]
+        },
+        {
+            "name": "Triangles miracle",
+            "description": "Three.js and Svelte example with shaders",
+            "screenshots": [],
+            "link": "https://triangles-mirracle-svelte.vercel.app/",
+            "tooltipsText": "Go to app",
+            "techStack": ["SvelteKit", "Three.js", "TypeScript", "GSAP", "Vite"]
+        },
+        {
+            "name": "Planet scene",
+            "description": "R3f example with gltf models, physics, shaders",
+            "screenshots": [],
+            "link": "https://planet-scene.vercel.app/",
+            "tooltipsText": "Go to app",
+            "techStack": [
+                "React",
+                "@react-three",
+                "@react-three/cannon",
+                "TypeScript",
+                "GSAP",
+                "React spring",
+                "Vite"
+            ]
         }
     ],
     "_cases": [

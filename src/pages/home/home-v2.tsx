@@ -67,43 +67,7 @@ const HomeV2 = () => {
                 showJobs,
             }}
         >
-            <div
-                // onScroll={throttle((e: React.UIEvent<HTMLDivElement>) => {
-                //     console.log(e);
-                //     if (
-                //         showJobs.length > 0 &&
-                //         showJobs.every((job) => job === true)
-                //     ) {
-                //         return;
-                //     }
-                //     const containerHeight = e.currentTarget?.scrollHeight;
-                //     const containerScrollTop = e.currentTarget?.scrollTop;
-
-                //     const _showJobs = data.map((job, idx) => {
-                //         const jobElement = document.getElementById(
-                //             `job-${idx}`
-                //         ); // assuming there's an HTML element with id `job-${idx}` for each job
-                //         if (jobElement) {
-                //             const elementTop = jobElement.offsetTop;
-                //             const elementHeight = jobElement.offsetHeight;
-                //             const elementBottom = elementTop + elementHeight;
-                //             const visibleTop = containerScrollTop;
-                //             const visibleBottom =
-                //                 containerScrollTop + containerHeight;
-                //             const isElementVisible =
-                //                 elementTop <= visibleBottom &&
-                //                 elementBottom >= visibleTop;
-                //             return !showJobs[idx]
-                //                 ? isElementVisible
-                //                 : showJobs[idx];
-                //         }
-                //         return showJobs[idx];
-                //     });
-
-                //     changeShowJobs?.(_showJobs);
-                // }, 400)}
-                className={style.container}
-            >
+            <div className={style.container}>
                 {supportWebGl ? (
                     <div ref={interceptor} className={style.home}>
                         {showCanvas ? <Scene /> : null}
@@ -128,9 +92,12 @@ function Scene() {
 
     return (
         <Canvas
-        // dpr={[1, 2]}
-        // onPointerMissed={() => setTarget(null)}
-        // frameloop="demand"
+            gl={{
+                antialias: true,
+                alpha: true,
+                powerPreference: "high-performance",
+                stencil: false,
+            }}
         >
             {bloom ? <BloomEffects /> : null}
             {glitch ? <GlitchEffects /> : null}

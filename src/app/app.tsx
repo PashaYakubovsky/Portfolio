@@ -1,24 +1,17 @@
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-import styles from "./app.module.scss";
+// import styles from "./app.module.scss";
 import { Routes, Route } from "react-router-dom";
 import HomeV2 from "src/pages/home/home-v2";
 import { ThemeContext, whiteThemeColors } from "src/contexts/theme-context";
 import { NoMatch } from "src/pages/no-match/no-match";
 import { useEffect, useRef, useState } from "react";
 import StickyHeader from "src/components/sticky-header/sticky-header";
-// import ScrollWave from "src/components/scroll-wave/scroll-wave";
-// import Register from "src/pages/register/register";
-// import SignIn from "src/pages/sign-in/sign-up";
 import SignUp from "src/pages/sign-up/sign-up";
-// import { io } from "socket.io-client";
 import { WsContext } from "src/contexts/ws-context";
 import NotSupportModal from "src/components/modals/not-support-modal";
 import ChatPage from "src/pages/chat/chat-page";
 import { ChatContext } from "src/contexts/chat-context";
-// import { DefaultEventsMap } from "socket.io/dist/typed-events";
 import { useConfigStore } from "src/store/store";
 import { v4 as uuid } from "uuid";
-import configMain from "../../config.json";
 import RequireAuth from "src/auth/requareAuth";
 import { socket } from "src/main";
 import AuthModal from "src/components/modals/auth-modal";
@@ -31,17 +24,11 @@ import {
 } from "./routes";
 import About from "src/pages/about/about";
 import AnimationPlanes from "src/pages/animations-plane/animationsPlane";
-// import { useVisitorStore } from "src/store/visitors";
 
 export const App = () => {
     const [theme, changeTheme] = useState("white");
-    // const socketRef = useRef<Socket<DefaultEventsMap, DefaultEventsMap> | null>(
-    //     null
-    // );
     const timeoutRef = useRef<number | null>(null);
-
     const [messages, changeMessages] = useState<ChatMessage[]>([]);
-
     const user = useConfigStore((state) => state.user);
     const text3d = useConfigStore((state) => state["3dText"]);
     const change3dText = useConfigStore((state) => state.change3dText);
@@ -55,40 +42,6 @@ export const App = () => {
     const changeSupportWebGl = useConfigStore(
         (state) => state.changeSupportWebGl
     );
-
-    // const { visitors, setVisitors } = useVisitorStore();
-
-    // useEffect(() => {
-    //     const init = async () => {
-    //         try {
-    //             const response = await fetch(
-    //                 configMain.devHelperApi + "/api/v1/active-socket-count"
-    //             );
-    //             const { count } = await response.json();
-
-    //             setVisitors((count ?? 0) + 1);
-    //         } catch (err) {
-    //             console.log(err);
-    //         }
-    //     };
-    //     init();
-    // }, [change3dText, setVisitors]);
-
-    // useEffect(() => {
-    //     const init = async () => {
-    //         try {
-    //             const response = await fetch(
-    //                 configMain.devHelperApi + "/api/v1/get-3d-text"
-    //             );
-    //             const { message } = await response.json();
-
-    //             change3dText(message ?? "");
-    //         } catch (err) {
-    //             console.log(err);
-    //         }
-    //     };
-    //     init();
-    // }, [change3dText]);
 
     useEffect(() => {
         const init = async () => {
@@ -211,7 +164,6 @@ export const App = () => {
                 >
                     <StickyHeader />
                     <NotSupportModal />
-                    {/* <SslAttentionModal /> */}
 
                     <Routes>
                         <Route path="/" element={<HomeV2 />} />

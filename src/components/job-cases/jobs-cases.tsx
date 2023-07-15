@@ -2,7 +2,6 @@ import { Container, Grid } from "@mui/material";
 import ImgMediaCard from "./card";
 import { LegacyRef, forwardRef, useContext, useRef } from "react";
 import { CasesContext } from "src/contexts/cases-context";
-// import { throttle } from "lodash";
 import style from "./job-cases.module.scss";
 import { Parallax, ParallaxLayer, IParallax } from "@react-spring/parallax";
 import RunAwayCloud from "./run-away-cloud";
@@ -14,39 +13,14 @@ export const url = (name: string, wrap = false) =>
         wrap ? ")" : ""
     }`;
 
-// eslint-disable-next-line no-empty-pattern
-const JobsCases = forwardRef(({}, ref: LegacyRef<HTMLElement>) => {
+const JobsCases = forwardRef((props, ref: LegacyRef<HTMLElement>) => {
     const { jobCases, showJobs, changeShowJobs } = useContext(CasesContext);
     const refs = useRef<HTMLDivElement[]>([]);
-    // const containerRef = useRef(null);
     const parallax = useRef<IParallax>(null);
 
-    // const [containerRef, percentage] = useScrollPercentage({
-    //     /* Optional options */
-    //     threshold: 0,
-    // });
-
-    // useEffect(() => {
-    //     changeShowRules((state) =>
-    //         state?.map(
-    //             (item, idx, arr) => ((idx + 1) / arr.length) * 100 <= percentage
-    //         )
-    //     );
-    // }, [percentage]);
-
     return (
-        <main
-            // onScroll={throttle((e: React.UIEvent<HTMLDivElement>) => {
-            //     console.log(e.currentTarget.scrollTop);
-            // }, 300)}
-            className={style.main}
-        >
-            <Parallax
-                ref={parallax}
-                pages={2}
-                className={style.mainInner}
-                // ref={containerRef}
-            >
+        <main className={style.main}>
+            <Parallax ref={parallax} pages={2} className={style.mainInner}>
                 <ParallaxLayer
                     offset={0}
                     speed={0}

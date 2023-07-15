@@ -8,9 +8,6 @@ import style from "./job-cases.module.scss";
 import LightTooltip from "../tooltip/light-tooltip";
 import JobExperienceTag from "../tags/job-expirience-tag";
 import { animated } from "react-spring";
-// import { ButtonProps } from "@mui/material";
-// import { ThreeDRotation } from "@mui/icons-material";
-// import { makeStyles, styled } from "@mui/styles";
 
 const ImgMediaCard = React.forwardRef(
     (
@@ -26,34 +23,8 @@ const ImgMediaCard = React.forwardRef(
         }: JobExperience,
         ref: React.RefObject<HTMLDivElement[]>
     ) => {
-        // const observerRef = React.useRef<IntersectionObserver>(null);
-
-        // const observer = React.useRef<IntersectionObserver>(null);
-        // const spring = useSpring({
-        //     transform: `translateX(${index % 2 === 0 ? "" : "-"}${
-        //         show ? 0 : 500
-        //     }px)`,
-
-        //     config: { ...config.gentle },
-        // });
-
         return (
-            <animated.div
-                id={`job-${index}`}
-                // ref={(node) => {
-                //     if (observerRef.current) {
-                //         observerRef.current.disconnect();
-                //     }
-                //     observerRef.current = new IntersectionObserver((entry) => {
-                //         // console.log(index, entry);
-                //         // if (entry[0].isIntersecting) {
-                //         //     changeIsInView(true);
-                //         // }
-                //     });
-                //     if (node) observerRef.current.observe(node);
-                // }}
-                // style={spring}
-            >
+            <animated.div id={`job-${index}`}>
                 <Card
                     ref={(node) => {
                         if (ref?.current) {
