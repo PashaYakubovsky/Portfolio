@@ -1,6 +1,6 @@
 import { Routes, Route, BrowserRouter } from "react-router-dom";
 import HomeV2 from "../pages/home/home-v2";
-import { ThemeContext, whiteThemeColors } from "../contexts/theme-context";
+// import { ThemeContext, whiteThemeColors } from "../contexts/theme-context";
 import { NoMatch } from "../pages/no-match/no-match";
 import { useEffect, useRef, useState } from "react";
 import StickyHeader from "../components/sticky-header/sticky-header";
@@ -152,57 +152,54 @@ const App = () => {
 
     return (
         <BrowserRouter>
-            <ThemeContext.Provider
+            {/* <ThemeContext.Provider
                 value={{ theme, changeTheme, ...whiteThemeColors }}
-            >
-                <WsContext.Provider value={{ socket: socket }}>
-                    <ChatContext.Provider
-                        value={{
-                            messages,
-                            changeMessages,
-                        }}
-                    >
-                        <StickyHeader />
-                        <NotSupportModal />
-                        {/* <SslAttentionModal /> */}
+            > */}
+            <WsContext.Provider value={{ socket }}>
+                <ChatContext.Provider
+                    value={{
+                        messages,
+                        changeMessages,
+                    }}
+                >
+                    <StickyHeader />
+                    <NotSupportModal />
+                    {/* <SslAttentionModal /> */}
 
-                        <Routes>
-                            <Route path="/" element={<HomeV2 />} />
-                            <Route
-                                path={CHAT_PAGE}
-                                element={
-                                    <RequireAuth>
-                                        <ChatPage />
-                                    </RequireAuth>
-                                }
-                            />
-                            <Route
-                                path={ABOUT_PAGE}
-                                element={
-                                    <RequireAuth>
-                                        <About />
-                                    </RequireAuth>
-                                }
-                            />
-                            <Route
-                                path={ANIMATIONS_PAGE}
-                                element={
-                                    <RequireAuth>
-                                        <AnimationPlanes />
-                                    </RequireAuth>
-                                }
-                            />
+                    <Routes>
+                        <Route path="/" element={<HomeV2 />} />
+                        <Route
+                            path={CHAT_PAGE}
+                            element={
+                                <RequireAuth>
+                                    <ChatPage />
+                                </RequireAuth>
+                            }
+                        />
+                        <Route
+                            path={ABOUT_PAGE}
+                            element={
+                                <RequireAuth>
+                                    <About />
+                                </RequireAuth>
+                            }
+                        />
+                        <Route
+                            path={ANIMATIONS_PAGE}
+                            element={
+                                <RequireAuth>
+                                    <AnimationPlanes />
+                                </RequireAuth>
+                            }
+                        />
 
-                            <Route
-                                path={LOGIN_PAGE}
-                                element={<AuthModal open />}
-                            />
-                            <Route path={SIGN_UP_PAGE} element={<SignUp />} />
-                            <Route path="*" element={<NoMatch />} />
-                        </Routes>
-                    </ChatContext.Provider>
-                </WsContext.Provider>
-            </ThemeContext.Provider>
+                        <Route path={LOGIN_PAGE} element={<AuthModal open />} />
+                        <Route path={SIGN_UP_PAGE} element={<SignUp />} />
+                        <Route path="*" element={<NoMatch />} />
+                    </Routes>
+                </ChatContext.Provider>
+            </WsContext.Provider>
+            {/* </ThemeContext.Provider> */}
         </BrowserRouter>
     );
 };
