@@ -25,7 +25,6 @@ import About from "../pages/about/about";
 import AnimationPlanes from "../pages/animations-plane/animationsPlane";
 
 const App = () => {
-    const [theme, changeTheme] = useState("white");
     const timeoutRef = useRef<number | null>(null);
     const [messages, changeMessages] = useState<ChatMessage[]>([]);
     const user = useConfigStore((state) => state.user);

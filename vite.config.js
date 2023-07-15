@@ -1,7 +1,7 @@
 /// <reference types="vitest" />
 const { defineConfig } = require("vite");
 const react = require("@vitejs/plugin-react");
-// const viteTsConfigPaths = require("vite-tsconfig-paths");
+const viteTsConfigPaths = require("vite-tsconfig-paths");
 
 export default defineConfig({
     cacheDir: "./node_modules/.vite/portfolio",
@@ -15,15 +15,15 @@ export default defineConfig({
     },
     plugins: [
         react(),
-        // viteTsConfigPaths({
-        //     root: "./",
-        // }),
+        viteTsConfigPaths({
+            root: "./",
+        }),
     ],
-    // worker: {
-    //     plugins: [
-    //         viteTsConfigPaths({
-    //             root: "./",
-    //         }),
-    //     ],
-    // },
+    worker: {
+        plugins: [
+            viteTsConfigPaths({
+                root: "./",
+            }),
+        ],
+    },
 });
